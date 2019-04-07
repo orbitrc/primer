@@ -1,1 +1,3 @@
 lib/
+*.o
+tests/primer-test
