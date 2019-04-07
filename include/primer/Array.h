@@ -11,27 +11,40 @@
 #ifndef _PR_ARRAY_H
 #define _PR_ARRAY_H
 
+#include <vector>
+
+#include <primer/Base.h>
+
+// for tests
+#include <iostream>
+
 namespace pr {
 
 /// \brief  Array class.
 /// \tparam T
 ///         Type of item.
 template <typename T>
-class Array {
+class Array : public Base {
 private:
     std::vector<T> _vec;
 public:
-    Array();
+    Array()
+    {
+        std::cout << "Array created." << std::endl;
+    }
     //==-------------------------
     // Examining an array
     //==-------------------------
     void contains() const;
-    void count() const;
+    void size() const;
 
     //==-------------------------
     // Modifying
     //==-------------------------
-    void append();
+    void push(const T& value)
+    {
+        this->_vec.push_back(value);
+    }
 
 };
 

@@ -22,4 +22,19 @@ Int8::Int8(int8_t int8)
 {
 }
 
+/*
+Int8& Int8::operator=(Int8& other)
+{
+    this->_int = other._int;
+
+    return *this;
+}
+*/
+
+const char* Int8::repr() const
+{
+    return "<Int>";
+}
+
+
 } // namespace pr

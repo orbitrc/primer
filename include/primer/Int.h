@@ -13,15 +13,18 @@
 
 #include <cstdint>
 
+#include <primer/Base.h>
+
 namespace pr {
 
 /// \brief  8-bit signed integer.
-class Int8 {
+class Int8 : public Base {
 private:
     int8_t _int;
 public:
     Int8();
     Int8(int8_t int8);
+    // Int8& operator=(Int8& other);
     //==-------------------------
     // Examining an array
     //==-------------------------
@@ -34,6 +37,11 @@ public:
     void append();
 
     operator int8_t() const { return _int; }
+
+    //==--------------------------
+    // Primer
+    //==--------------------------
+    const char* repr() const;
 };
 
 } // namespace pr

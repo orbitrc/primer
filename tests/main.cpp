@@ -1,12 +1,19 @@
 #include <iostream>
+#include <cstdio>
 
 #include <primer/primer.h>
 
 int main()
 {
+    // Int
     pr::Int8 i = 1;
 
-    std::cout << i << std::endl;
+    printf("%d\n", i);
+    pr::print(i);
+
+    // Array
+    pr::Array<pr::Int8> a;
+    a.push(i);
 
     return 0;
 }
