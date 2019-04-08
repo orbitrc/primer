@@ -16,7 +16,10 @@
 
 namespace pr {
 
+class String;
+
 void print(const Base& object);
+void print(const String& str);
 
 } // namespace pr
 

@@ -1,5 +1,6 @@
 OBJ = src/Int.o src/Array.o \
 	src/String.o \
+	src/Exception.o \
 	src/utils.o
 CXXFLAGS = -std=c++17
 
