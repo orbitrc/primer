@@ -16,8 +16,9 @@ namespace pr {
 class Base {
 private:
 public:
-    virtual const char* repr() const { return ""; };
+
 };
+
 
 } // namespace pr
 

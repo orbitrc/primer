@@ -1,4 +1,5 @@
 OBJ = src/Int.o src/Array.o \
+	src/String.o \
 	src/utils.o
 CXXFLAGS = -std=c++17
 
@@ -19,3 +20,5 @@ test:
 clean:
 	rm -rf src/*.o
 	rm -rf lib/
+	rm tests/*.o
+	rm tests/primer-test

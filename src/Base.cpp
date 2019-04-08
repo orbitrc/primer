@@ -9,3 +9,10 @@
 */
 
 #include <primer/Base.h>
+
+#include <primer/String.h>
+
+namespace pr {
+
+
+} // namespace pr

@@ -10,6 +10,8 @@
 
 #include <primer/Int.h>
 
+#include <primer/String.h>
+
 namespace pr {
 
 Int8::Int8()
@@ -31,7 +33,12 @@ Int8& Int8::operator=(Int8& other)
 }
 */
 
-const char* Int8::repr() const
+Int8::operator String() const
+{
+    return "<Int>";
+}
+
+const String Int8::repr() const
 {
     return "<Int>";
 }

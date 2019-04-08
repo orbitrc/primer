@@ -14,6 +14,10 @@ int main()
     // Array
     pr::Array<pr::Int8> a;
     a.push(i);
+    pr::print(a);
+
+    // String
+    pr::String s = "Hello";
 
     return 0;
 }

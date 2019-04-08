@@ -17,6 +17,8 @@
 
 namespace pr {
 
+class String;
+
 /// \brief  8-bit signed integer.
 class Int8 : public Base {
 private:
@@ -37,11 +39,12 @@ public:
     void append();
 
     operator int8_t() const { return _int; }
+    operator String() const;
 
     //==--------------------------
     // Primer
     //==--------------------------
-    const char* repr() const;
+    const String repr() const;
 };
 
 } // namespace pr

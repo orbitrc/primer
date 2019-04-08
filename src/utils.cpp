@@ -9,13 +9,20 @@
 */
 #include <primer/utils.h>
 
+#include <primer/String.h>
+
 #include <iostream>
 
 namespace pr {
 
 void print(const Base& object)
 {
-    std::cout << object.repr() << std::endl;
+    std::cout << "<Primer object>" << std::endl;
+}
+
+void print(const String& str)
+{
+    std::cout << str << std::endl;
 }
 
 } // namespace pr
