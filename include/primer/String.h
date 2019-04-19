@@ -27,6 +27,8 @@ public:
 
     String(const char* c_str);
 
+    String(const Base& object);
+
     //==-------------------------
     // Examining a string
     //==-------------------------

@@ -27,7 +27,6 @@ public:
     Int8();
     Int8(int8_t int8);
     Int8(int i);
-    // Int8& operator=(Int8& other);
     //==-------------------------
     // Examining an array
     //==-------------------------

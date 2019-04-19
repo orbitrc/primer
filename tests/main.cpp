@@ -14,7 +14,7 @@ int main()
     try {
         pr::Int8 i2 = 6666;
     } catch (const pr::Exception& err) {
-        pr::print(pr::String("exception caught"));
+        pr::print("exception caught");
     }
 
     // pr::Int8 i3 = 9999;

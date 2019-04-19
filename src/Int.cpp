@@ -13,6 +13,8 @@
 #include <primer/String.h>
 #include <primer/Exception.h>
 
+#include <cstdio>
+
 namespace pr {
 
 Int8::Int8()
@@ -30,21 +32,14 @@ Int8::Int8(int i)
     if (i < -128 || 127 < i) {
         throw Exception();
     }
-    Int8(static_cast<int8_t>(i));
+    this->_int = static_cast<int8_t>(i);
 }
-
-/*
-Int8& Int8::operator=(Int8& other)
-{
-    this->_int = other._int;
-
-    return *this;
-}
-*/
 
 Int8::operator String() const
 {
-    return "<Int>";
+    char str[4];
+    std::snprintf(str, 4, "%d", this->_int);
+    return str;
 }
 
 // const String Int8::repr() const

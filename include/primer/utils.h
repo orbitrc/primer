@@ -12,13 +12,11 @@
 #ifndef _PR_UTILS_H
 #define _PR_UTILS_H
 
-#include <primer/Base.h>
-
 namespace pr {
 
+class Base;
 class String;
 
-void print(const Base& object);
 void print(const String& str);
 
 } // namespace pr

@@ -15,10 +15,6 @@
 
 namespace pr {
 
-void print(const Base& object)
-{
-    std::cout << "<Primer object>" << std::endl;
-}
 
 void print(const String& str)
 {

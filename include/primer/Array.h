@@ -3,7 +3,7 @@
 //
 //  Author:     hardboiled65
 //  Created:    2018. 12. 31. 16:22
-//  Copyright (c) 2018 hardboiled65. All rights reserved.
+//  Copyright (c) 2018-2019 hardboiled65. All rights reserved.
 //
 
 /// \file
@@ -29,9 +29,10 @@ private:
     std::vector<T> _vec;
 public:
     Array()
+        : _vec()
     {
-        std::cout << "Array created." << std::endl;
     }
+
     //==-------------------------
     // Examining an array
     //==-------------------------

@@ -17,8 +17,8 @@ namespace pr {
 /*
 template <typename T>
 Array<T>::Array()
+    : _vec()
 {
-    std::cout << "Array created." << std::endl;
 }
 
 template <typename T>

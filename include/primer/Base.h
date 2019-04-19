@@ -16,6 +16,16 @@ namespace pr {
 class Base {
 private:
 public:
+    operator const char*() const
+    {
+        return "<Primer object>";
+    }
+
+};
+
+
+template <typename T>
+class Optional {
 
 };
 

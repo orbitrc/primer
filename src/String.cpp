@@ -24,6 +24,11 @@ String::String(const char* c_str)
 {
 }
 
+String::String(const Base& object)
+    : _str(object)
+{
+}
+
 String String::operator+(const String& other) const
 {
     return (this->_str + other._str).c_str();
