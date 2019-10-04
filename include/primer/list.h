@@ -31,4 +31,6 @@ void* pr_list_pop(pr_list *list);
 
 void pr_list_remove(pr_list *list, int64_t i);
 
+void pr_list_destructor(pr_object *obj);
+
 #endif /* _PR_LIST_H */

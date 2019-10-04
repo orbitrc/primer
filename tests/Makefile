@@ -1,7 +1,11 @@
 OBJ = main.o
 
 default: $(OBJ)
-	$(CXX) $(CXXFLAGS) $^ -o primer-test -I../include -L../lib/ -lprimer -Wl,-rpath=../lib
+	$(CC) $(CFLAGS) $^ -o primer-test -I../include -L../lib/ -lprimer -Wl,-rpath=../lib
 
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c -o $@ $^ -I../include
+%.o: %.c
+	$(CC) $(CFLAGS) -c -o $@ $^ -I../include
+
+clean:
+	rm -f *.o
+	rm -f primer-test

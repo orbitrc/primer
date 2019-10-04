@@ -20,8 +20,14 @@ enum pr_object_base {
 struct pr_object {
     enum pr_object_base base;
     uint64_t rc;
+    void (*destructor)(struct pr_object*);
 };
 typedef struct pr_object pr_object;
+
+void pr_object_ref(pr_object *obj);
+
+void pr_object_deref(pr_object *obj);
+
 
 struct pr_type {
     const char *name;

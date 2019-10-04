@@ -15,8 +15,6 @@
 #include <stdint.h>
 
 
-void pr_object_ref(pr_object *obj);
 
-void pr_object_deref(pr_object *obj);
 
 #endif /* _PR_OBJECT_H */

@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include <stdio.h>
+
 struct pr_list {
     pr_object base_object;
     const pr_type *generic_type;
@@ -25,6 +27,9 @@ pr_list* pr_list_new(const pr_type *type)
 
     ((pr_object*)list)->base = PR_CLASS;
     ((pr_object*)list)->rc = 1;
+    ((pr_object*)list)->destructor = pr_list_destructor;
+
+    /* Set generic type of list */
     list->generic_type = type;
 
     /* Initialize list. */
@@ -93,4 +98,10 @@ void* pr_list_pop(pr_list *list)
 void pr_list_remove(pr_list *list, int64_t i)
 {
     /* TODO: implement */
+}
+
+void pr_list_destructor(pr_object *obj)
+{
+    fprintf(stdout, "pr_list destructor\n");
+    pr_list *list = (pr_list*)obj;
 }
