@@ -1,4 +1,4 @@
-OBJ = src/int.o \
+OBJ = src/base.o \
 	src/list.o \
 	src/utils.o
 CXXFLAGS = -std=c++17

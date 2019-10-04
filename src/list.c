@@ -1,5 +1,6 @@
 #include <primer/list.h>
 
+#include <string.h>
 #include <stdlib.h>
 
 struct pr_list {
@@ -28,7 +29,7 @@ pr_list* pr_list_new(const pr_type *type)
 
     /* Initialize list. */
     list->m_capacity = 8;
-    list->m_size = 0;
+    list->m_count = 0;
     if (type->size == 0) { /* Generic type is class. */
         list->m_items = malloc(sizeof(void*) * list->m_capacity);
     } else { /* Generic type is struct. */
@@ -41,7 +42,25 @@ pr_list* pr_list_new(const pr_type *type)
 
 void pr_list_push(pr_list *list, const void *val)
 {
-    /* TODO: implement */
+    int64_t size = list->generic_type->size; /* Size of generic type */
+
+    /* Insert to list. */
+    if (size == 0) {
+        memcpy(
+            (list->m_items + size * sizeof(void*)),
+            val,
+            sizeof(void*)
+        );
+    } else {
+        memcpy(
+            (list->m_items + size * (list->m_count)),
+            val,
+            size
+        );
+    }
+    list->m_count += 1;
+
+    // Re-allocate if capacity is full.
 }
 
 
@@ -60,7 +79,8 @@ int64_t pr_list_count(pr_list *list)
 void* pr_list_at(pr_list *list, int64_t i)
 {
     /* TODO: implement */
-    return ;
+    char *c_p = (char*)(list->m_items + i);
+    return (void*)c_p;
 }
 
 
