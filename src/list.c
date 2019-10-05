@@ -49,8 +49,10 @@ void pr_list_push(pr_list *list, const void *val)
 {
     int64_t size = list->generic_type->size; /* Size of generic type */
 
-    /* Insert to list. */
+    /* Insert into list. */
     if (size == 0) {
+        /* Increse reference count. */
+        pr_object_ref((pr_object*)val);
         memcpy(
             (list->m_items + size * sizeof(void*)),
             val,
@@ -65,7 +67,9 @@ void pr_list_push(pr_list *list, const void *val)
     }
     list->m_count += 1;
 
-    // Re-allocate if capacity is full.
+    if (list->m_count >= list->m_capacity) {
+        // Re-allocate if capacity is full.
+    }
 }
 
 
