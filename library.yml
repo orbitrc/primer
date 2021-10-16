@@ -1,7 +1,0 @@
-description: ''
-license: MIT
-name: primer
-scripts:
-  configure: 'echo "Error: no configure specified" && exit 1'
-  make: make
-version: 0.0.1-alpha
