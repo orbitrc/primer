@@ -2,6 +2,7 @@ use std::ops::Range;
 
 use rand::{Rng, thread_rng};
 
+/// Random trait provides random method to numeric types.
 pub trait Random {
     fn random(&self, range: Range<Self>) -> Self where Self: Sized;
 }
