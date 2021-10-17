@@ -5,7 +5,7 @@ pub mod random;
 mod tests {
     use super::json::JsonValue;
     use super::json::Map;
-    use super::json::Number;
+    use super::json::JsonNumber;
     use super::json::json;
 
     #[test]
@@ -17,7 +17,8 @@ mod tests {
     #[test]
     fn json_object() {
         let mut map: Map = Map::new();
-        map.insert(String::from("Foo"), JsonValue::Number(Number::from_f64(42.0).unwrap()));
+        map.insert(String::from("Foo"),
+            JsonValue::Number(JsonNumber::from_f64(42.0).unwrap()));
         let object = JsonValue::Object(map);
         let j = json!({
             "Foo": 42.0,
