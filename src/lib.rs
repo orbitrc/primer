@@ -19,9 +19,10 @@ mod tests {
         let mut map: Map = Map::new();
         map.insert(String::from("Foo"),
             JsonValue::Number(JsonNumber::from_f64(42.0).unwrap()));
+        map["Foo"] = json!(42);
         let object = JsonValue::Object(map);
         let j = json!({
-            "Foo": 42.0,
+            "Foo": 42,
         });
         assert_eq!(object, j);
     }
