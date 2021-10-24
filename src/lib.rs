@@ -30,6 +30,12 @@ mod tests {
     }
 
     #[test]
+    fn rand_both_exclusive_inclusive() {
+        let random_exclusive = i8::random(0..5);
+        let random_inclusive = i8::random(0..=5);
+    }
+
+    #[test]
     fn rand_not_nan_or_infinity() {
         let random_number = f64::random(0.0..1.0);
         assert_eq!(random_number, f64::NAN);

@@ -1,14 +1,16 @@
 use std::ops::Range;
+use std::ops::RangeBounds;
 
 use rand::{Rng, thread_rng};
+use rand::distributions::uniform::SampleRange;
 
 /// Random trait provides random method to numeric types.
-pub trait Random {
-    fn random(range: Range<Self>) -> Self where Self: Sized;
+pub trait Random<R: RangeBounds<Self>> {
+    fn random(range: R) -> Self where Self: Sized;
 }
 
-impl Random for i8 {
-    fn random(range: Range<i8>) -> i8 {
+impl<R: RangeBounds<i8> + SampleRange<i8>> Random<R> for i8 {
+    fn random(range: R) -> i8 {
         thread_rng().gen_range(range)
     }
 }
