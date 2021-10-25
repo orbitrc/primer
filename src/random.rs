@@ -1,4 +1,3 @@
-use std::ops::Range;
 use std::ops::RangeBounds;
 
 use rand::{Rng, thread_rng};
@@ -15,56 +14,56 @@ impl<R: RangeBounds<i8> + SampleRange<i8>> Random<R> for i8 {
     }
 }
 
-impl Random for u8 {
-    fn random(range: Range<u8>) -> u8 {
+impl<R: RangeBounds<u8> + SampleRange<u8>> Random<R> for u8 {
+    fn random(range: R) -> u8 {
         thread_rng().gen_range(range)
     }
 }
 
-impl Random for i16 {
-    fn random(range: Range<i16>) -> i16 {
+impl<R: RangeBounds<i16> + SampleRange<i16>> Random<R> for i16 {
+    fn random(range: R) -> i16 {
         thread_rng().gen_range(range)
     }
 }
 
-impl Random for u16 {
-    fn random(range: Range<u16>) -> u16 {
+impl<R: RangeBounds<u16> + SampleRange<u16>> Random<R> for u16 {
+    fn random(range: R) -> u16 {
         thread_rng().gen_range(range)
     }
 }
 
-impl Random for i32 {
-    fn random(range: Range<i32>) -> i32 {
+impl<R: RangeBounds<i32> + SampleRange<i32>> Random<R> for i32 {
+    fn random(range: R) -> i32 {
         thread_rng().gen_range(range)
     }
 }
 
-impl Random for u32 {
-    fn random(range: Range<u32>) -> u32 {
+impl<R: RangeBounds<u32> + SampleRange<u32>> Random<R> for u32 {
+    fn random(range: R) -> u32 {
         thread_rng().gen_range(range)
     }
 }
 
-impl Random for i64 {
-    fn random(range: Range<i64>) -> i64 {
+impl<R: RangeBounds<i64> + SampleRange<i64>> Random<R> for i64 {
+    fn random(range: R) -> i64 {
         thread_rng().gen_range(range)
     }
 }
 
-impl Random for u64 {
-    fn random(range: Range<u64>) -> u64 {
+impl<R: RangeBounds<u64> + SampleRange<u64>> Random<R> for u64 {
+    fn random(range: R) -> u64 {
         thread_rng().gen_range(range)
     }
 }
 
-impl Random for f32 {
-    fn random(range: Range<f32>) -> f32 {
+impl<R: RangeBounds<f32> + SampleRange<f32>> Random<R> for f32 {
+    fn random(range: R) -> f32 {
         thread_rng().gen_range(range)
     }
 }
 
-impl Random for f64 {
-    fn random(range: Range<f64>) -> f64 {
+impl<R: RangeBounds<f64> + SampleRange<f64>> Random<R> for f64 {
+    fn random(range: R) -> f64 {
         thread_rng().gen_range(range)
     }
 }
