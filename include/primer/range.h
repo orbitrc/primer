@@ -3,14 +3,14 @@
 
 #include <stdint.h>
 
-typedef struct pr_range pr_range;
+#include <primer/core/range.h>
 
 namespace pr {
 
 template <typename T>
 class Range {
 private:
-    pr_range *range;
+    pr_range range;
 public:
     //=========================
     // Constructor/Destructor
@@ -19,6 +19,14 @@ public:
     Range<T>(T start, T end);
 
     ~Range();
+
+    //=========================
+    // Element access
+    //=========================
+
+    T start() const;
+
+    T end() const;
 };
 
 } // namespace pr
