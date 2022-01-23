@@ -1,5 +1,5 @@
 [package]
-name = "primer"
+name = "primer-core"
 version = "0.2.0"
 authors = ["Yujŏnja <hardboiled65@gmail.com>"]
 description = "A base library collections for Application."
@@ -11,8 +11,10 @@ edition = "2018"
 
 [lib]
 name = "primer"
+crate-type = ["cdylib"]
 
 [dependencies]
+seshat-unicode = "0.0.15"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 rand = "0.8.4"
