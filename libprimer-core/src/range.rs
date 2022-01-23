@@ -107,71 +107,11 @@ pub extern "C" fn pr_range_free(range: pr_range) {
 //===================
 
 #[no_mangle]
-pub extern "C" fn pr_range_start_i8(range: pr_range) -> i8 {
-    range.range.start as i8
+pub extern "C" fn pr_range_start(range: pr_range) -> i64 {
+    range.range.start
 }
 
 #[no_mangle]
-pub extern "C" fn pr_range_end_i8(range: pr_range) -> i8 {
-    range.range.end as i8
-}
-
-#[no_mangle]
-pub extern "C" fn pr_range_start_u8(range: pr_range) -> u8 {
-    range.range.start as u8
-}
-
-#[no_mangle]
-pub extern "C" fn pr_range_end_u8(range: pr_range) -> u8 {
-    range.range.end as u8
-}
-
-#[no_mangle]
-pub extern "C" fn pr_range_start_i16(range: pr_range) -> i16 {
-    range.range.start as i16
-}
-
-#[no_mangle]
-pub extern "C" fn pr_range_end_i16(range: pr_range) -> i16 {
-    range.range.end as i16
-}
-
-#[no_mangle]
-pub extern "C" fn pr_range_start_u16(range: pr_range) -> u16 {
-    range.range.start as u16
-}
-
-#[no_mangle]
-pub extern "C" fn pr_range_end_u16(range: pr_range) -> u16 {
-    range.range.end as u16
-}
-
-#[no_mangle]
-pub extern "C" fn pr_range_start_i32(range: pr_range) -> i32 {
-    range.range.start as i32
-}
-
-#[no_mangle]
-pub extern "C" fn pr_range_end_i32(range: pr_range) -> i32 {
-    range.range.end as i32
-}
-
-#[no_mangle]
-pub extern "C" fn pr_range_start_i64(range: pr_range) -> i64 {
-    range.range.start as i64
-}
-
-#[no_mangle]
-pub extern "C" fn pr_range_end_i64(range: pr_range) -> i64 {
-    range.range.end as i64
-}
-
-#[no_mangle]
-pub extern "C" fn pr_range_start_u64(range: pr_range) -> u64 {
-    range.range.start as u64
-}
-
-#[no_mangle]
-pub extern "C" fn pr_range_end_u64(range: pr_range) -> u64 {
-    range.range.end as u64
+pub extern "C" fn pr_range_end(range: pr_range) -> i64 {
+    range.range.end
 }

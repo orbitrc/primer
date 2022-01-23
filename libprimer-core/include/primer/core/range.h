@@ -31,37 +31,9 @@ pr_range pr_range_new_u64(uint64_t start, uint64_t end);
 void pr_range_free(pr_range range);
 
 
-int8_t pr_range_start_i8(pr_range range);
+int64_t pr_range_start(pr_range range);
 
-int8_t pr_range_end_i8(pr_range range);
-
-uint8_t pr_range_start_u8(pr_range range);
-
-uint8_t pr_range_end_u8(pr_range range);
-
-int16_t pr_range_start_i16(pr_range range);
-
-int16_t pr_range_end_i16(pr_range range);
-
-uint16_t pr_range_start_u16(pr_range range);
-
-uint16_t pr_range_end_u16(pr_range range);
-
-int32_t pr_range_start_i32(pr_range range);
-
-int32_t pr_range_end_i32(pr_range range);
-
-uint32_t pr_range_start_u32(pr_range range);
-
-uint32_t pr_range_end_u32(pr_range range);
-
-int64_t pr_range_start_i64(pr_range range);
-
-int64_t pr_range_end_i64(pr_range range);
-
-uint64_t pr_range_start_u64(pr_range range);
-
-uint64_t pr_range_end_u64(pr_range range);
+int64_t pr_range_end(pr_range range);
 
 #ifdef __cplusplus
 }
