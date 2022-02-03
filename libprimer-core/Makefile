@@ -6,6 +6,9 @@ VERSION_PATCH=$(shell echo $(VERSION) | cut -d "." -f 3)
 default:
 	cargo build --release
 	cp target/release/libprimer.so target/release/libprimer-core.so.$(VERSION)
+	ln -sf libprimer-core.so.$(VERSION) target/release/libprimer-core.so.$(VERSION_MAJOR).$(VERSION_MINOR)
+	ln -sf libprimer-core.so.$(VERSION_MAJOR).$(VERSION_MINOR) target/release/libprimer-core.so.$(VERSION_MAJOR)
+	ln -sf libprimer-core.so.$(VERSION_MAJOR) target/release/libprimer-core.so
 
 clean:
 	cargo clean

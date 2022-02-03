@@ -16,7 +16,7 @@ public:
     // Constructor/Destructor
     //=========================
 
-    Range<T>(T start, T end);
+    Range<T>(T start, T end, bool exclusive=true);
 
     ~Range();
 

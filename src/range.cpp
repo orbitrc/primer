@@ -8,30 +8,30 @@ namespace pr {
 
 // int8_t
 template<>
-Range<int8_t>::Range(int8_t start, int8_t end)
+Range<int8_t>::Range(int8_t start, int8_t end, bool exclusive)
 {
-    this->range = pr_range_new_i8(start, end);
+    this->range = pr_range_new(start, end, exclusive);
 }
 
 // uint8_t
 template<>
-Range<uint8_t>::Range(uint8_t start, uint8_t end)
+Range<uint8_t>::Range(uint8_t start, uint8_t end, bool exclusive)
 {
-    this->range = pr_range_new_u8(start, end);
+    this->range = pr_range_new(start, end, exclusive);
 }
 
 // int16_t
 template<>
-Range<int16_t>::Range(int16_t start, int16_t end)
+Range<int16_t>::Range(int16_t start, int16_t end, bool exclusive)
 {
-    this->range = pr_range_new_i16(start, end);
+    this->range = pr_range_new(start, end, exclusive);
 }
 
 // uint16_t
 template<>
-Range<uint16_t>::Range(uint16_t start, uint16_t end)
+Range<uint16_t>::Range(uint16_t start, uint16_t end, bool exclusive)
 {
-    this->range = pr_range_new_u16(start, end);
+    this->range = pr_range_new(start, end, exclusive);
 }
 
 template <typename T>
