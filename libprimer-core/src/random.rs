@@ -68,3 +68,18 @@ impl<R: RangeBounds<f64> + SampleRange<f64>> Random<R> for f64 {
     }
 }
 
+#[no_mangle]
+pub extern "C" fn pr_random(start: i64, end: i64, exclusive: bool) -> i64 {
+    match exclusive {
+        true => i64::random(start..end),
+        false => i64::random(start..=end),
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn pr_random_u(start: u64, end: u64, exclusive: bool) -> u64 {
+    match exclusive {
+        true => u64::random(start..end),
+        false => u64::random(start..=end),
+    }
+}
