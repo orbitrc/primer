@@ -10,6 +10,17 @@ default:
 	ln -sf libprimer-core.so.$(VERSION_MAJOR).$(VERSION_MINOR) target/release/libprimer-core.so.$(VERSION_MAJOR)
 	ln -sf libprimer-core.so.$(VERSION_MAJOR) target/release/libprimer-core.so
 
+install: $(DESTDIR)/usr/include/primer/core
+	cp include/primer/core/*.h $(DESTDIR)/usr/include/primer/core/
+	strip target/release/libprimer-core.so.$(VERSION)
+	cp target/release/libprimer-core.so.$(VERSION) $(DESTDIR)/usr/lib/
+	cp -P target/release/libprimer-core.so.$(VERSION_MAJOR).$(VERSION_MINOR) $(DESTDIR)/usr/lib/
+	cp -P target/release/libprimer-core.so.$(VERSION_MAJOR) $(DESTDIR)/usr/lib/
+	cp -P target/release/libprimer-core.so $(DESTDIR)/usr/lib/
+
+$(DESTDIR)/usr/include/primer/core:
+	mkdir -p $(DESTDIR)/usr/include/primer/core
+
 clean:
 	cargo clean
 
