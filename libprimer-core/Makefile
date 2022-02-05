@@ -24,3 +24,11 @@ $(DESTDIR)/usr/include/primer/core:
 clean:
 	cargo clean
 
+version-major:
+	@echo $(VERSION_MAJOR)
+
+version-minor:
+	@echo $(VERSION_MINOR)
+
+version-patch:
+	@echo $(VERSION_PATCH)
