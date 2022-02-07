@@ -30,6 +30,17 @@ mod tests {
     }
 
     #[test]
+    fn json_double() {
+        let j = json!({
+            "int": 42,
+            "double": 42.3,
+        });
+
+        assert_eq!(j["int"], 42);
+        assert_eq!(j["double"].is_f64(), true);
+    }
+
+    #[test]
     fn rand_both_exclusive_inclusive() {
         let _random_exclusive = i8::random(0..5);
         let _random_inclusive = i8::random(0..=5);
