@@ -31,6 +31,8 @@ pr_json_value pr_json_int_new(int64_t value);
 
 pr_json_value pr_json_double_new(double value);
 
+pr_json_value pr_json_string_new(const char *value);
+
 #ifdef __cplusplus
 }
 #endif

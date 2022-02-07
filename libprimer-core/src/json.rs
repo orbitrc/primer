@@ -1,3 +1,6 @@
+use std::os::raw::c_char;
+use std::ffi::CStr;
+
 use serde_json;
 
 pub type JsonValue = serde_json::Value;
@@ -60,5 +63,16 @@ pub extern "C" fn pr_json_double_new(value: f64) -> pr_json_value {
             value: Box::new(JsonValue::Null),
             json_type: pr_json_type::PR_JSON_TYPE_NULL,
         }
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn pr_json_string_new(value: *const c_char) -> pr_json_value {
+    let c_str = unsafe { CStr::from_ptr(value) };
+    let rust_str = c_str.to_str().unwrap();
+
+    pr_json_value {
+        value: Box::new(JsonValue::String(rust_str.to_owned())),
+        json_type: pr_json_type::PR_JSON_TYPE_STRING,
     }
 }
