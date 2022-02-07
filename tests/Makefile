@@ -1,10 +1,13 @@
-OBJ = main.o
+OBJ = range.o
 
 default: $(OBJ)
-	$(CC) $(CFLAGS) $^ -o primer-test -I../include -L../lib/ -lprimer -Wl,-rpath=../lib
+	$(CXX) $(CFLAGS) $^ main.cpp -o primer-test -I../include -L../lib/ -lprimer -Wl,-rpath=../lib
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $^ -I../include
+%.o: %.cpp
+	$(CXX) $(CFLAGS) -c -o $@ $^ -I../include
+
+run:
+	LD_LIBRARY_PATH=../libprimer-core ./primer-test
 
 clean:
 	rm -f *.o

@@ -67,6 +67,66 @@ Range<uint64_t>::Range(uint64_t start, uint64_t end, bool exclusive)
 }
 
 //==============
+// Destructor
+//==============
+
+// int8_t
+template<>
+Range<int8_t>::~Range()
+{
+    pr_range_free(this->range);
+}
+
+// uint8_t
+template<>
+Range<uint8_t>::~Range()
+{
+    pr_range_free(this->range);
+}
+
+// int16_t
+template<>
+Range<int16_t>::~Range()
+{
+    pr_range_free(this->range);
+}
+
+// uint16_t
+template<>
+Range<uint16_t>::~Range()
+{
+    pr_range_free(this->range);
+}
+
+// int32_t
+template<>
+Range<int32_t>::~Range()
+{
+    pr_range_free(this->range);
+}
+
+// uint32_t
+template<>
+Range<uint32_t>::~Range()
+{
+    pr_range_free(this->range);
+}
+
+// int64_t
+template<>
+Range<int64_t>::~Range()
+{
+    pr_range_free(this->range);
+}
+
+// uint64_t
+template<>
+Range<uint64_t>::~Range()
+{
+    pr_range_free(this->range);
+}
+
+//==============
 // Random
 //==============
 

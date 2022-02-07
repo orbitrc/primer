@@ -9,7 +9,7 @@ CXXFLAGS = -std=c++17 -Iinclude -Ilibprimer-core/include
 
 default: $(OBJ)
 	mkdir -p lib
-	$(CXX) -shared -Wl,-soname,$(SONAME) -o lib/libprimer.so.$(VERSION) $^ -Iinclude
+	$(CXX) -shared -Wl,-soname,$(SONAME) -o lib/libprimer.so.$(VERSION) $^ -Iinclude -Llibprimer-core -lprimer-core
 	rm -f lib/libprimer.so.$(VERSION_MAJOR).$(VERSION_MINOR) lib/libprimer.so.$(VERSION_MAJOR) lib/libprimer.so
 	ln -s libprimer.so.$(VERSION) lib/libprimer.so.$(VERSION_MAJOR).$(VERSION_MINOR)
 	ln -s libprimer.so.$(VERSION_MAJOR).$(VERSION_MINOR) lib/libprimer.so.$(VERSION_MAJOR)

@@ -18,10 +18,7 @@ public:
 
     Range<T>(T start, T end, bool exclusive=true);
 
-    ~Range()
-    {
-        pr_range_free(this->range);
-    }
+    ~Range();
 
     //=========================
     // Element access
