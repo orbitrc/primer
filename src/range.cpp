@@ -127,6 +127,66 @@ Range<uint64_t>::~Range()
 }
 
 //==============
+// Contains
+//==============
+
+// int8_t
+template<>
+bool Range<int8_t>::contains(const int8_t value) const
+{
+    return pr_range_contains(this->range, value);
+}
+
+// uint8_t
+template<>
+bool Range<uint8_t>::contains(const uint8_t value) const
+{
+    return pr_range_contains(this->range, value);
+}
+
+// int16_t
+template<>
+bool Range<int16_t>::contains(const int16_t value) const
+{
+    return pr_range_contains(this->range, value);
+}
+
+// uint16_t
+template<>
+bool Range<uint16_t>::contains(const uint16_t value) const
+{
+    return pr_range_contains(this->range, value);
+}
+
+// int32_t
+template<>
+bool Range<int32_t>::contains(const int32_t value) const
+{
+    return pr_range_contains(this->range, value);
+}
+
+// uint32_t
+template<>
+bool Range<uint32_t>::contains(const uint32_t value) const
+{
+    return pr_range_contains(this->range, value);
+}
+
+// int64_t
+template<>
+bool Range<int64_t>::contains(const int64_t value) const
+{
+    return pr_range_contains(this->range, value);
+}
+
+// uint64_t
+template<>
+bool Range<uint64_t>::contains(const uint64_t value) const
+{
+    return pr_range_contains(this->range, value);
+}
+
+//==============
 // Random
 //==============
 

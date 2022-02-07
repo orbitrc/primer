@@ -43,10 +43,7 @@ public:
     // Others
     //=========================
 
-    bool contains(const T value) const
-    {
-        return pr_range_contains(this->range, static_cast<int64_t>(value));
-    }
+    bool contains(const T value) const;
 
     T random() const;
 };

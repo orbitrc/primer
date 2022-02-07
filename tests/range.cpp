@@ -8,10 +8,8 @@ void range_contains()
 {
     pr::Range r1(2, 42);
 
-    /*
     assert(r1.contains(41));
     assert(!r1.contains(42));
-    */
 }
 
 void range_random()
