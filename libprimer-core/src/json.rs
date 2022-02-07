@@ -24,6 +24,14 @@ pub struct pr_json_value {
 }
 
 #[no_mangle]
+pub extern "C" fn pr_json_null_new() -> pr_json_value {
+    pr_json_value {
+        value: Box::new(JsonValue::Null),
+        json_type: pr_json_type::PR_JSON_TYPE_NULL,
+    }
+}
+
+#[no_mangle]
 pub extern "C" fn pr_json_bool_new(value: bool) -> pr_json_value {
     pr_json_value {
         value: Box::new(JsonValue::Bool(value)),
