@@ -10,6 +10,7 @@ pub use serde_json::json;
 
 #[repr(u8)]
 #[allow(non_camel_case_types)]
+#[derive(Clone, Copy)]
 pub enum pr_json_type {
     PR_JSON_TYPE_NULL = 0,
     PR_JSON_TYPE_BOOL = 1,
@@ -22,8 +23,69 @@ pub enum pr_json_type {
 
 #[repr(C)]
 pub struct pr_json_value {
-    value: Box<JsonValue>,
-    json_type: pr_json_type,
+    pub value: Box<JsonValue>,
+    pub json_type: pr_json_type,
+}
+
+#[no_mangle]
+pub extern "C" fn pr_json_value_to_bool(json: pr_json_value) -> bool {
+    match json.json_type {
+        pr_json_type::PR_JSON_TYPE_BOOL => {
+            match *(json.value) {
+                JsonValue::Bool(true) => {
+                    return true;
+                },
+                JsonValue::Bool(false) => {
+                    return false;
+                },
+                _ => {
+                    return false;
+                }
+            }
+        },
+        _ => {
+            return false;
+        },
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn pr_json_value_to_int(json: pr_json_value) -> i64 {
+    match json.json_type {
+        pr_json_type::PR_JSON_TYPE_INT => {
+            let opt = (*(json.value)).as_i64();
+            match opt {
+                Some(val) => { return val; },
+                None => { return 0; },
+            }
+        },
+        _ => {
+            return 0;
+        },
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn pr_json_value_to_double(json: pr_json_value) -> f64 {
+    match json.json_type {
+        pr_json_type::PR_JSON_TYPE_DOUBLE => {
+            let opt = (*(json.value)).as_f64();
+            match opt {
+                Some(val) => { return val; },
+                None => { return 0.0; },
+            }
+        },
+        pr_json_type::PR_JSON_TYPE_INT => {
+            let opt = (*(json.value)).as_f64();
+            match opt {
+                Some(val) => { return val; },
+                None => { return 0.0; },
+            }
+        },
+        _ => {
+            return 0.0;
+        },
+    }
 }
 
 #[no_mangle]
@@ -74,5 +136,37 @@ pub extern "C" fn pr_json_string_new(value: *const c_char) -> pr_json_value {
     pr_json_value {
         value: Box::new(JsonValue::String(rust_str.to_owned())),
         json_type: pr_json_type::PR_JSON_TYPE_STRING,
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn pr_json_array_new() -> pr_json_value {
+    pr_json_value {
+        value: Box::new(json!([])),
+        json_type: pr_json_type::PR_JSON_TYPE_ARRAY,
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn pr_json_array_push_back(array: *mut pr_json_value, value: pr_json_value) {
+    let json_type = unsafe { (*array).json_type };
+
+    match json_type {
+        pr_json_type::PR_JSON_TYPE_ARRAY => {},
+        _ => {
+            return;
+        }
+    }
+
+    let opt = unsafe { (*array).value.as_array() };
+    match opt {
+        Some(vec) => {
+            let mut vec = vec.to_owned();
+            vec.push(*value.value);
+            unsafe {
+                (*array).value = Box::new(JsonValue::Array(vec));
+            }
+        },
+        None => {},
     }
 }

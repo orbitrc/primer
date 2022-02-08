@@ -4,7 +4,8 @@ VERSION_PATCH=$(shell cd libprimer-core ; make version-patch)
 VERSION = $(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH)
 SONAME = libprimer.so.$(VERSION_MAJOR)
 
-OBJ = src/range.o
+OBJ = src/range.o \
+	src/json.o
 CXXFLAGS = -std=c++17 -Iinclude -Ilibprimer-core/include
 
 default: $(OBJ)

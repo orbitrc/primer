@@ -1,4 +1,5 @@
-OBJ = range.o
+OBJ = range.o \
+	json.o
 
 default: $(OBJ)
 	$(CXX) $(CFLAGS) $^ main.cpp -o primer-test -I../include -L../lib/ -lprimer -Wl,-rpath=../lib

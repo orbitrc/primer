@@ -1,4 +1,5 @@
 #include "range.h"
+#include "json.h"
 
 int main(int argc, char *argv[])
 {
@@ -8,6 +9,11 @@ int main(int argc, char *argv[])
     tests::range_contains();
 
     tests::range_random();
+
+    //==========
+    // JSON
+    //==========
+    tests::json_array();
 
     return 0;
 }

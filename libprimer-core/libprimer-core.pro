@@ -1,4 +1,5 @@
 SOURCES +=
 
-HEADERS += include/primer/core/range.h
+HEADERS += include/primer/core/range.h \
+    include/primer/core/json.h
 

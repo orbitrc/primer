@@ -41,6 +41,19 @@ mod tests {
     }
 
     #[test]
+    fn pr_json_array() {
+        let mut arr = super::json::pr_json_array_new();
+        let num = super::json::pr_json_int_new(42);
+        let null = super::json::pr_json_null_new();
+        super::json::pr_json_array_push_back(&mut arr as *mut super::json::pr_json_value, num);
+        super::json::pr_json_array_push_back(&mut arr as *mut super::json::pr_json_value, null);
+        assert_eq!(
+            arr.value.as_array().unwrap(),
+            json!([42, JsonValue::Null]).as_array().unwrap()
+        );
+    }
+
+    #[test]
     fn rand_both_exclusive_inclusive() {
         let _random_exclusive = i8::random(0..5);
         let _random_inclusive = i8::random(0..=5);
