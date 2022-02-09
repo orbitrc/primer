@@ -20,6 +20,7 @@ typedef enum pr_json_type {
 
 typedef struct pr_json_value {
     void *value;
+    void *c_string;
     pr_json_type json_type;
 } pr_json_value;
 
