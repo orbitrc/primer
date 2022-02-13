@@ -24,11 +24,13 @@ typedef struct pr_json_value {
     pr_json_type json_type;
 } pr_json_value;
 
-bool pr_json_value_to_bool(pr_json_value json);
+bool pr_json_value_to_bool(const pr_json_value *json);
 
-int64_t pr_json_value_to_int(pr_json_value json);
+int64_t pr_json_value_to_int(const pr_json_value *json);
 
-double pr_json_value_to_double(pr_json_value json);
+double pr_json_value_to_double(const pr_json_value *json);
+
+const char* pr_json_value_to_string(const pr_json_value *json);
 
 pr_json_value pr_json_null_new();
 

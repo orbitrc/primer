@@ -29,83 +29,115 @@ pub struct pr_json_value {
 }
 
 #[no_mangle]
-pub extern "C" fn pr_json_value_to_bool(json: pr_json_value) -> bool {
-    match json.json_type {
+pub extern "C" fn pr_json_value_to_bool(json: *const pr_json_value) -> bool {
+    let json_type = unsafe { (*json).json_type };
+    let boxed = unsafe { Box::from_raw(json as *mut pr_json_value) };
+    let mut _ret = false;
+
+    match json_type {
         pr_json_type::PR_JSON_TYPE_BOOL => {
-            match *(json.value) {
+            match *(boxed.value) {
                 JsonValue::Bool(true) => {
-                    return true;
+                    _ret = true;
                 },
                 JsonValue::Bool(false) => {
-                    return false;
+                    _ret = false;
                 },
                 _ => {
-                    return false;
+                    _ret = false;
                 }
             }
         },
         _ => {
-            return false;
+            _ret = false;
         },
     }
+
+    Box::into_raw(boxed);
+
+    _ret
 }
 
 #[no_mangle]
-pub extern "C" fn pr_json_value_to_int(json: pr_json_value) -> i64 {
-    match json.json_type {
+pub extern "C" fn pr_json_value_to_int(json: *const pr_json_value) -> i64 {
+    let json_type = unsafe { (*json).json_type };
+    let boxed = unsafe { Box::from_raw(json as *mut pr_json_value) };
+    let mut _ret = 0;
+
+    match json_type {
         pr_json_type::PR_JSON_TYPE_INT => {
-            let opt = (*(json.value)).as_i64();
+            let opt = (*boxed.value).as_i64();
             match opt {
-                Some(val) => { return val; },
-                None => { return 0; },
+                Some(val) => { _ret = val; },
+                None => { _ret = 0; },
             }
         },
         _ => {
-            return 0;
+            _ret = 0;
         },
     }
+
+    Box::into_raw(boxed);
+
+    _ret
 }
 
 #[no_mangle]
-pub extern "C" fn pr_json_value_to_double(json: pr_json_value) -> f64 {
-    match json.json_type {
+pub extern "C" fn pr_json_value_to_double(json: *const pr_json_value) -> f64 {
+    let json_type = unsafe { (*json).json_type };
+    let boxed = unsafe { Box::from_raw(json as *mut pr_json_value) };
+    let mut _ret = 0.0;
+
+    match json_type {
         pr_json_type::PR_JSON_TYPE_DOUBLE => {
-            let opt = (*(json.value)).as_f64();
+            let opt = (*boxed.value).as_f64();
             match opt {
-                Some(val) => { return val; },
-                None => { return 0.0; },
+                Some(val) => { _ret = val; },
+                None => { _ret = 0.0; },
             }
         },
         pr_json_type::PR_JSON_TYPE_INT => {
-            let opt = (*(json.value)).as_f64();
+            let opt = (*boxed.value).as_f64();
             match opt {
-                Some(val) => { return val; },
-                None => { return 0.0; },
+                Some(val) => { _ret = val; },
+                None => { _ret = 0.0; },
             }
         },
         _ => {
-            return 0.0;
+            _ret = 0.0;
         },
     }
+
+    Box::into_raw(boxed);
+
+    _ret
 }
 
 #[no_mangle]
-pub extern "C" fn pr_json_value_to_string(json: pr_json_value) -> *const c_char {
-    match json.json_type {
+pub extern "C" fn pr_json_value_to_string(json: *const pr_json_value) -> *const c_char {
+    let json_type = unsafe { (*json).json_type };
+    let boxed = unsafe { Box::from_raw(json as *mut pr_json_value) };
+    let mut _ret: *const c_char = std::ptr::null();
+
+    match json_type {
         pr_json_type::PR_JSON_TYPE_STRING => {
-            match *(json.value) {
-                JsonValue::String(val) => {
-                    val.as_ptr() as *const c_char
+            match *boxed.value {
+                JsonValue::String(_) => {
+                    _ret = boxed.c_string.as_ptr();
                 },
                 _ => {
-                    return std::ptr::null();
+                    _ret = std::ptr::null();
                 }
             }
         },
         _ => {
-            return std::ptr::null();
+            _ret = std::ptr::null();
         }
     }
+
+    Box::into_raw(boxed);
+
+    _ret
 }
 
 #[no_mangle]
