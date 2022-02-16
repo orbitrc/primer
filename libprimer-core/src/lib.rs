@@ -1,6 +1,7 @@
 pub mod json;
 pub mod random;
 pub mod range;
+pub mod string;
 
 #[cfg(test)]
 mod tests {
