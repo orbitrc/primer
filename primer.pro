@@ -3,7 +3,8 @@ SOURCES += src/range.cpp \
     tests/range.cpp \
     tests/json.cpp
 
-HEADERS += include/primer/range.h \
+HEADERS += include/primer/base.h \
+    include/primer/range.h \
     include/primer/json.h \
     tests/range.h \
     tests/json.h
