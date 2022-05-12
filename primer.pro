@@ -5,6 +5,7 @@ SOURCES += src/range.cpp \
 
 HEADERS += include/primer/base.h \
     include/primer/range.h \
+    include/primer/string.h \
     include/primer/json.h \
     tests/range.h \
     tests/json.h
