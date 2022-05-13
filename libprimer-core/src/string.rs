@@ -32,3 +32,9 @@ pub extern "C" fn pr_string_from_c_str(c_str: *const c_char) -> pr_string {
         string: Box::new(string),
     }
 }
+
+#[no_mangle]
+pub extern "C" fn pr_string_free(_string: pr_string) {
+    // TODO: Free the boxed String instance.
+    let _ = _string.string;
+}
