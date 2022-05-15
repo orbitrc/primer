@@ -9,6 +9,7 @@ pub struct pr_code_point {
 #[repr(C)]
 pub struct pr_string {
     string: Box<String>,
+    c_string: Box<CString>,
 }
 
 #[repr(C)]
@@ -28,8 +29,10 @@ pub extern "C" fn pr_string_from_c_str(c_str: *const c_char) -> pr_string {
     let c_string = unsafe { CString::from_raw(c_str as *mut c_char) };
     let string = c_string.into_string().unwrap();
 
+    let rust_str = string.to_owned();
     pr_string {
         string: Box::new(string),
+        c_string: Box::new(CString::new(rust_str).unwrap()),
     }
 }
 
