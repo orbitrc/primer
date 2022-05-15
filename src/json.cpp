@@ -53,17 +53,17 @@ JsonType JsonValue::type() const
 
 bool JsonValue::to_bool() const
 {
-    return pr_json_value_to_bool(this->_json_value);
+    return pr_json_value_to_bool(&this->_json_value);
 }
 
 int64_t JsonValue::to_int() const
 {
-    return pr_json_value_to_int(this->_json_value);
+    return pr_json_value_to_int(&this->_json_value);
 }
 
 double JsonValue::to_double() const
 {
-    return pr_json_value_to_double(this->_json_value);
+    return pr_json_value_to_double(&this->_json_value);
 }
 
 
