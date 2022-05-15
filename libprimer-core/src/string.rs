@@ -37,6 +37,21 @@ pub extern "C" fn pr_string_from_c_str(c_str: *const c_char) -> pr_string {
 }
 
 #[no_mangle]
+pub extern "C" fn pr_string_contains(_string: pr_string, sub: pr_string) -> bool {
+    _string.string.contains(sub.string.as_str())
+}
+
+#[no_mangle]
+pub extern "C" fn pr_string_starts_with(_string: pr_string, sub: pr_string) -> bool {
+    _string.string.starts_with(sub.string.as_str())
+}
+
+#[no_mangle]
+pub extern "C" fn pr_string_ends_with(_string: pr_string, sub: pr_string) -> bool {
+    _string.string.ends_with(sub.string.as_str())
+}
+
+#[no_mangle]
 pub extern "C" fn pr_string_free(_string: pr_string) {
     // TODO: Free the boxed String instance.
     let _ = _string.string;
