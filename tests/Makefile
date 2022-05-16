@@ -1,4 +1,5 @@
 OBJ = range.o \
+	string.o \
 	json.o
 
 default: $(OBJ)
