@@ -37,6 +37,21 @@ pub extern "C" fn pr_string_from_c_str(c_str: *const c_char) -> pr_string {
 }
 
 #[no_mangle]
+pub extern "C" fn pr_string_from_c_str_sized(c_str: *const c_char, len: u64) -> pr_string {
+    let rust_string: String = unsafe { String::from_raw_parts(
+        c_str as *mut u8,
+        len as usize,
+        len as usize
+    ) };
+
+    let tmp = rust_string.to_owned();
+    pr_string {
+        string: Box::new(rust_string),
+        c_string: Box::new(CString::new(tmp).unwrap()),
+    }
+}
+
+#[no_mangle]
 pub extern "C" fn pr_string_contains(_string: pr_string, sub: pr_string) -> bool {
     _string.string.contains(sub.string.as_str())
 }

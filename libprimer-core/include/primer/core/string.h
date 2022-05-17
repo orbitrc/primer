@@ -2,6 +2,7 @@
 #define _PRIMER_CORE_STRING_H
 
 #include <stdbool.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,6 +14,8 @@ typedef struct pr_string {
 } pr_string;
 
 pr_string pr_string_from_c_str(const char *c_str);
+
+pr_string pr_string_from_c_str_sized(const char *c_str, uint64_t len);
 
 bool pr_string_contains(const pr_string string, const pr_string sub);
 
