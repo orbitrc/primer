@@ -13,6 +13,8 @@ typedef struct pr_string {
     void *c_string;
 } pr_string;
 
+pr_string pr_string_new();
+
 pr_string pr_string_from_c_str(const char *c_str);
 
 pr_string pr_string_from_c_str_sized(const char *c_str, uint64_t len);

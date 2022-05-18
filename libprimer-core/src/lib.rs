@@ -5,10 +5,14 @@ pub mod string;
 
 #[cfg(test)]
 mod tests {
+    use std::ffi::CString;
+
     use super::json::JsonValue;
     use super::json::Map;
     use super::json::JsonNumber;
     use super::json::json;
+
+    use super::string::*;
 
     use super::random::Random;
 
@@ -52,6 +56,35 @@ mod tests {
             arr.value.as_array().unwrap(),
             json!([42, JsonValue::Null]).as_array().unwrap()
         );
+    }
+
+    #[test]
+    fn pr_string_construct() {
+        let rust_c_string = CString::new("Hello").unwrap();
+        let c_string_ptr = rust_c_string.into_raw();
+
+        let _pr_string = pr_string_from_c_str(c_string_ptr);
+
+        pr_string_free(_pr_string);
+    }
+
+    #[test]
+    fn pr_string_contains_() {
+        let rust_c_string = CString::new("Lorem ipsum dolor").unwrap();
+        let c_string_ptr = rust_c_string.into_raw();
+
+        let pr_string_full = pr_string_from_c_str(c_string_ptr);
+
+        let rust_c_string = CString::new("ipsum").unwrap();
+        let c_string_ptr = rust_c_string.into_raw();
+
+        let pr_string_part = pr_string_from_c_str(c_string_ptr);
+
+        assert_eq!(pr_string_contains(pr_string_full, pr_string_part), true);
+
+        // Free.
+        pr_string_free(pr_string_part);
+        pr_string_free(pr_string_full);
     }
 
     #[test]

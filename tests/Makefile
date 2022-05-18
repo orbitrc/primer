@@ -3,7 +3,7 @@ OBJ = range.o \
 	json.o
 
 default: $(OBJ)
-	$(CXX) $(CFLAGS) $^ main.cpp -o primer-test -I../include -L../lib/ -lprimer -Wl,-rpath=../lib
+	$(CXX) $(CFLAGS) $^ main.cpp -o primer-test -I../include -I../libprimer-core/include -L../lib/ -lprimer -Wl,-rpath=../lib
 
 %.o: %.cpp
 	$(CXX) $(CFLAGS) -c -o $@ $^ -I../include

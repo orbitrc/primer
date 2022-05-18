@@ -25,6 +25,14 @@ pub extern "C" fn pr_code_point_new(cp: u32) -> pr_code_point {
 }
 
 #[no_mangle]
+pub extern "C" fn pr_string_new() -> pr_string {
+    pr_string {
+        string: Box::new(String::new()),
+        c_string: Box::new(CString::new("").unwrap()),
+    }
+}
+
+#[no_mangle]
 pub extern "C" fn pr_string_from_c_str(c_str: *const c_char) -> pr_string {
     let c_string = unsafe { CString::from_raw(c_str as *mut c_char) };
     let string = c_string.into_string().unwrap();
