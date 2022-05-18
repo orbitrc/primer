@@ -1,5 +1,6 @@
 use std::os::raw::c_char;
 use std::ffi::CString;
+use std::ffi::CStr;
 
 #[repr(C)]
 pub struct pr_code_point {
@@ -25,27 +26,31 @@ pub extern "C" fn pr_code_point_new(cp: u32) -> pr_code_point {
 }
 
 #[no_mangle]
-pub extern "C" fn pr_string_new() -> pr_string {
-    pr_string {
+pub extern "C" fn pr_string_new() -> *mut pr_string {
+    let boxed = Box::new(pr_string {
         string: Box::new(String::new()),
         c_string: Box::new(CString::new("").unwrap()),
-    }
+    });
+
+    Box::into_raw(boxed)
 }
 
 #[no_mangle]
-pub extern "C" fn pr_string_from_c_str(c_str: *const c_char) -> pr_string {
-    let c_string = unsafe { CString::from_raw(c_str as *mut c_char) };
-    let string = c_string.into_string().unwrap();
+pub extern "C" fn pr_string_from_c_str(c_str: *const c_char) -> *mut pr_string {
+    let c_str = unsafe { CStr::from_ptr(c_str) };
+    let to_str = c_str.to_str().unwrap();
 
-    let rust_str = string.to_owned();
-    pr_string {
-        string: Box::new(string),
+    let rust_str = to_str.to_owned();
+    let boxed = Box::new(pr_string {
+        string: Box::new(to_str.to_owned()),
         c_string: Box::new(CString::new(rust_str).unwrap()),
-    }
+    });
+
+    Box::into_raw(boxed)
 }
 
 #[no_mangle]
-pub extern "C" fn pr_string_from_c_str_sized(c_str: *const c_char, len: u64) -> pr_string {
+pub extern "C" fn pr_string_from_c_str_sized(c_str: *const c_char, len: u64) -> *mut pr_string {
     let rust_string: String = unsafe { String::from_raw_parts(
         c_str as *mut u8,
         len as usize,
@@ -53,29 +58,59 @@ pub extern "C" fn pr_string_from_c_str_sized(c_str: *const c_char, len: u64) -> 
     ) };
 
     let tmp = rust_string.to_owned();
-    pr_string {
+    let boxed = Box::new(pr_string {
         string: Box::new(rust_string),
         c_string: Box::new(CString::new(tmp).unwrap()),
-    }
+    });
+
+    Box::into_raw(boxed)
 }
 
 #[no_mangle]
-pub extern "C" fn pr_string_contains(_string: pr_string, sub: pr_string) -> bool {
-    _string.string.contains(sub.string.as_str())
+pub extern "C" fn pr_string_contains(_string: *const pr_string, sub: *const pr_string) -> bool {
+    let full_boxed = unsafe {
+        Box::from_raw(_string as *mut pr_string)
+    };
+    let sub_boxed = unsafe {
+        Box::from_raw(sub as *mut pr_string)
+    };
+    let ret = full_boxed.string.contains(sub_boxed.string.as_str());
+
+    Box::into_raw(sub_boxed);
+    Box::into_raw(full_boxed);
+
+    ret
 }
 
 #[no_mangle]
-pub extern "C" fn pr_string_starts_with(_string: pr_string, sub: pr_string) -> bool {
-    _string.string.starts_with(sub.string.as_str())
+pub extern "C" fn pr_string_starts_with(_string: *const pr_string, sub: *const pr_string) -> bool {
+    let full_boxed = unsafe { Box::from_raw(_string as *mut pr_string) };
+    let sub_boxed = unsafe { Box::from_raw(sub as *mut pr_string) };
+
+    let ret = full_boxed.string.starts_with(sub_boxed.string.as_str());
+
+    Box::into_raw(sub_boxed);
+    Box::into_raw(full_boxed);
+
+    ret
 }
 
 #[no_mangle]
-pub extern "C" fn pr_string_ends_with(_string: pr_string, sub: pr_string) -> bool {
-    _string.string.ends_with(sub.string.as_str())
+pub extern "C" fn pr_string_ends_with(_string: *const pr_string, sub: *const pr_string) -> bool {
+    let full_boxed = unsafe { Box::from_raw(_string as *mut pr_string) };
+    let sub_boxed = unsafe { Box::from_raw(sub as *mut pr_string) };
+
+    let ret = full_boxed.string.ends_with(sub_boxed.string.as_str());
+
+    Box::into_raw(sub_boxed);
+    Box::into_raw(full_boxed);
+
+    ret
 }
 
 #[no_mangle]
-pub extern "C" fn pr_string_free(_string: pr_string) {
-    // TODO: Free the boxed String instance.
-    let _ = _string.string;
+pub extern "C" fn pr_string_free(_string: *mut pr_string) {
+    let boxed = unsafe { Box::from_raw(_string) };
+    let _ = boxed.string;
+    let _ = boxed.c_string;
 }

@@ -63,7 +63,7 @@ mod tests {
         let rust_c_string = CString::new("Hello").unwrap();
         let c_string_ptr = rust_c_string.into_raw();
 
-        let _pr_string = pr_string_from_c_str(c_string_ptr);
+        let _pr_string: *mut pr_string = pr_string_from_c_str(c_string_ptr);
 
         pr_string_free(_pr_string);
     }
@@ -80,7 +80,13 @@ mod tests {
 
         let pr_string_part = pr_string_from_c_str(c_string_ptr);
 
-        assert_eq!(pr_string_contains(pr_string_full, pr_string_part), true);
+        assert_eq!(
+            pr_string_contains(
+                pr_string_full as *const pr_string,
+                pr_string_part as *const pr_string
+            ),
+            true
+        );
 
         // Free.
         pr_string_free(pr_string_part);

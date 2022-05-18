@@ -1,9 +1,11 @@
 #ifndef _PRIMER_STRING_H
 #define _PRIMER_STRING_H
 
-#include <primer/core/string.h>
+#include <stdint.h>
 
 namespace pr {
+
+class StringImpl;
 
 class String
 {
@@ -31,7 +33,7 @@ public:
     bool ends_with(const String& other) const;
 
 private:
-    pr_string _string;
+    StringImpl *_impl;
 };
 
 } // namespace pr

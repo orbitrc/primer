@@ -1,41 +1,64 @@
 #include <primer/string.h>
 
+#include <primer/core/string.h>
+
 namespace pr {
+
+//========
+// Impl
+//========
+
+class StringImpl
+{
+public:
+    pr_string *_pr_string;
+};
+
+//===========
+// String
+//===========
 
 String::String()
 {
-    this->_string = pr_string_new();
+    this->_impl = new StringImpl;
+    this->_impl->_pr_string = pr_string_new();
 }
 
 String::String(const char *c_str)
 {
-    this->_string = pr_string_from_c_str(c_str);
+    this->_impl = new StringImpl;
+    this->_impl->_pr_string = pr_string_from_c_str(c_str);
 }
 
 String::String(const char *c_str, uint64_t len)
 {
-    this->_string = pr_string_from_c_str_sized(c_str, len);
+    this->_impl = new StringImpl;
+    this->_impl->_pr_string = pr_string_from_c_str_sized(c_str, len);
 }
 
 String::~String()
 {
-    pr_string_free(this->_string);
+    pr_string_free(this->_impl->_pr_string);
+    delete this->_impl;
 }
 
 
 bool String::contains(const String& other) const
 {
-    return pr_string_contains(this->_string, other._string);
+    return pr_string_contains(this->_impl->_pr_string,
+        other._impl->_pr_string);
 }
 
 bool String::starts_with(const String &other) const
 {
-    return pr_string_starts_with(this->_string, other._string);
+    return pr_string_starts_with(this->_impl->_pr_string,
+        other._impl->_pr_string);
 }
 
 bool String::ends_with(const String &other) const
 {
-    return pr_string_ends_with(this->_string, other._string);
+    return pr_string_ends_with(this->_impl->_pr_string,
+        other._impl->_pr_string);
 }
 
 } // namespace pr
