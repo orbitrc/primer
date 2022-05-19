@@ -36,6 +36,12 @@ String::String(const char *c_str, uint64_t len)
     this->_impl->_pr_string = pr_string_from_c_str_sized(c_str, len);
 }
 
+String::String(const String& other)
+{
+    this->_impl = new StringImpl;
+    this->_impl->_pr_string = pr_string_cloned(other._impl->_pr_string);
+}
+
 String::~String()
 {
     pr_string_free(this->_impl->_pr_string);
@@ -59,6 +65,15 @@ bool String::ends_with(const String &other) const
 {
     return pr_string_ends_with(this->_impl->_pr_string,
         other._impl->_pr_string);
+}
+
+
+String& String::operator=(const String &other)
+{
+    pr_string_free(this->_impl->_pr_string);
+    this->_impl->_pr_string = pr_string_cloned(other._impl->_pr_string);
+
+    return *this;
 }
 
 } // namespace pr

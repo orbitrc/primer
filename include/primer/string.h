@@ -20,6 +20,8 @@ public:
 
     String(const char *c_str, uint64_t len);
 
+    String(const String& other);
+
     ~String();
 
     //===============
@@ -32,10 +34,22 @@ public:
 
     bool ends_with(const String& other) const;
 
+    //===============
+    // Operators
+    //===============
+
+    String& operator=(const String& other);
+
 private:
     StringImpl *_impl;
 };
 
 } // namespace pr
+
+//===============
+// Literals
+//===============
+
+pr::String operator""_S(const char *str, uint64_t len);
 
 #endif // _PRIMER_STRING_H

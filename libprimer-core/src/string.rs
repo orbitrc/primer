@@ -67,6 +67,20 @@ pub extern "C" fn pr_string_from_c_str_sized(c_str: *const c_char, len: u64) -> 
 }
 
 #[no_mangle]
+pub extern "C" fn pr_string_cloned(string: *const pr_string) -> *mut pr_string {
+    let orig_boxed = unsafe { Box::from_raw(string as *mut pr_string) };
+
+    let new_boxed = Box::new(pr_string {
+        string: Box::new((*orig_boxed.string).clone()),
+        c_string: Box::new((*orig_boxed.c_string).clone()),
+    });
+
+    Box::into_raw(orig_boxed);
+
+    Box::into_raw(new_boxed)
+}
+
+#[no_mangle]
 pub extern "C" fn pr_string_contains(_string: *const pr_string, sub: *const pr_string) -> bool {
     let full_boxed = unsafe {
         Box::from_raw(_string as *mut pr_string)
