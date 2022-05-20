@@ -81,6 +81,19 @@ pub extern "C" fn pr_string_cloned(string: *const pr_string) -> *mut pr_string {
 }
 
 #[no_mangle]
+pub extern "C" fn pr_string_eq(_string: *const pr_string, other: *const pr_string) -> bool {
+    let this_boxed = unsafe { Box::from_raw(_string as *mut pr_string) };
+    let other_boxed = unsafe { Box::from_raw(other as *mut pr_string) };
+
+    let ret = *this_boxed.string == *other_boxed.string;
+
+    Box::into_raw(this_boxed);
+    Box::into_raw(other_boxed);
+
+    ret
+}
+
+#[no_mangle]
 pub extern "C" fn pr_string_contains(_string: *const pr_string, sub: *const pr_string) -> bool {
     let full_boxed = unsafe {
         Box::from_raw(_string as *mut pr_string)

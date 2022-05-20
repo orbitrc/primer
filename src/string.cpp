@@ -76,4 +76,25 @@ String& String::operator=(const String &other)
     return *this;
 }
 
+bool String::operator==(const String& other)
+{
+    return pr_string_eq(this->_impl->_pr_string, other._impl->_pr_string);
+}
+
+bool String::operator!=(const String& other)
+{
+    return !(*this == other);
+}
+
 } // namespace pr
+
+//===========
+// Literals
+//===========
+
+pr::String operator""_S(const char *str, uint64_t len)
+{
+    pr::String ret(str, len);
+
+    return ret;
+}

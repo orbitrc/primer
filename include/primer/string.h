@@ -40,6 +40,10 @@ public:
 
     String& operator=(const String& other);
 
+    bool operator==(const String& other);
+
+    bool operator!=(const String& other);
+
 private:
     StringImpl *_impl;
 };

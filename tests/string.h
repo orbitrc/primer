@@ -3,6 +3,8 @@
 
 namespace tests {
 
+void string_compare();
+
 void string_contains();
 
 void string_starts_with();
