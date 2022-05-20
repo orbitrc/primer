@@ -5,6 +5,37 @@
 
 namespace pr {
 
+//===========
+// Unicode
+//===========
+
+class String;
+
+class Unicode
+{
+public:
+
+    class Scalar
+    {
+    public:
+
+        Scalar(uint32_t code_point);
+
+    private:
+        uint32_t _code_point;
+    };
+
+public:
+
+    Unicode() = delete;
+
+    static String version();
+};
+
+//===========
+// String
+//===========
+
 class StringImpl;
 
 class String

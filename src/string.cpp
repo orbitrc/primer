@@ -4,6 +4,22 @@
 
 namespace pr {
 
+//==========
+// Unicode
+//==========
+
+String Unicode::version()
+{
+    return "14.0.0"_S;
+}
+
+Unicode::Scalar::Scalar(uint32_t code_point)
+{
+    // TODO: Check if code point is surrogate.
+
+    this->_code_point = code_point;
+}
+
 //========
 // Impl
 //========
