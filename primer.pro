@@ -1,3 +1,5 @@
+CONFIG += c++17
+
 SOURCES += src/range.cpp \
     src/string.cpp \
     src/json.cpp \
