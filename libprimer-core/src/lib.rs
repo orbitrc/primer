@@ -2,6 +2,7 @@ pub mod json;
 pub mod random;
 pub mod range;
 pub mod string;
+pub mod vector;
 
 #[cfg(test)]
 mod tests {
@@ -15,6 +16,8 @@ mod tests {
     use super::string::*;
 
     use super::random::Random;
+
+    use super::vector::*;
 
     #[test]
     fn json_value() {
@@ -104,5 +107,11 @@ mod tests {
         let random_number = f64::random(0.0..=1.0);
         assert_ne!(random_number, f64::NAN);
         assert_ne!(random_number, f64::INFINITY);
+    }
+
+    #[test]
+    fn pr_vector_construct() {
+        let v = pr_string_vector_new();
+        pr_string_vector_free(v);
     }
 }
