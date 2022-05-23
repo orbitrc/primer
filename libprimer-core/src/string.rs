@@ -2,6 +2,10 @@ use std::os::raw::c_char;
 use std::ffi::CString;
 use std::ffi::CStr;
 
+use super::vector::pr_string_vector;
+use super::vector::pr_string_vector_new;
+use super::vector::pr_string_vector_push;
+
 #[repr(C)]
 pub struct pr_code_point {
     cp: u32,
@@ -61,6 +65,15 @@ pub extern "C" fn pr_string_from_c_str_sized(c_str: *const c_char, len: u64) -> 
     let boxed = Box::new(pr_string {
         string: Box::new(rust_string),
         c_string: Box::new(CString::new(tmp).unwrap()),
+    });
+
+    Box::into_raw(boxed)
+}
+
+pub fn pr_string_from_rust_string(string: String) -> *mut pr_string {
+    let boxed = Box::new(pr_string {
+        string: Box::new(string.to_owned()),
+        c_string: Box::new(CString::new(string).unwrap()),
     });
 
     Box::into_raw(boxed)
@@ -133,6 +146,25 @@ pub extern "C" fn pr_string_ends_with(_string: *const pr_string, sub: *const pr_
     Box::into_raw(full_boxed);
 
     ret
+}
+
+#[no_mangle]
+pub extern "C" fn pr_string_split(_string: *const pr_string, delim: *const pr_string) -> *mut pr_string_vector {
+    let boxed = unsafe { Box::from_raw(_string as *mut pr_string) };
+    let delim_boxed = unsafe { Box::from_raw(delim as *mut pr_string) };
+
+    let splitted = boxed.string.split(delim_boxed.string.as_str());
+
+    // Create vector.
+    let v = pr_string_vector_new();
+
+    // Push splitted strings to the vector.
+    for s in splitted {
+        let pr_s = pr_string_from_rust_string(s.to_string());
+        pr_string_vector_push(v, pr_s);
+    }
+
+    v
 }
 
 #[no_mangle]
