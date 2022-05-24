@@ -1,5 +1,6 @@
 #include "range.h"
 #include "string.h"
+#include "vector.h"
 #include "json.h"
 
 int main(int argc, char *argv[])
@@ -15,6 +16,11 @@ int main(int argc, char *argv[])
     // String
     //==========
     tests::string_contains();
+
+    //==========
+    // Vector
+    //==========
+    tests::vector_map();
 
     //==========
     // JSON

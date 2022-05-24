@@ -1,5 +1,6 @@
 OBJ = range.o \
 	string.o \
+	vector.o \
 	json.o
 
 default: $(OBJ)
