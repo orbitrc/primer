@@ -55,6 +55,28 @@ public:
         return ret;
     }
 
+    std::optional<T&> find(std::function<bool(const T&)>)
+    {
+        return std::nullopt;
+    }
+
+    //=======================
+    // Range-based For Loop
+    //=======================
+    typename std::vector<T>::iterator begin()
+    {
+        return this->_vec.begin();
+    }
+
+    typename std::vector<T>::iterator end()
+    {
+        return this->_vec.end();
+    }
+
+    //==============
+    // Operators
+    //==============
+
     T& operator[](uint64_t index)
     {
         return this->_vec[index];

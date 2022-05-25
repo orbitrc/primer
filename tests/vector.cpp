@@ -24,4 +24,26 @@ void vector_map()
     assert(v2[2] == 6);
 }
 
+void vector_loop()
+{
+    pr::Vector<int32_t> v;
+
+    v.push(10);
+    v.push(10);
+    v.push(10);
+
+    for (auto& val: v) {
+        assert(val == 10);
+    }
+}
+
+void vector_find()
+{
+    pr::Vector<int32_t> v;
+
+    v.push(1);
+    v.push(2);
+    v.push(100);
+}
+
 } // namespace tests

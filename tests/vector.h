@@ -5,6 +5,10 @@ namespace tests {
 
 void vector_map();
 
+void vector_loop();
+
+void vector_find();
+
 }
 
 #endif // _TESTS_VECTOR_H
