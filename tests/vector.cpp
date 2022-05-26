@@ -46,4 +46,17 @@ void vector_find()
     v.push(100);
 }
 
+void vector_index()
+{
+    pr::Vector<int32_t> v;
+
+    v.push(1);
+    v.push(2);
+    v.push(4);
+
+    auto index = v.index(4);
+
+    assert(index == 2);
+}
+
 } // namespace tests

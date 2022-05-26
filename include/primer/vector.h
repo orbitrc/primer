@@ -31,6 +31,8 @@ public:
         this->_vec.push_back(value);
     }
 
+    /// Find first index of given value.
+    /// Returns index if contanis value, or std::nullopt.
     std::optional<uint64_t> index(const T& value) const
     {
         uint64_t index = 0;
