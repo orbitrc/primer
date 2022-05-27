@@ -26,6 +26,7 @@ public:
         return this->_vec.size();
     }
 
+    /// Append a value to the last of Vector.
     void push(const T& value)
     {
         this->_vec.push_back(value);
@@ -46,6 +47,7 @@ public:
         return std::nullopt;
     }
 
+    /// Maps each elements and returns new Vector.
     Vector<T> map(std::function<T(const T&)> map_func) const
     {
         Vector<T> ret;
