@@ -32,6 +32,12 @@ public:
         this->_vec.push_back(value);
     }
 
+    /// Inserts a value to the index.
+    void insert(uint64_t index, T value)
+    {
+        this->_vec.insert(index, value);
+    }
+
     /// Find first index of given value.
     /// Returns index if contanis value, or std::nullopt.
     std::optional<uint64_t> index(const T& value) const
