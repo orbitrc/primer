@@ -61,6 +61,8 @@ public:
     // Operations
     //===============
 
+    Vector<String> split(const String& delim) const;
+
     bool contains(const String& other) const;
 
     bool starts_with(const String& other) const;
