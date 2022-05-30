@@ -63,6 +63,9 @@ public:
 
     Vector<String> split(const String& delim) const;
 
+    /// Returns new String that leading and trailing whitespaces removed.
+    String trim() const;
+
     bool contains(const String& other) const;
 
     bool starts_with(const String& other) const;
