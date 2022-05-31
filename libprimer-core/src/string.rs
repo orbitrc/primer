@@ -61,10 +61,9 @@ pub extern "C" fn pr_string_from_c_str_sized(c_str: *const c_char, len: u64) -> 
         len as usize
     ) };
 
-    let tmp = rust_string.to_owned();
     let boxed = Box::new(pr_string {
-        string: Box::new(rust_string),
-        c_string: Box::new(CString::new(tmp).unwrap()),
+        string: Box::new(rust_string.to_owned()),
+        c_string: Box::new(CString::new(rust_string).unwrap()),
     });
 
     Box::into_raw(boxed)
@@ -104,6 +103,22 @@ pub extern "C" fn pr_string_eq(_string: *const pr_string, other: *const pr_strin
     Box::into_raw(other_boxed);
 
     ret
+}
+
+#[no_mangle]
+pub extern "C" fn pr_string_trim(_string: *const pr_string) -> *mut pr_string {
+    let boxed = unsafe { Box::from_raw(_string as *mut pr_string) };
+
+    let trimmed = boxed.string.trim();
+
+    let string = Box::new(pr_string {
+        string: Box::new(trimmed.to_owned()),
+        c_string: Box::new(CString::new(trimmed).unwrap()),
+    });
+
+    Box::into_raw(boxed);
+
+    Box::into_raw(string)
 }
 
 #[no_mangle]

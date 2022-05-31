@@ -11,6 +11,8 @@ void string_starts_with();
 
 void string_ends_with();
 
+void string_trim();
+
 } // namespace tests
 
 #endif // _TESTS_STRING_H

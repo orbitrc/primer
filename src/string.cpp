@@ -65,6 +65,15 @@ String::~String()
 }
 
 
+String String::trim() const
+{
+    String trimmed = String();
+    pr_string_free(trimmed._impl->_pr_string);
+    trimmed._impl->_pr_string = pr_string_trim(this->_impl->_pr_string);
+
+    return trimmed;
+}
+
 bool String::contains(const String& other) const
 {
     return pr_string_contains(this->_impl->_pr_string,

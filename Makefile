@@ -17,8 +17,8 @@ default: $(OBJ)
 	ln -s libprimer.so.$(VERSION_MAJOR).$(VERSION_MINOR) lib/libprimer.so.$(VERSION_MAJOR)
 	ln -s libprimer.so.$(VERSION_MAJOR) lib/libprimer.so
 
-src/%.o: src/%.c
-	$(CXX) -c -Iinclude -fPIC -o $@ $<
+src/%.o: src/%.cpp
+	$(CXX) -c -Iinclude $(CXXFLAGS) -fPIC -o $@ $<
 
 test:
 	$(MAKE) -C tests/

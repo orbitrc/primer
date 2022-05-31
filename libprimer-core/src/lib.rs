@@ -63,10 +63,20 @@ mod tests {
 
     #[test]
     fn pr_string_construct() {
+        // From c_str.
         let rust_c_string = CString::new("Hello").unwrap();
         let c_string_ptr = rust_c_string.into_raw();
 
         let _pr_string: *mut pr_string = pr_string_from_c_str(c_string_ptr);
+
+        pr_string_free(_pr_string);
+
+        // From c_str with size.
+        let rust_c_string = CString::new("World").unwrap();
+        let c_string_ptr = rust_c_string.into_raw();
+
+        let _pr_string: *mut pr_string = pr_string_from_c_str_sized(
+            c_string_ptr, 5);
 
         pr_string_free(_pr_string);
     }

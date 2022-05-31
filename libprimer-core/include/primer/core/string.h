@@ -23,6 +23,8 @@ pr_string* pr_string_cloned(const pr_string *string);
 
 bool pr_string_eq(const pr_string *string, const pr_string *other);
 
+pr_string* pr_string_trim(const pr_string *string);
+
 bool pr_string_contains(const pr_string *string, const pr_string *sub);
 
 bool pr_string_starts_with(const pr_string *string, const pr_string *sub);

@@ -26,4 +26,11 @@ void string_contains()
     assert(str.contains(ipsum));
 }
 
+void string_trim()
+{
+    pr::String str(" Hello, world!\t");
+
+    assert(str.trim() == "Hello, world!"_S);
+}
+
 } // namespace tests
