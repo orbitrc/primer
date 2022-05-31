@@ -55,12 +55,14 @@ pub extern "C" fn pr_string_from_c_str(c_str: *const c_char) -> *mut pr_string {
 
 #[no_mangle]
 pub extern "C" fn pr_string_from_c_str_sized(c_str: *const c_char, len: u64) -> *mut pr_string {
-    let rust_string: String = unsafe { String::from_raw_parts(
-        c_str as *mut u8,
-        len as usize,
-        len as usize
-    ) };
+    let mut v: Vec<u8> = vec![];
+    for i in 0..len {
+        unsafe {
+            v.push(*c_str.offset(i as isize) as u8);
+        }
+    }
 
+    let rust_string = String::from_utf8(v).unwrap();
     let boxed = Box::new(pr_string {
         string: Box::new(rust_string.to_owned()),
         c_string: Box::new(CString::new(rust_string).unwrap()),
