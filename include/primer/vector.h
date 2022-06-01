@@ -83,6 +83,26 @@ public:
         return this->_vec.end();
     }
 
+    const typename std::vector<T>::const_iterator begin() const
+    {
+        return this->_vec.begin();
+    }
+
+    const typename std::vector<T>::const_iterator end() const
+    {
+        return this->_vec.end();
+    }
+
+    const typename std::vector<T>::const_iterator cbegin() const
+    {
+        return this->_vec.cbegin();
+    }
+
+    const typename std::vector<T>::const_iterator cend() const
+    {
+        return this->_vec.cend();
+    }
+
     //==============
     // Operators
     //==============
