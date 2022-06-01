@@ -23,6 +23,14 @@ src/%.o: src/%.cpp
 test:
 	$(MAKE) -C tests/
 
+install:
+	strip lib/libprimer.so.$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH)
+	cp include/primer/*.h /usr/include/primer/
+	cp lib/libprimer.so.$(VERSION) /usr/lib/
+	cp -P lib/libprimer.so.$(VERSION_MAJOR).$(VERSION_MINOR) /usr/lib/
+	cp -P lib/libprimer.so.$(VERSION_MAJOR) /usr/lib/
+	cp -P lib/libprimer.so /usr/lib/
+
 clean:
 	rm -rf src/*.o
 	rm -rf lib/
