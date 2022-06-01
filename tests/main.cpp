@@ -47,6 +47,10 @@ int main(int argc, char *argv[])
     tests::string_trim();
     test_log_done("string_trim");
 
+    test_log_start("string_split");
+    tests::string_split();
+    test_log_done("string_split");
+
     //==========
     // Vector
     //==========

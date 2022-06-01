@@ -107,6 +107,23 @@ mod tests {
     }
 
     #[test]
+    fn pr_string_split_() {
+        let pr_s = pr_string_from_rust_string(String::from("A;B;C"));
+        let pr_delim = pr_string_from_rust_string(String::from(";"));
+        let split = pr_string_split(pr_s, pr_delim);
+        assert_eq!(pr_string_vector_length(split), 3);
+
+        let a = pr_string_vector_get(split, 0);
+        let comp_a = pr_string_from_rust_string(String::from("A"));
+        assert_eq!(pr_string_eq(a, comp_a), true);
+
+        pr_string_free(comp_a);
+        pr_string_free(a);
+        pr_string_free(pr_delim);
+        pr_string_free(pr_s);
+    }
+
+    #[test]
     fn rand_both_exclusive_inclusive() {
         let _random_exclusive = i8::random(0..5);
         let _random_inclusive = i8::random(0..=5);

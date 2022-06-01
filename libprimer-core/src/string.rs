@@ -181,6 +181,9 @@ pub extern "C" fn pr_string_split(_string: *const pr_string, delim: *const pr_st
         pr_string_vector_push(v, pr_s);
     }
 
+    Box::into_raw(boxed);
+    Box::into_raw(delim_boxed);
+
     v
 }
 

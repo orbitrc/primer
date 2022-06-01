@@ -14,6 +14,10 @@ typedef struct pr_string_vector pr_string_vector;
 
 pr_string_vector* pr_string_vector_new();
 
+uint64_t pr_string_vector_length(pr_string_vector *vector);
+
+pr_string* pr_string_vector_get(pr_string_vector *vector, uint64_t index);
+
 void pr_string_vector_free(pr_string_vector *vector);
 
 #ifdef __cplusplus

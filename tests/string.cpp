@@ -33,4 +33,15 @@ void string_trim()
     assert(str.trim() == "Hello, world!"_S);
 }
 
+void string_split()
+{
+    pr::String str = "A;B;C"_S;
+    pr::Vector<pr::String> split = str.split(";");
+
+    assert(split.length() == 3);
+    assert(split[0] == "A"_S);
+    assert(split[1] == "B"_S);
+    assert(split[2] == "C"_S);
+}
+
 } // namespace tests

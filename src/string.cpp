@@ -1,7 +1,7 @@
 #include <primer/string.h>
 
 #include <primer/core/string.h>
-
+#include <primer/core/vector.h>
 namespace pr {
 
 //==========
@@ -64,6 +64,23 @@ String::~String()
     delete this->_impl;
 }
 
+
+Vector<String> String::split(const String& delim) const
+{
+    pr_string_vector *pr_v = pr_string_split(this->_impl->_pr_string,
+        delim._impl->_pr_string);
+
+    Vector<String> v;
+    for (uint64_t i = 0; i < pr_string_vector_length(pr_v); ++i) {
+        auto ptr = pr_string_vector_get(pr_v, i);
+        auto string = String();
+        pr_string_free(string._impl->_pr_string);
+        string._impl->_pr_string = ptr;
+        v.push(string);
+    }
+
+    return v;
+}
 
 String String::trim() const
 {
