@@ -44,4 +44,12 @@ void string_split()
     assert(split[2] == "C"_S);
 }
 
+void unicode_na()
+{
+    pr::Unicode::Scalar ga = 0xAC00;
+    auto na = ga.na();
+
+    assert(na == "HANGUL SYLLABLE GA");
+}
+
 } // namespace tests

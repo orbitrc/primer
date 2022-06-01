@@ -2,6 +2,7 @@
 
 #include <primer/core/string.h>
 #include <primer/core/vector.h>
+
 namespace pr {
 
 //==========
@@ -18,6 +19,21 @@ Unicode::Scalar::Scalar(uint32_t code_point)
     // TODO: Check if code point is surrogate.
 
     this->_code_point = code_point;
+}
+
+String Unicode::Scalar::na() const
+{
+    auto pr_s = pr_unicode_scalar_na(this->_code_point);
+    String na = String(pr_string_c_str(pr_s));
+
+    pr_string_free(pr_s);
+
+    return na;
+}
+
+Unicode::Scalar::operator uint32_t()
+{
+    return this->_code_point;
 }
 
 //========

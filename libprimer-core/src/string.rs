@@ -2,6 +2,8 @@ use std::os::raw::c_char;
 use std::ffi::CString;
 use std::ffi::CStr;
 
+use seshat::unicode::Ucd;
+
 use super::vector::pr_string_vector;
 use super::vector::pr_string_vector_new;
 use super::vector::pr_string_vector_push;
@@ -188,8 +190,31 @@ pub extern "C" fn pr_string_split(_string: *const pr_string, delim: *const pr_st
 }
 
 #[no_mangle]
+pub extern "C" fn pr_string_c_str(_string: *const pr_string) -> *const c_char {
+    let boxed = unsafe { Box::from_raw(_string as *mut pr_string) };
+
+    let raw = boxed.c_string.as_ptr();
+
+    Box::into_raw(boxed);
+
+    raw
+}
+
+#[no_mangle]
 pub extern "C" fn pr_string_free(_string: *mut pr_string) {
     let boxed = unsafe { Box::from_raw(_string) };
     let _ = boxed.string;
     let _ = boxed.c_string;
+}
+
+//=============
+// Unicode
+//=============
+#[no_mangle]
+pub extern "C" fn pr_unicode_scalar_na(scalar: u32) -> *mut pr_string {
+    let rust_char = char::from_u32(scalar).unwrap();
+    let na = rust_char.na();
+    let pr_s = pr_string_from_rust_string(na);
+
+    pr_s
 }

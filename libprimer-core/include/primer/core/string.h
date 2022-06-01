@@ -36,7 +36,14 @@ bool pr_string_starts_with(const pr_string *string, const pr_string *sub);
 
 bool pr_string_ends_with(const pr_string *string, const pr_string *sub);
 
+const char* pr_string_c_str(const pr_string *string);
+
 void pr_string_free(pr_string *string);
+
+//==================
+// Unicode Methods
+//==================
+pr_string* pr_unicode_scalar_na(uint32_t scalar);
 
 #ifdef __cplusplus
 }

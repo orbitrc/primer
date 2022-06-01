@@ -15,6 +15,8 @@ void string_trim();
 
 void string_split();
 
+void unicode_na();
+
 } // namespace tests
 
 #endif // _TESTS_STRING_H

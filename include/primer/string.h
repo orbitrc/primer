@@ -23,6 +23,16 @@ public:
 
         Scalar(uint32_t code_point);
 
+        //=====================
+        // Unicode Properties
+        //=====================
+        String na() const;
+
+        //==============
+        // Conversions
+        //==============
+        operator uint32_t();
+
     private:
         uint32_t _code_point;
     };
