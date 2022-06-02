@@ -1,6 +1,7 @@
 #include "string.h"
 
 #include <assert.h>
+#include <string.h>
 
 #include <primer/string.h>
 
@@ -42,6 +43,13 @@ void string_split()
     assert(split[0] == "A"_S);
     assert(split[1] == "B"_S);
     assert(split[2] == "C"_S);
+}
+
+void string_c_str()
+{
+    pr::String str = "Hello"_S;
+
+    assert(strcmp(str.c_str(), "Hello") == 0);
 }
 
 void unicode_na()

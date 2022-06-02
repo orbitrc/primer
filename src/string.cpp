@@ -81,6 +81,11 @@ String::~String()
 }
 
 
+const char* String::c_str() const
+{
+    return pr_string_c_str(this->_impl->_pr_string);
+}
+
 Vector<String> String::split(const String& delim) const
 {
     pr_string_vector *pr_v = pr_string_split(this->_impl->_pr_string,

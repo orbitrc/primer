@@ -15,6 +15,8 @@ void string_trim();
 
 void string_split();
 
+void string_c_str();
+
 void unicode_na();
 
 } // namespace tests

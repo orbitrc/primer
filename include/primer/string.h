@@ -67,6 +67,12 @@ public:
 
     ~String();
 
+    //=================
+    // Element Access
+    //=================
+
+    const char* c_str() const;
+
     //===============
     // Operations
     //===============

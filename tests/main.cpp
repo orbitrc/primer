@@ -51,6 +51,10 @@ int main(int argc, char *argv[])
     tests::string_split();
     test_log_done("string_split");
 
+    test_log_start("string_c_str");
+    tests::string_c_str();
+    test_log_done("string_c_str");
+
     test_log_start("unicode_na");
     tests::unicode_na();
     test_log_done("unicode_na");
