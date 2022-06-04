@@ -57,6 +57,7 @@ public:
     // Constructor/Destructor
     //=========================
 
+    /// Contruct with empty string.
     String();
 
     String(const char *c_str);
