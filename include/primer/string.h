@@ -60,6 +60,7 @@ public:
     /// Contruct with empty string.
     String();
 
+    /// Construct with null-terminated string literal.
     String(const char *c_str);
 
     String(const char *c_str, uint64_t len);
