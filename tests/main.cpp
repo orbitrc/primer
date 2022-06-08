@@ -28,9 +28,9 @@ int main(int argc, char *argv[])
 
     test_with_log("string_compare", tests::string_compare);
 
-    // test_with_log("string_starts_with", tests::string_starts_with);
+    test_with_log("string_starts_with", tests::string_starts_with);
 
-    // test_with_log("string_ends_with", tests::string_ends_with);
+    test_with_log("string_ends_with", tests::string_ends_with);
 
     test_with_log("string_trim", tests::string_trim);
 

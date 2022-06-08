@@ -27,6 +27,20 @@ void string_contains()
     assert(str.contains(ipsum));
 }
 
+void string_starts_with()
+{
+    pr::String full = "Lorem ipsum dolor"_S;
+
+    assert(full.starts_with("Lorem"_S));
+}
+
+void string_ends_with()
+{
+    pr::String full = "Lorem ipsum dolor"_S;
+
+    assert(full.ends_with("dolor"_S));
+}
+
 void string_trim()
 {
     pr::String str(" Hello, world!\t");
