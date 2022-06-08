@@ -131,6 +131,16 @@ bool String::ends_with(const String &other) const
 }
 
 
+String String::operator+(const String& other) const
+{
+    String ret;
+    pr_string_free(ret._impl->_pr_string);
+    ret._impl->_pr_string = pr_string_add(this->_impl->_pr_string,
+        other._impl->_pr_string);
+
+    return ret;
+}
+
 String& String::operator=(const String &other)
 {
     pr_string_free(this->_impl->_pr_string);

@@ -201,6 +201,23 @@ pub extern "C" fn pr_string_c_str(_string: *const pr_string) -> *const c_char {
 }
 
 #[no_mangle]
+pub extern "C" fn pr_string_add(_string: *const pr_string, other: *const pr_string) -> *mut pr_string {
+    let src_boxed = unsafe { Box::from_raw(_string as *mut pr_string) };
+    let dst_boxed = unsafe { Box::from_raw(other as *mut pr_string) };
+
+    let added = (*(src_boxed.string)).to_owned() + &(*(dst_boxed.string));
+    let boxed = Box::new(pr_string {
+        string: Box::new(added.clone()),
+        c_string: Box::new(CString::new(added).unwrap()),
+    });
+
+    Box::into_raw(src_boxed);
+    Box::into_raw(dst_boxed);
+
+    Box::into_raw(boxed)
+}
+
+#[no_mangle]
 pub extern "C" fn pr_string_free(_string: *mut pr_string) {
     let boxed = unsafe { Box::from_raw(_string) };
     let _ = boxed.string;

@@ -66,6 +66,15 @@ void string_c_str()
     assert(strcmp(str.c_str(), "Hello") == 0);
 }
 
+void string_add()
+{
+    pr::String src = "Lorem"_S;
+
+    pr::String dst = src + " ipsum"_S + " dolor"_S;
+
+    assert(dst == "Lorem ipsum dolor"_S);
+}
+
 void unicode_na()
 {
     pr::Unicode::Scalar ga = 0xAC00;

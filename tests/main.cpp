@@ -38,6 +38,8 @@ int main(int argc, char *argv[])
 
     test_with_log("string_c_str", tests::string_c_str);
 
+    test_with_log("string_add", tests::string_add);
+
     test_with_log("unicode_na", tests::unicode_na);
 
     //==========

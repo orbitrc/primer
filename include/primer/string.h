@@ -94,6 +94,8 @@ public:
     // Operators
     //===============
 
+    String operator+(const String& other) const;
+
     String& operator=(const String& other);
 
     bool operator==(const String& other);

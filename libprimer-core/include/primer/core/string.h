@@ -38,6 +38,8 @@ bool pr_string_ends_with(const pr_string *string, const pr_string *sub);
 
 const char* pr_string_c_str(const pr_string *string);
 
+pr_string* pr_string_add(const pr_string *string, const pr_string *other);
+
 void pr_string_free(pr_string *string);
 
 //==================
