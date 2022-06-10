@@ -3,6 +3,8 @@
 
 namespace tests {
 
+void vector_length();
+
 void vector_map();
 
 void vector_loop();

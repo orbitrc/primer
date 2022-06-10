@@ -7,6 +7,19 @@
 
 namespace tests {
 
+void vector_length()
+{
+    pr::Vector<int32_t> v;
+
+    assert(v.length() == 0);
+
+    v.push(10);
+    v.push(20);
+    v.push(30);
+
+    assert(v.length() == 3);
+}
+
 void vector_map()
 {
     pr::Vector<int32_t> v;
