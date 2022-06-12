@@ -48,6 +48,7 @@ public:
             if (*it == value) {
                 return std::optional<uint64_t>(index);
             }
+            ++index;
         }
 
         return std::nullopt;

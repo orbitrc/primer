@@ -51,6 +51,8 @@ int main(int argc, char *argv[])
 
     test_with_log("vector_loop", tests::vector_loop);
 
+    test_with_log("vector_index", tests::vector_index);
+
     //==========
     // JSON
     //==========

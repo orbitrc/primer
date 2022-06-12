@@ -11,6 +11,8 @@ void vector_loop();
 
 void vector_find();
 
+void vector_index();
+
 }
 
 #endif // _TESTS_VECTOR_H
