@@ -141,4 +141,10 @@ mod tests {
         let v = pr_string_vector_new();
         pr_string_vector_free(v);
     }
+
+    #[test]
+    fn pr_unicode_scalar_vector_construct() {
+        let v = pr_unicode_scalar_vector_new();
+        pr_unicode_scalar_vector_free(v);
+    }
 }

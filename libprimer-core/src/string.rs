@@ -7,6 +7,9 @@ use seshat::unicode::Ucd;
 use super::vector::pr_string_vector;
 use super::vector::pr_string_vector_new;
 use super::vector::pr_string_vector_push;
+use super::vector::pr_unicode_scalar_vector;
+use super::vector::pr_unicode_scalar_vector_new;
+use super::vector::pr_unicode_scalar_vector_push;
 
 #[repr(C)]
 pub struct pr_code_point {
@@ -215,6 +218,23 @@ pub extern "C" fn pr_string_add(_string: *const pr_string, other: *const pr_stri
     Box::into_raw(dst_boxed);
 
     Box::into_raw(boxed)
+}
+
+#[no_mangle]
+pub extern "C" fn pr_string_unicode_scalars(string: *const pr_string) -> *mut pr_unicode_scalar_vector {
+    let boxed = unsafe { Box::from_raw(string as *mut pr_string) };
+
+    let chars = boxed.string.chars();
+
+    let v = pr_unicode_scalar_vector_new();
+
+    for ch in chars {
+        pr_unicode_scalar_vector_push(v, ch as u32);
+    }
+
+    Box::into_raw(boxed);
+
+    v
 }
 
 #[no_mangle]

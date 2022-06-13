@@ -81,6 +81,23 @@ String::~String()
 }
 
 
+Vector<Unicode::Scalar> String::unicode_scalars() const
+{
+    pr_unicode_scalar_vector *pr_v = pr_string_unicode_scalars(
+        this->_impl->_pr_string);
+
+    Vector<Unicode::Scalar> v;
+    for (uint64_t i = 0; i < pr_unicode_scalar_vector_length(pr_v); ++i) {
+        uint32_t code_point = pr_unicode_scalar_vector_get(pr_v, i);
+        Unicode::Scalar scalar(code_point);
+        v.push(scalar);
+    }
+
+    pr_unicode_scalar_vector_free(pr_v);
+
+    return v;
+}
+
 const char* String::c_str() const
 {
     return pr_string_c_str(this->_impl->_pr_string);

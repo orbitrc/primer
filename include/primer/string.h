@@ -73,6 +73,8 @@ public:
     // Element Access
     //=================
 
+    Vector<Unicode::Scalar> unicode_scalars() const;
+
     const char* c_str() const;
 
     //===============

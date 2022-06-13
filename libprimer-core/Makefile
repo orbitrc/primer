@@ -21,6 +21,9 @@ install: $(DESTDIR)/usr/include/primer/core
 $(DESTDIR)/usr/include/primer/core:
 	mkdir -p $(DESTDIR)/usr/include/primer/core
 
+test:
+	cargo test --release
+
 clean:
 	cargo clean
 

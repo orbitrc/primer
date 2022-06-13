@@ -10,6 +10,8 @@ extern "C" {
 
 typedef struct pr_string_vector pr_string_vector;
 
+typedef struct pr_unicode_scalar_vector pr_unicode_scalar_vector;
+
 typedef struct pr_string {
     void *string;
     void *c_string;
@@ -25,8 +27,13 @@ pr_string* pr_string_cloned(const pr_string *string);
 
 bool pr_string_eq(const pr_string *string, const pr_string *other);
 
+/* Returns vector. */
+
 pr_string_vector* pr_string_split(const pr_string *string,
         const pr_string *delim);
+
+pr_unicode_scalar_vector* pr_string_unicode_scalars(const pr_string *string);
+
 
 pr_string* pr_string_trim(const pr_string *string);
 
