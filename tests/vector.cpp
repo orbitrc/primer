@@ -72,4 +72,15 @@ void vector_index()
     assert(index == 2);
 }
 
+void vector_insert()
+{
+    pr::Vector<int32_t> v;
+
+    v.push(2);
+    v.push(3);
+    v.insert(0, 1);
+
+    assert(v[0] == 1);
+}
+
 } // namespace tests

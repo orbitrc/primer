@@ -53,6 +53,8 @@ int main(int argc, char *argv[])
 
     test_with_log("vector_index", tests::vector_index);
 
+    test_with_log("vector_insert", tests::vector_insert);
+
     //==========
     // JSON
     //==========

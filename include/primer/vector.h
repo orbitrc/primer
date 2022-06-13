@@ -35,7 +35,11 @@ public:
     /// Inserts a value to the index.
     void insert(uint64_t index, T value)
     {
-        this->_vec.insert(index, value);
+        // Find iter.
+        auto it = this->_vec.begin();
+        it += index;
+
+        this->_vec.insert(it, value);
     }
 
     /// Find first index of given value.

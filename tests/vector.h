@@ -13,6 +13,8 @@ void vector_find();
 
 void vector_index();
 
+void vector_insert();
+
 }
 
 #endif // _TESTS_VECTOR_H
