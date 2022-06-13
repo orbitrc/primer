@@ -42,6 +42,18 @@ public:
         this->_vec.insert(it, value);
     }
 
+    /// Removes and returns the element of given index.
+    T remove(uint64_t index)
+    {
+        auto it = this->_vec.begin();
+        it += index;
+
+        auto el = this->_vec[index];
+        this->_vec.erase(it);
+
+        return el;
+    }
+
     /// Find first index of given value.
     /// Returns index if contanis value, or std::nullopt.
     std::optional<uint64_t> index(const T& value) const

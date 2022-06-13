@@ -83,4 +83,21 @@ void vector_insert()
     assert(v[0] == 1);
 }
 
+void vector_remove()
+{
+    pr::Vector<int32_t> v;
+
+    v.push(1);
+    v.push(2);
+    v.push(3);
+
+    auto removed = v.remove(1);
+    (void)removed;
+
+    assert(removed = 2);
+
+    assert(v[0] == 1);
+    assert(v[1] == 3);
+}
+
 } // namespace tests
