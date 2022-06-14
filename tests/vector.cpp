@@ -104,6 +104,8 @@ void vector_remove()
     auto removed = v.remove(1);
     (void)removed;
 
+    assert(v.length() == 2);
+
     assert(removed = 2);
 
     assert(v[0] == 1);
