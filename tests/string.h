@@ -19,6 +19,8 @@ void string_c_str();
 
 void string_add();
 
+void string_unicode_scalars();
+
 void unicode_na();
 
 } // namespace tests

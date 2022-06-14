@@ -75,6 +75,17 @@ void string_add()
     assert(dst == "Lorem ipsum dolor"_S);
 }
 
+void string_unicode_scalars()
+{
+    pr::String s = "A가"_S;
+
+    auto scalars = s.unicode_scalars();
+
+    assert(scalars.length() == 2);
+    assert(scalars[0] == 0x0041);
+    assert(scalars[1] == 0xAC00);
+}
+
 void unicode_na()
 {
     pr::Unicode::Scalar ga = 0xAC00;
