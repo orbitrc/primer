@@ -3,6 +3,8 @@
 
 namespace tests {
 
+void vector_initializer_list();
+
 void vector_length();
 
 void vector_map();

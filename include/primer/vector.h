@@ -6,6 +6,7 @@
 #include <vector>
 #include <optional>
 #include <functional>
+#include <initializer_list>
 
 namespace pr {
 
@@ -15,6 +16,11 @@ class Vector
 public:
     Vector<T>()
     {
+    }
+
+    Vector<T>(std::initializer_list<T> init)
+    {
+        this->_vec = init;
     }
 
     ~Vector<T>()

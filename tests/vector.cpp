@@ -7,6 +7,16 @@
 
 namespace tests {
 
+void vector_initializer_list()
+{
+    pr::Vector<int32_t> v{10, 20, 30, 40};
+
+    assert(v[0] == 10);
+    assert(v[1] == 20);
+    assert(v[2] == 30);
+    assert(v[3] == 40);
+}
+
 void vector_length()
 {
     pr::Vector<int32_t> v;

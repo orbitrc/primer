@@ -45,6 +45,8 @@ int main(int argc, char *argv[])
     //==========
     // Vector
     //==========
+    test_with_log("vector_initializer_list", tests::vector_initializer_list);
+
     test_with_log("vector_length", tests::vector_length);
 
     test_with_log("vector_map", tests::vector_map);
