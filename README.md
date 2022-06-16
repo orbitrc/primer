@@ -20,3 +20,19 @@ Primer's version is same as **libprimer-core**.
 
 Before build Primer, you should build **libprimer-core** and install.
 
+Build
+-----
+
+For build and install,
+
+```sh
+$ cd libprimer-core/
+$ make
+$ sudo make install
+```
+
+```sh
+$ make
+$ sudo make install
+```
+
