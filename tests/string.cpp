@@ -86,6 +86,19 @@ void string_unicode_scalars()
     assert(scalars[1] == 0xAC00);
 }
 
+void unicode_scalar_compare()
+{
+    pr::Unicode::Scalar b = U'b';
+
+    assert(b == U'b');
+
+    pr::String s = "ABCD"_S;
+
+    const auto scalars = s.unicode_scalars();
+
+    assert(scalars[0] == U'A');
+}
+
 void unicode_na()
 {
     pr::Unicode::Scalar ga = 0xAC00;

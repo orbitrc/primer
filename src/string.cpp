@@ -36,6 +36,11 @@ Unicode::Scalar::operator uint32_t()
     return this->_code_point;
 }
 
+Unicode::Scalar::operator const uint32_t() const
+{
+    return this->_code_point;
+}
+
 //========
 // Impl
 //========

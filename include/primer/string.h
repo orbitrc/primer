@@ -32,6 +32,7 @@ public:
         // Conversions
         //==============
         operator uint32_t();
+        operator const uint32_t() const;
 
     private:
         uint32_t _code_point;

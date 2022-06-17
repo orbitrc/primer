@@ -21,6 +21,8 @@ void string_add();
 
 void string_unicode_scalars();
 
+void unicode_scalar_compare();
+
 void unicode_na();
 
 } // namespace tests

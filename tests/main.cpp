@@ -42,6 +42,8 @@ int main(int argc, char *argv[])
 
     test_with_log("string_unicode_scalars", tests::string_unicode_scalars);
 
+    test_with_log("unicode_scalar_compare", tests::unicode_scalar_compare);
+
     test_with_log("unicode_na", tests::unicode_na);
 
     //==========
