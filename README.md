@@ -5,6 +5,16 @@ A base C++ library collections for Application.
 
 It contains DateTime, JSON, Unicode etc. all-in-one.
 
+Perpose
+-------
+
+It is for providing syntactic sugars and abstract classes used in
+applications. Primer doesn't care about performance ultil a
+decent API is done.
+This means that it is suitable for use in applications where
+performance is not critical, which makes it unsuitable for use
+in libraries.
+
 Namespaces
 ----------
 
