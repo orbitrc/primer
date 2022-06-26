@@ -4,6 +4,8 @@ VERSION_PATCH=$(shell cd libprimer-core ; make version-patch)
 VERSION = $(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH)
 SONAME = libprimer.so.$(VERSION_MAJOR)
 
+INSTALL_DIR=$(shell tools/dist-install-dir.sh)
+
 OBJ = src/range.o \
 	src/string.o \
 	src/json.o
@@ -26,10 +28,10 @@ test:
 install:
 	strip lib/libprimer.so.$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH)
 	cp include/primer/*.h /usr/include/primer/
-	cp lib/libprimer.so.$(VERSION) /usr/lib/
-	cp -P lib/libprimer.so.$(VERSION_MAJOR).$(VERSION_MINOR) /usr/lib/
-	cp -P lib/libprimer.so.$(VERSION_MAJOR) /usr/lib/
-	cp -P lib/libprimer.so /usr/lib/
+	cp lib/libprimer.so.$(VERSION) $(INSTALL_DIR)
+	cp -P lib/libprimer.so.$(VERSION_MAJOR).$(VERSION_MINOR) $(INSTALL_DIR)
+	cp -P lib/libprimer.so.$(VERSION_MAJOR) $(INSTALL_DIR)
+	cp -P lib/libprimer.so $(INSTALL_DIR)
 
 clean:
 	rm -rf src/*.o
