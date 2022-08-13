@@ -30,6 +30,13 @@ Primer's version is same as **libprimer-core**.
 
 Before build Primer, you should build **libprimer-core** and install.
 
+**libprimer-core** requires `cargo` command which is package manager for Rust.
+Check it by,
+
+```
+$ cargo --version
+```
+
 Build
 -----
 
