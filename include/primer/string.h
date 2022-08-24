@@ -64,6 +64,7 @@ public:
     /// Construct with null-terminated string literal.
     String(const char *c_str);
 
+    /// Construct with C char array with length. Not null-terminated.
     String(const char *c_str, uint64_t len);
 
     String(const String& other);
