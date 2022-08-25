@@ -90,8 +90,10 @@ public:
 
     bool contains(const String& other) const;
 
+    /// Returns true if the string starts with given string.
     bool starts_with(const String& other) const;
 
+    /// Returns true if the string ends with given string.
     bool ends_with(const String& other) const;
 
     //===============
