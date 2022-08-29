@@ -88,6 +88,7 @@ public:
     /// Returns new String that leading and trailing whitespaces removed.
     String trim() const;
 
+    /// Returns true if the string contains given string.
     bool contains(const String& other) const;
 
     /// Returns true if the string starts with given string.
