@@ -27,6 +27,7 @@ public:
     {
     }
 
+    /// Returns number of items in Vector.
     uint64_t length() const
     {
         return this->_vec.size();
