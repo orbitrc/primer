@@ -187,6 +187,11 @@ bool String::operator!=(const String& other)
 // Literals
 //===========
 
+pr::Unicode::Scalar operator""_S(unsigned long long int cp)
+{
+    return pr::Unicode::Scalar(cp);
+}
+
 pr::String operator""_S(const char *str, uint64_t len)
 {
     pr::String ret(str, len);

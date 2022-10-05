@@ -119,6 +119,8 @@ private:
 // Literals
 //===============
 
+pr::Unicode::Scalar operator""_U(unsigned long long int);
+
 pr::String operator""_S(const char *str, uint64_t len);
 
 #endif // _PRIMER_STRING_H
