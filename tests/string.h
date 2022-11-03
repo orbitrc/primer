@@ -23,6 +23,8 @@ void string_unicode_scalars();
 
 void unicode_scalar_compare();
 
+void unicode_scalar_literal();
+
 void unicode_na();
 
 } // namespace tests

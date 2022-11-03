@@ -107,4 +107,11 @@ void unicode_na()
     assert(na == "HANGUL SYLLABLE GA");
 }
 
+void unicode_scalar_literal()
+{
+    auto space = 0x0020_U;
+
+    assert(space == 0x0020);
+}
+
 } // namespace tests

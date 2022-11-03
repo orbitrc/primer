@@ -187,7 +187,7 @@ bool String::operator!=(const String& other)
 // Literals
 //===========
 
-pr::Unicode::Scalar operator""_S(unsigned long long int cp)
+pr::Unicode::Scalar operator""_U(unsigned long long int cp)
 {
     return pr::Unicode::Scalar(cp);
 }
