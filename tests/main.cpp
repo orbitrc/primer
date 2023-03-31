@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
 
     test_with_log("range_random", tests::range_random);
 
+    test_with_log("range_copy", tests::range_copy);
+
     //==========
     // String
     //==========

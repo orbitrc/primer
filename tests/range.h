@@ -9,6 +9,8 @@ void range_contains();
 
 void range_random();
 
+void range_copy();
+
 } // namespace tests
 
 #endif /* _TESTS_RANGE_H */

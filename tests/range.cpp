@@ -19,4 +19,10 @@ void range_random()
     assert(r1.random() >= -10 && r1.random() < 10);
 }
 
+void range_copy()
+{
+    pr::Range r1(0, 10);
+    pr::Range r2 = r1;
+}
+
 } // namespace tests

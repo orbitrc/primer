@@ -3,20 +3,23 @@
 
 #include <stdint.h>
 
-#include <primer/core/range.h>
-
 namespace pr {
+
+class RangeImpl;
 
 template <typename T>
 class Range {
 private:
-    pr_range range;
+    RangeImpl *_impl;
+
 public:
     //=========================
     // Constructor/Destructor
     //=========================
 
     Range<T>(T start, T end, bool exclusive=true);
+
+    Range<T>(const Range& other);
 
     ~Range();
 

@@ -4,7 +4,7 @@ OBJ = range.o \
 	json.o
 
 default: $(OBJ)
-	$(CXX) $(CFLAGS) $^ main.cpp -o primer-test -I../include -I../libprimer-core/include -L../build/ -lprimer -Wl,-rpath=../build
+	$(CXX) $(CFLAGS) $^ main.cpp -o primer-test -I../include -L../build/ -lprimer -Wl,-rpath=../build
 
 %.o: %.cpp
 	$(CXX) $(CFLAGS) -c -o $@ $^ -I../include
