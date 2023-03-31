@@ -1,10 +1,12 @@
-VERSION_MAJOR=$(shell cd libprimer-core ; make version-major)
-VERSION_MINOR=$(shell cd libprimer-core ; make version-minor)
-VERSION_PATCH=$(shell cd libprimer-core ; make version-patch)
+VERSION_MAJOR=0
+VERSION_MINOR=2
+VERSION_PATCH=1
 VERSION = $(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH)
 SONAME = libprimer.so.$(VERSION_MAJOR)
 
 INSTALL_DIR=$(shell tools/dist-install-dir.sh)
+
+PREFIX ?= /usr/local
 
 OBJ = src/range.o \
 	src/string.o \
@@ -23,15 +25,17 @@ test:
 	$(MAKE) -C tests/
 
 install:
-	strip lib/libprimer.so.$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH)
-	cp include/primer/*.h /usr/include/primer/
-	cp lib/libprimer.so.$(VERSION) $(INSTALL_DIR)
-	cp -P lib/libprimer.so.$(VERSION_MAJOR).$(VERSION_MINOR) $(INSTALL_DIR)
-	cp -P lib/libprimer.so.$(VERSION_MAJOR) $(INSTALL_DIR)
-	cp -P lib/libprimer.so $(INSTALL_DIR)
+	strip build/libprimer.so.$(VERSION)
+	cp include/primer/*.h $(DESTDIR)/$(PREFIX)/include/primer/
+	cp build/libprimer.so.$(VERSION) $(DESTDIR)/$(PREFIX)/lib/
+	ln -sf libprimer.so.$(VERSION) \
+		$(DESTDIR)/$(PREFIX)/lib/libprimer.so.$(VERSION_MAJOR).$(VERSION_MINOR)
+	ln -sf libprimer.so.$(VERSION_MAJOR).$(VERSION_MINOR) \
+		$(DESTDIR)/$(PREFIX)/lib/libprimer.so.$(VERSION_MAJOR)
+	ln -sf libprimer.so.$(VERSION_MAJOR) \
+		$(DESTDIR)/$(PREFIX)/lib/libprimer.so
 
 clean:
-	rm -rf src/*.o
-	rm -rf lib/
+	rm -rf build/
 	rm tests/*.o
 	rm tests/primer-test
