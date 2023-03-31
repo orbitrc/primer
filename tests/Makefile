@@ -4,13 +4,13 @@ OBJ = range.o \
 	json.o
 
 default: $(OBJ)
-	$(CXX) $(CFLAGS) $^ main.cpp -o primer-test -I../include -I../libprimer-core/include -L../lib/ -lprimer -Wl,-rpath=../lib
+	$(CXX) $(CFLAGS) $^ main.cpp -o primer-test -I../include -I../libprimer-core/include -L../build/ -lprimer -Wl,-rpath=../build
 
 %.o: %.cpp
 	$(CXX) $(CFLAGS) -c -o $@ $^ -I../include
 
 run:
-	LD_LIBRARY_PATH=../libprimer-core ./primer-test
+	./primer-test
 
 clean:
 	rm -f *.o

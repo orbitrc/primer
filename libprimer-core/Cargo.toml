@@ -10,8 +10,7 @@ keywords = ["rust"]
 edition = "2018"
 
 [lib]
-name = "primer"
-crate-type = ["cdylib"]
+crate-type = ["staticlib", "cdylib"]
 
 [dependencies]
 seshat-unicode = "0.0.15"

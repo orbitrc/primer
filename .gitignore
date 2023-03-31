@@ -1,4 +1,5 @@
 lib/
+build/
 *.o
 tests/primer-test
 Cargo.lock
