@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 project(primer
-    VERSION 0.1.1
+    VERSION 0.2.1
     DESCRIPTION "Primer library"
     LANGUAGES CXX)
 
