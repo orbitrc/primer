@@ -85,6 +85,8 @@ public:
 
     Vector<String> split(const String& delim) const;
 
+    Vector<String> split(const String& delim, uint64_t count) const;
+
     /// Returns new String that leading and trailing whitespaces removed.
     String trim() const;
 

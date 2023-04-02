@@ -9,6 +9,13 @@ add_library(primer SHARED
     src/json.cpp
     src/range.cpp
     src/string.cpp
+    src/format.cpp
+    src/io.cpp
+    include/primer/json.h
+    include/primer/range.h
+    include/primer/string.h
+    include/primer/format.h
+    include/primer/io.h
 )
 
 target_include_directories(primer

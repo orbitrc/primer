@@ -5,3 +5,4 @@ tests/primer-test
 Cargo.lock
 target/
 *.pro.user
+CMakeLists.txt.user

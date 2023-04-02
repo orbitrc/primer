@@ -57,6 +57,18 @@ void string_split()
     assert(split[0] == "A"_S);
     assert(split[1] == "B"_S);
     assert(split[2] == "C"_S);
+
+    pr::String str2 = "A-B-C-D"_S;
+    auto split2 = str2.split("-"_S, 2);
+
+    assert(split2.length() == 3);
+    assert(split2[0] == "A"_S);
+    assert(split2[1] == "B"_S);
+    assert(split2[2] == "C-D"_S);
+
+    auto split3 = str2.split("-", 6);
+
+    assert(split3.length() == 4);
 }
 
 void string_c_str()

@@ -122,7 +122,32 @@ Vector<String> String::split(const String& delim) const
         v.push(string);
     }
 
+    pr_string_vector_free(pr_v);
+
     return v;
+}
+
+Vector<String> String::split(const String& delim, uint64_t count) const
+{
+    auto v = this->split(delim);
+    if (v.length() <= count) {
+        return v;
+    }
+
+    Vector<String> ret;
+    auto len = v.length();
+    decltype(len) i = 0;
+    for (; i < count; ++i) {
+        ret.push(v[i]);
+    }
+    String remains = v[i];
+    ++i;
+    for (; i < len; ++i) {
+        remains = remains + delim + v[i];
+    }
+    ret.push(remains);
+
+    return ret;
 }
 
 String String::trim() const
