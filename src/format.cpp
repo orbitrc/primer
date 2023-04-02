@@ -6,7 +6,7 @@ namespace pr {
 
 String format(const String& format_str, const String& str)
 {
-    auto split = format_str.split("{}"_S);
+    auto split = format_str.split("{}"_S, 1);
     if (split.length() < 2) {
         return format_str;
     }
@@ -16,7 +16,7 @@ String format(const String& format_str, const String& str)
 
 String format(const String& format_str, int32_t i)
 {
-    auto split = format_str.split("{}"_S);
+    auto split = format_str.split("{}"_S, 1);
     if (split.length() < 2) {
         return format_str;
     }

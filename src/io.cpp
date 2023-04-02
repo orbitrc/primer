@@ -14,7 +14,13 @@ void println(const String& str)
 void println(const String& format_str, const String& str)
 {
     auto s = format(format_str, str);
-    printf("%s\n", s.c_str());
+    println(s);
+}
+
+void println(const String& format_str, int32_t i)
+{
+    auto s = format(format_str, i);
+    println(s);
 }
 
 } // namespace pr

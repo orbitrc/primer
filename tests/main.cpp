@@ -4,6 +4,7 @@
 #include "string.h"
 #include "vector.h"
 #include "json.h"
+#include "format.h"
 
 void test_with_log(const char *name, void(*test_func)())
 {
@@ -71,6 +72,11 @@ int main(int argc, char *argv[])
     // JSON
     //==========
     test_with_log("json_array", tests::json_array);
+
+    //==========
+    // Format
+    //==========
+    test_with_log("format_format", tests::format);
 
     return 0;
 }
