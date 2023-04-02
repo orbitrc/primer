@@ -5,9 +5,29 @@
 
 namespace pr {
 
+/// Returns a new formatted string.
+///
+/// \since 0.4
+/// \param format_str Format string.
+/// \param str Format argument.
+/// \return pr::String A new formatted string.
 String format(const String& format_str, const String& str);
 
+String format(const String& format_str, int8_t i);
+
+String format(const String& format_str, uint8_t ui);
+
+String format(const String& format_str, int16_t i);
+
+String format(const String& format_str, uint16_t ui);
+
 String format(const String& format_str, int32_t i);
+
+String format(const String& format_str, uint32_t ui);
+
+String format(const String& format_str, int64_t i);
+
+String format(const String& format_str, uint64_t ui);
 
 String format(const String& format_str, float f);
 

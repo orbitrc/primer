@@ -9,7 +9,7 @@
 
 namespace pr {
 
-/// Prints string to the standard output.
+/// Prints string to the standard output with trailing newline.
 ///
 /// \since 0.4
 void println(const pr::String& str);
