@@ -2,6 +2,7 @@ lib/
 build/
 *.o
 tests/primer-test
+tests/println
 Cargo.lock
 target/
 *.pro.user
