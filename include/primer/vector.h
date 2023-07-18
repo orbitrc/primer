@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include <vector>
+#include <algorithm>
 #include <optional>
 #include <functional>
 #include <initializer_list>
@@ -92,6 +93,12 @@ public:
     std::optional<T&> find(std::function<bool(const T&)>)
     {
         return std::nullopt;
+    }
+
+    /// Sort items in the Vector. This method changes the Vector.
+    void sort()
+    {
+        std::sort(this->begin(), this->end());
     }
 
     //=======================

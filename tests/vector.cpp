@@ -112,4 +112,23 @@ void vector_remove()
     assert(v[1] == 3);
 }
 
+void vector_sort()
+{
+    pr::Vector<int32_t> v;
+
+    v.push(5);
+    v.push(1);
+    v.push(4);
+    v.push(2);
+    v.push(3);
+
+    v.sort();
+
+    assert(v[0] == 1);
+    assert(v[1] == 2);
+    assert(v[2] == 3);
+    assert(v[3] == 4);
+    assert(v[4] == 5);
+}
+
 } // namespace tests

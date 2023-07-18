@@ -19,6 +19,8 @@ void vector_insert();
 
 void vector_remove();
 
+void vector_sort();
+
 }
 
 #endif // _TESTS_VECTOR_H

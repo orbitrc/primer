@@ -68,6 +68,8 @@ int main(int argc, char *argv[])
 
     test_with_log("vector_remove", tests::vector_remove);
 
+    test_with_log("vector_sort", tests::vector_sort);
+
     //==========
     // JSON
     //==========
