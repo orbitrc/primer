@@ -7,10 +7,6 @@ INSTALL_DIR=$(shell ../tools/dist-install-dir.sh)
 
 default:
 	cargo build --release
-	# cp target/release/libprimer.so target/release/libprimer-core.so.$(VERSION)
-	# ln -sf libprimer-core.so.$(VERSION) target/release/libprimer-core.so.$(VERSION_MAJOR).$(VERSION_MINOR)
-	# ln -sf libprimer-core.so.$(VERSION_MAJOR).$(VERSION_MINOR) target/release/libprimer-core.so.$(VERSION_MAJOR)
-	# ln -sf libprimer-core.so.$(VERSION_MAJOR) target/release/libprimer-core.so
 
 install: $(DESTDIR)/usr/include/primer/core
 	cp include/primer/core/*.h $(DESTDIR)/usr/include/primer/core/

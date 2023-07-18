@@ -14,6 +14,7 @@ OBJ = src/range.o \
 CXXFLAGS = -std=c++17 -Iinclude -Ilibprimer-core/include
 
 default:
+	cd libprimer-core && make
 	mkdir -p build
 	cd build && cmake ..
 	cd build && make
