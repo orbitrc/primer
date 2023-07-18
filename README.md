@@ -40,16 +40,17 @@ $ cargo --version
 Build
 -----
 
-For build and install,
+For build,
 
 ```sh
-$ cd libprimer-core/
 $ make
-$ sudo make install
 ```
 
+For install,
+
+### Arch Linux
+
 ```sh
-$ make
-$ sudo make install
+$ sudo make PREFIX=/usr install
 ```
 
