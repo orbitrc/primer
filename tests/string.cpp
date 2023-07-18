@@ -17,6 +17,11 @@ void string_compare()
     pr::String s3 = "Bar"_S;
 
     assert(s1 != s3);
+
+    assert(s1 > s3);
+    assert(s3 < s1);
+    assert(s1 <= s2);
+    assert(s1 >= s2);
 }
 
 void string_contains()

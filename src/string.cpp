@@ -196,14 +196,38 @@ String& String::operator=(const String &other)
     return *this;
 }
 
-bool String::operator==(const String& other)
+bool String::operator==(const String& other) const
 {
     return pr_string_eq(this->_impl->_pr_string, other._impl->_pr_string);
 }
 
-bool String::operator!=(const String& other)
+bool String::operator!=(const String& other) const
 {
     return !(*this == other);
+}
+
+bool String::operator<(const String& other) const
+{
+    return pr_string_lt(this->_impl->_pr_string, other._impl->_pr_string);
+}
+
+bool String::operator>(const String& other) const
+{
+    return pr_string_gt(this->_impl->_pr_string, other._impl->_pr_string);
+}
+
+bool String::operator<=(const String& other) const
+{
+    bool lt = pr_string_lt(this->_impl->_pr_string, other._impl->_pr_string);
+
+    return (lt || *this == other);
+}
+
+bool String::operator>=(const String& other) const
+{
+    bool gt = pr_string_gt(this->_impl->_pr_string, other._impl->_pr_string);
+
+    return (gt || *this == other);
 }
 
 } // namespace pr

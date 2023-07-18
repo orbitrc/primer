@@ -1,6 +1,6 @@
 [package]
 name = "primer-core"
-version = "0.2.0"
+version = "0.4.0"
 authors = ["Yujŏnja <hardboiled65@gmail.com>"]
 description = "A base library collections for Application."
 license = "MIT"
@@ -10,10 +10,10 @@ keywords = ["rust"]
 edition = "2018"
 
 [lib]
-crate-type = ["staticlib", "cdylib"]
+crate-type = ["staticlib"]
 
 [dependencies]
-seshat-unicode = "0.0.15"
+seshat-unicode = "0.1.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 rand = "0.8.4"

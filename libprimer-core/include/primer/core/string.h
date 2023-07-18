@@ -27,6 +27,10 @@ pr_string* pr_string_cloned(const pr_string *string);
 
 bool pr_string_eq(const pr_string *string, const pr_string *other);
 
+bool pr_string_lt(const pr_string *string, const pr_string *other);
+
+bool pr_string_gt(const pr_string *string, const pr_string *other);
+
 /* Returns vector. */
 
 pr_string_vector* pr_string_split(const pr_string *string,
