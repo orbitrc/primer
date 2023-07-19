@@ -14,6 +14,7 @@ HEADERS += include/primer/base.h \
     include/primer/string.h \
     include/primer/vector.h \
     include/primer/json.h \
+    include/primer/hash-map.h \
     tests/range.h \
     tests/string.h \
     tests/vector.h \

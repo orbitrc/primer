@@ -2,7 +2,8 @@ OBJ = range.o \
 	string.o \
 	vector.o \
 	json.o \
-	format.o
+	format.o \
+	hash-map.o
 
 default: $(OBJ)
 	$(CXX) $(CFLAGS) $^ main.cpp -o primer-test -I../include -L../build/ -lprimer -Wl,-rpath=../build
