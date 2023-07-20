@@ -129,6 +129,20 @@ void vector_sort()
     assert(v[2] == 3);
     assert(v[3] == 4);
     assert(v[4] == 5);
+
+    pr::Vector<const char*> v2;
+
+    v2.push("B1");
+    v2.push("A1");
+    v2.push("B2");
+    v2.push("A2");
+
+    v2.sort([](const char* const& a, const char* const& b) {
+        return a[0] < b[0];
+    });
+
+    assert(v2[0][1] == '1');
+    assert(v2[1][1] == '2');
 }
 
 } // namespace tests

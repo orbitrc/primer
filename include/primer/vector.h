@@ -96,9 +96,18 @@ public:
     }
 
     /// Sort items in the Vector. This method changes the Vector.
+    /// Sort is in stable.
     void sort()
     {
-        std::sort(this->begin(), this->end());
+        std::stable_sort(this->begin(), this->end());
+    }
+
+    /// Sort items in the Vector by given function.
+    /// This method changes the Vector.
+    /// Sort is in stable.
+    void sort(std::function<bool(const T&, const T&)> func)
+    {
+        std::stable_sort(this->begin(), this->end(), func);
     }
 
     //=======================
