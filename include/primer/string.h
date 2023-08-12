@@ -3,6 +3,9 @@
 
 #include <stdint.h>
 
+#include <functional>
+#include <string>
+
 #include <primer/vector.h>
 
 namespace pr {
@@ -132,5 +135,18 @@ private:
 pr::Unicode::Scalar operator""_U(unsigned long long int);
 
 pr::String operator""_S(const char *str, uint64_t len);
+
+//=========
+// Hash
+//=========
+
+template<>
+struct std::hash<pr::String>
+{
+    std::size_t operator()(const pr::String& s) const
+    {
+        return std::hash<std::string>()(s.c_str());
+    }
+};
 
 #endif // _PRIMER_STRING_H
