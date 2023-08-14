@@ -248,6 +248,17 @@ bool DBusMessage::append(const pr::String& value)
 }
 
 
+DBusConnection::DBusConnection()
+{
+    this->_impl = new DBusConnection::Impl();
+}
+
+DBusConnection::DBusConnection(const DBusConnection& other)
+{
+    this->_impl = new DBusConnection::Impl();
+    this->_impl->connection = other._impl->connection;
+}
+
 DBusConnection::~DBusConnection()
 {
     delete this->_impl;
@@ -331,6 +342,15 @@ DBusConnection DBusConnection::bus_get(DBus::Type bus_type)
     }
 
     return conn;
+}
+
+DBusConnection& DBusConnection::operator=(const DBusConnection& other)
+{
+    delete this->_impl;
+    this->_impl = new DBusConnection::Impl();
+    this->_impl->connection = other._impl->connection;
+
+    return *this;
 }
 
 } // namespace pr

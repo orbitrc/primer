@@ -112,6 +112,10 @@ private:
 class DBusConnection
 {
 public:
+    DBusConnection();
+
+    DBusConnection(const DBusConnection& other);
+
     ~DBusConnection();
 
     bool request_name(const pr::String& name);
@@ -121,6 +125,8 @@ public:
     std::optional<DBusMessage> pop_message();
 
     bool send(const DBusMessage& message) const;
+
+    DBusConnection& operator=(const DBusConnection& other);
 
 public:
     static DBusConnection bus_get(DBus::Type bus_type);
