@@ -34,7 +34,12 @@ int main(int argc, char *argv[])
     conn.request_name("org.example.Test"_S);
 
     while (conn.read_write_dispatch()) {
-        auto message = conn.pop_message();
+        auto message_opt = conn.pop_message();
+        if (message_opt == std::nullopt) {
+            fprintf(stderr, "pop_message() returned null.\n");
+            continue;
+        }
+        auto message = message_opt.value();
 
         auto interface = message.interface();
         auto member = message.member();

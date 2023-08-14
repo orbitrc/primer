@@ -99,9 +99,11 @@ DBusMessage::DBusMessage(const DBusMessage& other)
 DBusMessage::~DBusMessage()
 {
     this->_impl->message_count -= 1;
+    /*
     if (this->_impl->message_count == 0) {
         dbus_message_unref(this->_impl->message);
     }
+    */
     delete this->_impl;
 }
 
@@ -124,6 +126,19 @@ pr::String DBusMessage::member() const
 pr::String DBusMessage::path() const
 {
     return pr::String(dbus_message_get_path(this->_impl->message));
+}
+
+DBusMessage::Type DBusMessage::type() const
+{
+    auto t = dbus_message_get_type(this->_impl->message);
+
+    if (t == DBUS_MESSAGE_TYPE_METHOD_CALL) {
+        return DBusMessage::Type::MethodCall;
+    } else if (t == DBUS_MESSAGE_TYPE_SIGNAL) {
+        return DBusMessage::Type::Signal;
+    }
+
+    return DBusMessage::Type::MethodCall; // TODO: Must invalid type.
 }
 
 DBusMessage DBusMessage::new_method_return() const
@@ -208,7 +223,7 @@ bool DBusMessage::append(const DBus::Variant& variant)
         dbus_message_iter_append_basic(&variant_iter,
             DBUS_TYPE_INT32, &int32_value);
     } else if (variant.type() == DBus::Variant::Type::Boolean) {
-        auto boolean_value = variant.value<bool>();
+        auto boolean_value = static_cast<int>(variant.value<bool>());
         dbus_message_iter_append_basic(&variant_iter,
             DBUS_TYPE_BOOLEAN, &boolean_value);
     }
@@ -264,9 +279,12 @@ bool DBusConnection::read_write_dispatch(int32_t timeout)
     return false;
 }
 
-DBusMessage DBusConnection::pop_message()
+std::optional<DBusMessage> DBusConnection::pop_message()
 {
     ::DBusMessage *msg = dbus_connection_pop_message(this->_impl->connection);
+    if (msg == NULL) {
+        return std::nullopt;
+    }
     DBusMessage message;
     message._impl->message = msg;
 

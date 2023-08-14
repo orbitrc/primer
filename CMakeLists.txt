@@ -15,6 +15,7 @@ add_library(primer SHARED
     include/primer/json.h
     include/primer/range.h
     include/primer/string.h
+    include/primer/vector.h
     include/primer/format.h
     include/primer/io.h
     include/primer/d-bus.h

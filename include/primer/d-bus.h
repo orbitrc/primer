@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include <exception>
+#include <optional>
 
 #include <primer/string.h>
 #include <primer/vector.h>
@@ -88,6 +89,8 @@ public:
 
     pr::String path() const;
 
+    DBusMessage::Type type() const;
+
     DBusMessage new_method_return() const;
 
     DBusMessage new_signal(const pr::String& path,
@@ -115,7 +118,7 @@ public:
 
     bool read_write_dispatch(int32_t timeout = -1);
 
-    DBusMessage pop_message();
+    std::optional<DBusMessage> pop_message();
 
     bool send(const DBusMessage& message) const;
 
