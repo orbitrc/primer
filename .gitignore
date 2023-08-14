@@ -3,6 +3,7 @@ build/
 *.o
 tests/primer-test
 tests/println
+tests/d-bus-server
 Cargo.lock
 target/
 *.pro.user

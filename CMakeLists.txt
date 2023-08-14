@@ -11,11 +11,13 @@ add_library(primer SHARED
     src/string.cpp
     src/format.cpp
     src/io.cpp
+    src/d-bus.cpp
     include/primer/json.h
     include/primer/range.h
     include/primer/string.h
     include/primer/format.h
     include/primer/io.h
+    include/primer/d-bus.h
 )
 
 target_include_directories(primer
@@ -32,11 +34,23 @@ string(REPLACE "-O3" "" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
 target_link_options(primer
     PRIVATE -O2)
 
+# Link libdbus-1.
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(DBUS REQUIRED dbus-1)
+
+target_include_directories(primer
+    PRIVATE ${DBUS_INCLUDE_DIRS})
+
+target_link_options(primer
+    PRIVATE -ldbus-1)
+
+# Version info.
 set_target_properties(primer PROPERTIES
     VERSION ${CMAKE_PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION_MAJOR}
 )
 
+# Link libprimer-core.
 set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 find_library(PRIMER_CORE_LIBRARY libprimer_core.a
     HINTS ./libprimer-core/target/release)
