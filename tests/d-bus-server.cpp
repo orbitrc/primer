@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
         + "  </interface>\n"_S
         + "</node>"_S;
 
-    auto conn = pr::DBusConnection::bus_get(pr::DBus::Type::Session);
+    auto conn = pr::DBusConnection::bus_get(pr::DBus::BusType::Session);
 
     conn.request_name("org.example.Test"_S);
 

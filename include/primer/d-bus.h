@@ -14,7 +14,7 @@ namespace pr {
 class DBus
 {
 public:
-    enum class Type {
+    enum class BusType {
         Session,
         System,
     };
@@ -144,7 +144,7 @@ public:
     DBusConnection& operator=(const DBusConnection& other);
 
 public:
-    static DBusConnection bus_get(DBus::Type bus_type);
+    static DBusConnection bus_get(DBus::BusType bus_type);
 
 private:
     class Impl;

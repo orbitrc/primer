@@ -316,14 +316,14 @@ bool DBusConnection::send(const DBusMessage& message) const
 }
 
 
-DBusConnection DBusConnection::bus_get(DBus::Type bus_type)
+DBusConnection DBusConnection::bus_get(DBus::BusType bus_type)
 {
     DBusConnection conn;
 
     DBusBusType t;
-    if (bus_type == DBus::Type::Session) {
+    if (bus_type == DBus::BusType::Session) {
         t = DBUS_BUS_SESSION;
-    } else if (bus_type == DBus::Type::System) {
+    } else if (bus_type == DBus::BusType::System) {
         t = DBUS_BUS_SYSTEM;
     } else {
         t = DBUS_BUS_SESSION;
