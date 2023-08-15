@@ -19,17 +19,17 @@ public:
         System,
     };
 
+    enum class Type {
+        Invalid,
+        Int32,
+        String,
+        Boolean,
+    };
+
     class Variant
     {
     public:
-        enum class Type {
-            Int32,
-            String,
-            Boolean,
-        };
-
-    public:
-        Variant(DBus::Variant::Type type);
+        Variant(DBus::Type type);
 
         Variant(const pr::String& value);
 
@@ -37,13 +37,13 @@ public:
 
         Variant(bool value);
 
-        DBus::Variant::Type type() const;
+        DBus::Type type() const;
 
         template<typename T>
         T value() const;
 
     private:
-        DBus::Variant::Type _type;
+        DBus::Type _type;
 
         pr::String _string;
         int32_t _int32;

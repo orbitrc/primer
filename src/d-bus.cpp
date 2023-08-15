@@ -3,30 +3,30 @@
 #include <dbus/dbus.h>
 
 namespace pr {
-DBus::Variant::Variant(DBus::Variant::Type type)
+DBus::Variant::Variant(DBus::Type type)
 {
     this->_type = type;
 }
 
 DBus::Variant::Variant(const pr::String& value)
 {
-    this->_type = DBus::Variant::Type::String;
+    this->_type = DBus::Type::String;
     this->_string = value;
 }
 
 DBus::Variant::Variant(int32_t value)
 {
-    this->_type = DBus::Variant::Type::Int32;
+    this->_type = DBus::Type::Int32;
     this->_int32 = value;
 }
 
 DBus::Variant::Variant(bool value)
 {
-    this->_type = DBus::Variant::Type::Boolean;
+    this->_type = DBus::Type::Boolean;
     this->_boolean = value;
 }
 
-DBus::Variant::Type DBus::Variant::type() const
+DBus::Type DBus::Variant::type() const
 {
     return this->_type;
 }
@@ -195,13 +195,13 @@ bool DBusMessage::append(const DBus::Variant& variant)
 
     const char *type_as_string = "";
     switch (variant.type()) {
-    case DBus::Variant::Type::String:
+    case DBus::Type::String:
         type_as_string = DBUS_TYPE_STRING_AS_STRING;
         break;
-    case DBus::Variant::Type::Int32:
+    case DBus::Type::Int32:
         type_as_string = DBUS_TYPE_INT32_AS_STRING;
         break;
-    case DBus::Variant::Type::Boolean:
+    case DBus::Type::Boolean:
         type_as_string = DBUS_TYPE_BOOLEAN_AS_STRING;
         break;
     default:
@@ -213,16 +213,16 @@ bool DBusMessage::append(const DBus::Variant& variant)
         DBUS_TYPE_VARIANT, type_as_string,
         &variant_iter);
 
-    if (variant.type() == DBus::Variant::Type::String) {
+    if (variant.type() == DBus::Type::String) {
         auto string_value = variant.value<pr::String>();
         const char *c_str = string_value.c_str();
         dbus_message_iter_append_basic(&variant_iter,
             DBUS_TYPE_STRING, &c_str);
-    } else if (variant.type() == DBus::Variant::Type::Int32) {
+    } else if (variant.type() == DBus::Type::Int32) {
         auto int32_value = variant.value<int32_t>();
         dbus_message_iter_append_basic(&variant_iter,
             DBUS_TYPE_INT32, &int32_value);
-    } else if (variant.type() == DBus::Variant::Type::Boolean) {
+    } else if (variant.type() == DBus::Type::Boolean) {
         auto boolean_value = static_cast<int>(variant.value<bool>());
         dbus_message_iter_append_basic(&variant_iter,
             DBUS_TYPE_BOOLEAN, &boolean_value);
