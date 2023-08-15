@@ -50,6 +50,21 @@ public:
         bool _boolean;
     };
 
+    template<typename K, typename V>
+    class DictEntry
+    {
+    public:
+        DictEntry(const K& key, const V& value)
+        {
+            this->_key = key;
+            this->_value = value;
+        }
+
+    private:
+        K _key;
+        V _value;
+    };
+
 public:
     static const char* introspect_1_0_xml_doctype_decl_node();
 };
