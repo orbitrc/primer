@@ -61,3 +61,8 @@ else()
     message(FATAL_ERROR "libprimer_core.a not found!")
 endif()
 
+# Tests. For IDE.
+add_custom_target(tests
+    SOURCES
+    ./tests/d-bus-server.cpp
+)
