@@ -65,4 +65,5 @@ endif()
 add_custom_target(tests
     SOURCES
     ./tests/d-bus-server.cpp
+    ./tests/d-bus-client.cpp
 )

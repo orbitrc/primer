@@ -1,5 +1,7 @@
 #include <primer/d-bus.h>
 
+#include <stdio.h> // REMOVE AFTER DEBUG!!!!
+
 #include <dbus/dbus.h>
 
 namespace pr {
@@ -7,6 +9,53 @@ namespace pr {
 DBus::Array::Array()
 {
     this->_type = DBus::Type::Invalid;
+}
+
+DBus::Array::Array(DBus::Type type)
+{
+    this->_type = type;
+}
+
+int32_t DBus::Array::length() const
+{
+    switch (this->_type) {
+    case DBus::Type::Int32:
+        return this->_int32_v.length();
+        break;
+    case DBus::Type::String:
+        return this->_string_v.length();
+        break;
+    case DBus::Type::Boolean:
+        return this->_boolean_v.length();
+        break;
+    case DBus::Type::Variant:
+        return this->_variant_v.length();
+        break;
+    case DBus::Type::Array:
+    case DBus::Type::Invalid:
+    default:
+        return 0;
+    }
+}
+
+void DBus::Array::push(int32_t value)
+{
+    this->_int32_v.push(value);
+}
+
+void DBus::Array::push(bool value)
+{
+    this->_boolean_v.push(value);
+}
+
+void DBus::Array::push(const pr::String& value)
+{
+    this->_string_v.push(value);
+}
+
+void DBus::Array::push(const pr::DBus::Variant& value)
+{
+    this->_variant_v.push(value);
 }
 
 
@@ -36,6 +85,12 @@ DBus::Variant::Variant(bool value)
 {
     this->_type = DBus::Type::Boolean;
     this->_boolean = value;
+}
+
+DBus::Variant::Variant(const pr::DBus::Array& value)
+{
+    this->_type = DBus::Type::Array;
+    this->_array = value;
 }
 
 DBus::Type DBus::Variant::type() const
@@ -241,6 +296,38 @@ static DBus::Array _process_array(::DBusMessageIter *iter)
 {
     DBus::Array array;
 
+    auto type = dbus_message_iter_get_element_type(iter);
+    auto len = dbus_message_iter_get_element_count(iter);
+
+    ::DBusMessageIter array_iter;
+    dbus_message_iter_recurse(iter, &array_iter);
+
+    if (type == DBUS_TYPE_INT32) {
+        array = DBus::Array(DBus::Type::Int32);
+        void *value;
+        for (int i = 0; i < len; ++i) {
+            dbus_message_iter_get_basic(&array_iter, &value);
+            array.push(*(static_cast<int32_t*>(value)));
+            dbus_message_iter_next(&array_iter);
+        }
+    } else if (type == DBUS_TYPE_STRING) {
+        array = DBus::Array(DBus::Type::String);
+        void *value;
+        for (int i = 0; i < len; ++i) {
+            dbus_message_iter_get_basic(&array_iter, &value);
+            array.push((static_cast<const char*>(value)));
+            dbus_message_iter_next(&array_iter);
+        }
+    } else if (type == DBUS_TYPE_BOOLEAN) {
+        array = DBus::Array(DBus::Type::Boolean);
+        void *value;
+        for (int i = 0; i < len; ++i) {
+            dbus_message_iter_get_basic(&array_iter, &value);
+            array.push(*(static_cast<int32_t*>(value)));
+            dbus_message_iter_next(&array_iter);
+        }
+    }
+
     return array;
 }
 
@@ -256,6 +343,16 @@ static DBus::Variant _process_variant(::DBusMessageIter *iter)
         void *value;
         dbus_message_iter_get_basic(iter, &value);
         DBus::Variant variant(pr::String(static_cast<const char*>(value)));
+        return variant;
+    } else if (variant_type == DBUS_TYPE_BOOLEAN) {
+        void *value;
+        dbus_message_iter_get_basic(iter, &value);
+        bool bool_value = (*(static_cast<int32_t*>(value)));
+        DBus::Variant variant(bool_value);
+        return variant;
+    } else if (variant_type == DBUS_TYPE_ARRAY) {
+        DBus::Array array = _process_array(iter);
+        DBus::Variant variant(array);
         return variant;
     }
 
@@ -281,6 +378,13 @@ pr::Vector<DBus::Argument> DBusMessage::arguments() const
             dbus_message_iter_recurse(&iter, &variant_iter);
             DBus::Variant variant = _process_variant(&variant_iter);
             v.push(variant);
+        } else if (type == DBUS_TYPE_BOOLEAN) {
+            void *arg = nullptr;
+            dbus_message_iter_get_basic(&iter, &arg);
+            v.push(DBus::Argument(*(static_cast<bool*>(arg))));
+        } else if (type == DBUS_TYPE_ARRAY) {
+            DBus::Array array = _process_array(&iter);
+            v.push(DBus::Argument(array));
         } else {
             // TODO: Other types.
         }
@@ -348,6 +452,21 @@ bool DBusMessage::append(const pr::String& value)
     return true;
 }
 
+DBusMessage DBusMessage::new_method_call(const pr::String& dest,
+                                         const pr::String& path,
+                                         const pr::String& interface,
+                                         const pr::String& method)
+{
+    DBusMessage message;
+
+    ::DBusMessage *msg = dbus_message_new_method_call(
+        dest.c_str(), path.c_str(), interface.c_str(), method.c_str());
+
+    message._impl->message = msg;
+
+    return message;
+}
+
 
 DBusConnection::DBusConnection()
 {
@@ -389,6 +508,27 @@ bool DBusConnection::read_write_dispatch(int32_t timeout)
     }
 
     return false;
+}
+
+DBusMessage DBusConnection::send_with_reply(const DBusMessage& message,
+                                            int32_t timeout)
+{
+    ::DBusError err;
+    dbus_error_init(&err);
+
+    ::DBusMessage *msg = dbus_connection_send_with_reply_and_block(
+        this->_impl->connection, message._impl->message, timeout, &err);
+
+    if (dbus_error_is_set(&err)) {
+        pr::String error_message = err.message;
+        dbus_error_free(&err);
+        throw DBusError(error_message.c_str());
+    }
+
+    DBusMessage reply;
+    reply._impl->message = msg;
+
+    return reply;
 }
 
 std::optional<DBusMessage> DBusConnection::pop_message()

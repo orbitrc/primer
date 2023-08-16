@@ -4,6 +4,7 @@ build/
 tests/primer-test
 tests/println
 tests/d-bus-server
+tests/d-bus-client
 Cargo.lock
 target/
 *.pro.user

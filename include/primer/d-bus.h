@@ -25,6 +25,7 @@ public:
         String,
         Boolean,
         Variant,
+        Array,
     };
 
     class Variant;
@@ -33,6 +34,18 @@ public:
     {
     public:
         Array();
+
+        Array(DBus::Type type);
+
+        int32_t length() const;
+
+        void push(int32_t value);
+
+        void push(bool value);
+
+        void push(const pr::String& value);
+
+        void push(const pr::DBus::Variant& value);
 
     private:
         DBus::Type _type;
@@ -57,6 +70,8 @@ public:
 
         Variant(bool value);
 
+        Variant(const pr::DBus::Array& value);
+
         DBus::Type type() const;
 
         template<typename T>
@@ -68,6 +83,7 @@ public:
         pr::String _string;
         int32_t _int32;
         bool _boolean;
+        pr::DBus::Array _array;
     };
 
     template<typename K, typename V>
@@ -167,6 +183,12 @@ public:
 
     bool append(const pr::String& value);
 
+public:
+    static DBusMessage new_method_call(const pr::String& dest,
+                                       const pr::String& path,
+                                       const pr::String& interface,
+                                       const pr::String& method);
+
 private:
     class Impl;
 
@@ -185,6 +207,12 @@ public:
     bool request_name(const pr::String& name);
 
     bool read_write_dispatch(int32_t timeout = -1);
+
+    /// Send message and get reply. Blocking mode. Timeout in milliseconds.
+    /// Timeout -1 for default or infinite.
+    /// It throws an exception on error.
+    DBusMessage send_with_reply(const DBusMessage& message,
+                                int32_t timeout = -1);
 
     std::optional<DBusMessage> pop_message();
 
