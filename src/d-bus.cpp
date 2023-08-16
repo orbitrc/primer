@@ -3,6 +3,12 @@
 #include <dbus/dbus.h>
 
 namespace pr {
+
+DBus::Variant::Variant()
+{
+    this->_type = DBus::Type::Invalid;
+}
+
 DBus::Variant::Variant(DBus::Type type)
 {
     this->_type = type;
@@ -47,6 +53,65 @@ template<>
 bool DBus::Variant::value<bool>() const
 {
     return this->_boolean;
+}
+
+
+DBus::Argument::Argument(DBus::Type type)
+{
+    this->_type = type;
+}
+
+DBus::Argument::Argument(int32_t value)
+{
+    this->_type = DBus::Type::Int32;
+    this->_int32 = value;
+}
+
+DBus::Argument::Argument(const pr::String& value)
+{
+    this->_type = DBus::Type::String;
+    this->_string = value;
+}
+
+DBus::Argument::Argument(bool value)
+{
+    this->_type = DBus::Type::Boolean;
+    this->_boolean = value;
+}
+
+DBus::Argument::Argument(const Variant& value)
+{
+    this->_type = DBus::Type::Variant;
+    this->_variant = value;
+}
+
+template<>
+int32_t DBus::Argument::value() const
+{
+    return this->_int32;
+}
+
+template<>
+pr::String DBus::Argument::value() const
+{
+    return this->_string;
+}
+
+template<>
+bool DBus::Argument::value() const
+{
+    return this->_boolean;
+}
+
+template<>
+DBus::Variant DBus::Argument::value() const
+{
+    return this->_variant;
+}
+
+DBus::Type DBus::Argument::type() const
+{
+    return this->_type;
 }
 
 
@@ -166,9 +231,9 @@ DBusMessage DBusMessage::new_signal(const pr::String& path,
     return message;
 }
 
-pr::Vector<DBus::Variant> DBusMessage::arguments() const
+pr::Vector<DBus::Argument> DBusMessage::arguments() const
 {
-    pr::Vector<DBus::Variant> v;
+    pr::Vector<DBus::Argument> v;
 
     ::DBusMessageIter iter;
     dbus_message_iter_init(this->_impl->message, &iter);

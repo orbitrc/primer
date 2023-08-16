@@ -24,11 +24,15 @@ public:
         Int32,
         String,
         Boolean,
+        Variant,
     };
 
     class Variant
     {
     public:
+        /// Construct with type `Invalid`.
+        Variant();
+
         Variant(DBus::Type type);
 
         Variant(const pr::String& value);
@@ -63,6 +67,35 @@ public:
     private:
         K _key;
         V _value;
+    };
+
+    /// A meta container for reply arguments. It can contains a plain type,
+    /// or a Variant type.
+    class Argument
+    {
+    public:
+        Argument(DBus::Type type);
+
+        Argument(int32_t value);
+
+        Argument(const pr::String& value);
+
+        Argument(bool value);
+
+        Argument(const Variant& value);
+
+        DBus::Type type() const;
+
+        template<typename T>
+        T value() const;
+
+    private:
+        DBus::Type _type;
+
+        pr::String _string;
+        int32_t _int32;
+        bool _boolean;
+        Variant _variant;
     };
 
 public:
@@ -112,7 +145,7 @@ public:
                            const pr::String& interface,
                            const pr::String& name) const;
 
-    pr::Vector<DBus::Variant> arguments() const;
+    pr::Vector<DBus::Argument> arguments() const;
 
     bool append(const DBus::Variant& variant);
 
