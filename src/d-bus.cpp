@@ -4,6 +4,12 @@
 
 namespace pr {
 
+DBus::Array::Array()
+{
+    this->_type = DBus::Type::Invalid;
+}
+
+
 DBus::Variant::Variant()
 {
     this->_type = DBus::Type::Invalid;
@@ -231,6 +237,31 @@ DBusMessage DBusMessage::new_signal(const pr::String& path,
     return message;
 }
 
+static DBus::Array _process_array(::DBusMessageIter *iter)
+{
+    DBus::Array array;
+
+    return array;
+}
+
+static DBus::Variant _process_variant(::DBusMessageIter *iter)
+{
+    auto variant_type = dbus_message_iter_get_arg_type(iter);
+    if (variant_type == DBUS_TYPE_INT32) {
+        void *value;
+        dbus_message_iter_get_basic(iter, &value);
+        DBus::Variant variant(*(static_cast<int32_t*>(value)));
+        return variant;
+    } else if (variant_type == DBUS_TYPE_STRING) {
+        void *value;
+        dbus_message_iter_get_basic(iter, &value);
+        DBus::Variant variant(pr::String(static_cast<const char*>(value)));
+        return variant;
+    }
+
+    return DBus::Variant();
+}
+
 pr::Vector<DBus::Argument> DBusMessage::arguments() const
 {
     pr::Vector<DBus::Argument> v;
@@ -240,11 +271,16 @@ pr::Vector<DBus::Argument> DBusMessage::arguments() const
 
     do {
         auto type = dbus_message_iter_get_arg_type(&iter);
-        void *arg = nullptr;
-        dbus_message_iter_get_basic(&iter, &arg);
 
         if (type == DBUS_TYPE_STRING) {
+            void *arg = nullptr;
+            dbus_message_iter_get_basic(&iter, &arg);
             v.push(pr::String(((const char*)arg)));
+        } else if (type == DBUS_TYPE_VARIANT) {
+            ::DBusMessageIter variant_iter;
+            dbus_message_iter_recurse(&iter, &variant_iter);
+            DBus::Variant variant = _process_variant(&variant_iter);
+            v.push(variant);
         } else {
             // TODO: Other types.
         }

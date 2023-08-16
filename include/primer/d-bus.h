@@ -27,6 +27,22 @@ public:
         Variant,
     };
 
+    class Variant;
+
+    class Array
+    {
+    public:
+        Array();
+
+    private:
+        DBus::Type _type;
+
+        pr::Vector<int32_t> _int32_v;
+        pr::Vector<bool> _boolean_v;
+        pr::Vector<pr::String> _string_v;
+        pr::Vector<pr::DBus::Variant> _variant_v;
+    };
+
     class Variant
     {
     public:
