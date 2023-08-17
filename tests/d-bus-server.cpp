@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 
             auto property = vec[1].value<pr::String>();
             if (property == "Greeting"_S) {
-                ret.append(pr::DBus::Variant("Hello!"_S));
+                ret.append(pr::DBusVariant("Hello!"_S));
 
                 conn.send(ret);
             }

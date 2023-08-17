@@ -48,11 +48,11 @@ int main(int argc, char *argv[])
         printf("Argument: (%s)\n", type_to_string(arg.type()));
 
         if (arg.type() == pr::DBus::Type::Variant) {
-            auto variant = arg.value<pr::DBus::Variant>();
+            auto variant = arg.value<pr::DBusVariant>();
             printf("  Variant type: %s\n", type_to_string(variant.type()));
 
             if (variant.type() == pr::DBus::Type::Array) {
-                auto array = variant.value<pr::DBus::Array>();
+                auto array = variant.value<pr::DBusArray>();
                 printf("    Array<%s>\n", type_to_string(array.type()));
 
                 if (array.type() == pr::DBus::Type::String) {

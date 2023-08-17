@@ -28,113 +28,6 @@ public:
         Array,
     };
 
-    class Variant;
-
-    class Array
-    {
-    public:
-        Array();
-
-        Array(DBus::Type type);
-
-        int32_t length() const;
-
-        DBus::Type type() const;
-
-        void push(int32_t value);
-
-        void push(bool value);
-
-        void push(const pr::String& value);
-
-        void push(const pr::DBus::Variant& value);
-
-        template<typename T>
-        const pr::Vector<T>& as_vector() const;
-
-    private:
-        DBus::Type _type;
-
-        pr::Vector<int32_t> _int32_v;
-        pr::Vector<bool> _boolean_v;
-        pr::Vector<pr::String> _string_v;
-        pr::Vector<pr::DBus::Variant> _variant_v;
-    };
-
-    class Variant
-    {
-    public:
-        /// Construct with type `Invalid`.
-        Variant();
-
-        Variant(DBus::Type type);
-
-        Variant(const pr::String& value);
-
-        Variant(int32_t value);
-
-        Variant(bool value);
-
-        Variant(const pr::DBus::Array& value);
-
-        DBus::Type type() const;
-
-        template<typename T>
-        T value() const;
-
-    private:
-        DBus::Type _type;
-
-        pr::String _string;
-        int32_t _int32;
-        bool _boolean;
-        pr::DBus::Array _array;
-    };
-
-    template<typename K, typename V>
-    class DictEntry
-    {
-    public:
-        DictEntry(const K& key, const V& value)
-        {
-            this->_key = key;
-            this->_value = value;
-        }
-
-    private:
-        K _key;
-        V _value;
-    };
-
-    /// A meta container for reply arguments. It can contains a plain type,
-    /// or a Variant type.
-    class Argument
-    {
-    public:
-        Argument(DBus::Type type);
-
-        Argument(int32_t value);
-
-        Argument(const pr::String& value);
-
-        Argument(bool value);
-
-        Argument(const Variant& value);
-
-        DBus::Type type() const;
-
-        template<typename T>
-        T value() const;
-
-    private:
-        DBus::Type _type;
-
-        pr::String _string;
-        int32_t _int32;
-        bool _boolean;
-        Variant _variant;
-    };
-
 public:
     static const char* introspect_1_0_xml_doctype_decl_node();
 };
@@ -148,6 +41,108 @@ public:
 
 private:
     pr::String _message;
+};
+
+class DBusVariant;
+
+class DBusArray
+{
+public:
+    DBusArray();
+
+    DBusArray(DBus::Type type);
+
+    int32_t length() const;
+
+    DBus::Type type() const;
+
+    void push(int32_t value);
+
+    void push(bool value);
+
+    void push(const pr::String& value);
+
+    void push(const pr::DBusVariant& value);
+
+    template<typename T>
+    const pr::Vector<T>& as_vector() const;
+
+private:
+    DBus::Type _type;
+
+    pr::Vector<int32_t> _int32_v;
+    pr::Vector<bool> _boolean_v;
+    pr::Vector<pr::String> _string_v;
+    pr::Vector<pr::DBusVariant> _variant_v;
+};
+
+class DBusVariant
+{
+public:
+    /// Construct with type `Invalid`.
+    DBusVariant();
+
+    DBusVariant(DBus::Type type);
+
+    DBusVariant(const pr::String& value);
+
+    DBusVariant(int32_t value);
+
+    DBusVariant(bool value);
+
+    DBusVariant(const pr::DBusArray& value);
+
+    DBus::Type type() const;
+
+    template<typename T>
+    T value() const;
+
+private:
+    DBus::Type _type;
+
+    pr::String _string;
+    int32_t _int32;
+    bool _boolean;
+    pr::DBusArray _array;
+};
+
+/// A meta container for reply arguments. It can contains a plain type,
+/// or a Variant type.
+class DBusArgument
+{
+public:
+    DBusArgument(DBus::Type type);
+
+    DBusArgument(int32_t value);
+
+    DBusArgument(const pr::String& value);
+
+    DBusArgument(bool value);
+
+    DBusArgument(const DBusVariant& value);
+
+    DBus::Type type() const;
+
+    template<typename T>
+    T value() const;
+
+private:
+    DBus::Type _type;
+
+    pr::String _string;
+    int32_t _int32;
+    bool _boolean;
+    DBusVariant _variant;
+};
+
+class DBusDictEntry
+{
+public:
+    DBusDictEntry();
+
+private:
+    DBus::Type _key_type;
+    DBus::Type _value_type;
 };
 
 class DBusConnection;
@@ -182,9 +177,9 @@ public:
                            const pr::String& interface,
                            const pr::String& name) const;
 
-    pr::Vector<DBus::Argument> arguments() const;
+    pr::Vector<DBusArgument> arguments() const;
 
-    bool append(const DBus::Variant& variant);
+    bool append(const DBusVariant& variant);
 
     bool append(const pr::String& value);
 

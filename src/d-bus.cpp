@@ -6,17 +6,17 @@
 
 namespace pr {
 
-DBus::Array::Array()
+DBusArray::DBusArray()
 {
     this->_type = DBus::Type::Invalid;
 }
 
-DBus::Array::Array(DBus::Type type)
+DBusArray::DBusArray(DBus::Type type)
 {
     this->_type = type;
 }
 
-int32_t DBus::Array::length() const
+int32_t DBusArray::length() const
 {
     switch (this->_type) {
     case DBus::Type::Int32:
@@ -38,174 +38,174 @@ int32_t DBus::Array::length() const
     }
 }
 
-DBus::Type DBus::Array::type() const
+DBus::Type DBusArray::type() const
 {
     return this->_type;
 }
 
-void DBus::Array::push(int32_t value)
+void DBusArray::push(int32_t value)
 {
     this->_int32_v.push(value);
 }
 
-void DBus::Array::push(bool value)
+void DBusArray::push(bool value)
 {
     this->_boolean_v.push(value);
 }
 
-void DBus::Array::push(const pr::String& value)
+void DBusArray::push(const pr::String& value)
 {
     this->_string_v.push(value);
 }
 
-void DBus::Array::push(const pr::DBus::Variant& value)
+void DBusArray::push(const pr::DBusVariant& value)
 {
     this->_variant_v.push(value);
 }
 
 template<>
-const pr::Vector<int32_t>& DBus::Array::as_vector() const
+const pr::Vector<int32_t>& DBusArray::as_vector() const
 {
     return this->_int32_v;
 }
 
 template<>
-const pr::Vector<bool>& DBus::Array::as_vector() const
+const pr::Vector<bool>& DBusArray::as_vector() const
 {
     return this->_boolean_v;
 }
 
 template<>
-const pr::Vector<pr::String>& DBus::Array::as_vector() const
+const pr::Vector<pr::String>& DBusArray::as_vector() const
 {
     return this->_string_v;
 }
 
 template<>
-const pr::Vector<pr::DBus::Variant>& DBus::Array::as_vector() const
+const pr::Vector<pr::DBusVariant>& DBusArray::as_vector() const
 {
     return this->_variant_v;
 }
 
 
-DBus::Variant::Variant()
+DBusVariant::DBusVariant()
 {
     this->_type = DBus::Type::Invalid;
 }
 
-DBus::Variant::Variant(DBus::Type type)
+DBusVariant::DBusVariant(DBus::Type type)
 {
     this->_type = type;
 }
 
-DBus::Variant::Variant(const pr::String& value)
+DBusVariant::DBusVariant(const pr::String& value)
 {
     this->_type = DBus::Type::String;
     this->_string = value;
 }
 
-DBus::Variant::Variant(int32_t value)
+DBusVariant::DBusVariant(int32_t value)
 {
     this->_type = DBus::Type::Int32;
     this->_int32 = value;
 }
 
-DBus::Variant::Variant(bool value)
+DBusVariant::DBusVariant(bool value)
 {
     this->_type = DBus::Type::Boolean;
     this->_boolean = value;
 }
 
-DBus::Variant::Variant(const pr::DBus::Array& value)
+DBusVariant::DBusVariant(const pr::DBusArray& value)
 {
     this->_type = DBus::Type::Array;
     this->_array = value;
 }
 
-DBus::Type DBus::Variant::type() const
+DBus::Type DBusVariant::type() const
 {
     return this->_type;
 }
 
 template<>
-pr::String DBus::Variant::value<pr::String>() const
+pr::String DBusVariant::value<pr::String>() const
 {
     return this->_string;
 }
 
 template<>
-int32_t DBus::Variant::value<int32_t>() const
+int32_t DBusVariant::value<int32_t>() const
 {
     return this->_int32;
 }
 
 template<>
-bool DBus::Variant::value<bool>() const
+bool DBusVariant::value<bool>() const
 {
     return this->_boolean;
 }
 
 template<>
-DBus::Array DBus::Variant::value<DBus::Array>() const
+DBusArray DBusVariant::value<DBusArray>() const
 {
     return this->_array;
 }
 
 
-DBus::Argument::Argument(DBus::Type type)
+DBusArgument::DBusArgument(DBus::Type type)
 {
     this->_type = type;
 }
 
-DBus::Argument::Argument(int32_t value)
+DBusArgument::DBusArgument(int32_t value)
 {
     this->_type = DBus::Type::Int32;
     this->_int32 = value;
 }
 
-DBus::Argument::Argument(const pr::String& value)
+DBusArgument::DBusArgument(const pr::String& value)
 {
     this->_type = DBus::Type::String;
     this->_string = value;
 }
 
-DBus::Argument::Argument(bool value)
+DBusArgument::DBusArgument(bool value)
 {
     this->_type = DBus::Type::Boolean;
     this->_boolean = value;
 }
 
-DBus::Argument::Argument(const Variant& value)
+DBusArgument::DBusArgument(const DBusVariant& value)
 {
     this->_type = DBus::Type::Variant;
     this->_variant = value;
 }
 
 template<>
-int32_t DBus::Argument::value() const
+int32_t DBusArgument::value() const
 {
     return this->_int32;
 }
 
 template<>
-pr::String DBus::Argument::value() const
+pr::String DBusArgument::value() const
 {
     return this->_string;
 }
 
 template<>
-bool DBus::Argument::value() const
+bool DBusArgument::value() const
 {
     return this->_boolean;
 }
 
 template<>
-DBus::Variant DBus::Argument::value() const
+DBusVariant DBusArgument::value() const
 {
     return this->_variant;
 }
 
-DBus::Type DBus::Argument::type() const
+DBus::Type DBusArgument::type() const
 {
     return this->_type;
 }
@@ -327,9 +327,9 @@ DBusMessage DBusMessage::new_signal(const pr::String& path,
     return message;
 }
 
-static DBus::Array _process_array(::DBusMessageIter *iter)
+static DBusArray _process_array(::DBusMessageIter *iter)
 {
-    DBus::Array array;
+    DBusArray array;
 
     auto type = dbus_message_iter_get_element_type(iter);
     auto len = dbus_message_iter_get_element_count(iter);
@@ -338,7 +338,7 @@ static DBus::Array _process_array(::DBusMessageIter *iter)
     dbus_message_iter_recurse(iter, &array_iter);
 
     if (type == DBUS_TYPE_INT32) {
-        array = DBus::Array(DBus::Type::Int32);
+        array = DBusArray(DBus::Type::Int32);
         void *value;
         for (int i = 0; i < len; ++i) {
             dbus_message_iter_get_basic(&array_iter, &value);
@@ -346,7 +346,7 @@ static DBus::Array _process_array(::DBusMessageIter *iter)
             dbus_message_iter_next(&array_iter);
         }
     } else if (type == DBUS_TYPE_STRING) {
-        array = DBus::Array(DBus::Type::String);
+        array = DBusArray(DBus::Type::String);
         void *value;
         for (int i = 0; i < len; ++i) {
             dbus_message_iter_get_basic(&array_iter, &value);
@@ -354,7 +354,7 @@ static DBus::Array _process_array(::DBusMessageIter *iter)
             dbus_message_iter_next(&array_iter);
         }
     } else if (type == DBUS_TYPE_BOOLEAN) {
-        array = DBus::Array(DBus::Type::Boolean);
+        array = DBusArray(DBus::Type::Boolean);
         void *value;
         for (int i = 0; i < len; ++i) {
             dbus_message_iter_get_basic(&array_iter, &value);
@@ -366,37 +366,37 @@ static DBus::Array _process_array(::DBusMessageIter *iter)
     return array;
 }
 
-static DBus::Variant _process_variant(::DBusMessageIter *iter)
+static DBusVariant _process_variant(::DBusMessageIter *iter)
 {
     auto variant_type = dbus_message_iter_get_arg_type(iter);
     if (variant_type == DBUS_TYPE_INT32) {
         void *value;
         dbus_message_iter_get_basic(iter, &value);
-        DBus::Variant variant(*(static_cast<int32_t*>(value)));
+        DBusVariant variant(*(static_cast<int32_t*>(value)));
         return variant;
     } else if (variant_type == DBUS_TYPE_STRING) {
         void *value;
         dbus_message_iter_get_basic(iter, &value);
-        DBus::Variant variant(pr::String(static_cast<const char*>(value)));
+        DBusVariant variant(pr::String(static_cast<const char*>(value)));
         return variant;
     } else if (variant_type == DBUS_TYPE_BOOLEAN) {
         void *value;
         dbus_message_iter_get_basic(iter, &value);
         bool bool_value = (*(static_cast<int32_t*>(value)));
-        DBus::Variant variant(bool_value);
+        DBusVariant variant(bool_value);
         return variant;
     } else if (variant_type == DBUS_TYPE_ARRAY) {
-        DBus::Array array = _process_array(iter);
-        DBus::Variant variant(array);
+        DBusArray array = _process_array(iter);
+        DBusVariant variant(array);
         return variant;
     }
 
-    return DBus::Variant();
+    return DBusVariant();
 }
 
-pr::Vector<DBus::Argument> DBusMessage::arguments() const
+pr::Vector<DBusArgument> DBusMessage::arguments() const
 {
-    pr::Vector<DBus::Argument> v;
+    pr::Vector<DBusArgument> v;
 
     ::DBusMessageIter iter;
     dbus_message_iter_init(this->_impl->message, &iter);
@@ -411,15 +411,15 @@ pr::Vector<DBus::Argument> DBusMessage::arguments() const
         } else if (type == DBUS_TYPE_VARIANT) {
             ::DBusMessageIter variant_iter;
             dbus_message_iter_recurse(&iter, &variant_iter);
-            DBus::Variant variant = _process_variant(&variant_iter);
+            DBusVariant variant = _process_variant(&variant_iter);
             v.push(variant);
         } else if (type == DBUS_TYPE_BOOLEAN) {
             void *arg = nullptr;
             dbus_message_iter_get_basic(&iter, &arg);
-            v.push(DBus::Argument(*(static_cast<bool*>(arg))));
+            v.push(DBusArgument(*(static_cast<bool*>(arg))));
         } else if (type == DBUS_TYPE_ARRAY) {
-            DBus::Array array = _process_array(&iter);
-            v.push(DBus::Argument(array));
+            DBusArray array = _process_array(&iter);
+            v.push(DBusArgument(array));
         } else {
             // TODO: Other types.
         }
@@ -428,7 +428,7 @@ pr::Vector<DBus::Argument> DBusMessage::arguments() const
     return v;
 }
 
-bool DBusMessage::append(const DBus::Variant& variant)
+bool DBusMessage::append(const DBusVariant& variant)
 {
     DBusMessageIter iter;
     dbus_message_iter_init_append(this->_impl->message, &iter);
