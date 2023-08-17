@@ -179,10 +179,46 @@ DBusVariant::DBusVariant(const pr::String& value)
     this->_string = value;
 }
 
+template<>
+DBusVariant::DBusVariant(int16_t value)
+{
+    this->_type = DBus::Type::Int16;
+    this->_int = value;
+}
+
+template<>
+DBusVariant::DBusVariant(uint16_t value)
+{
+    this->_type = DBus::Type::Uint16;
+    this->_int = value;
+}
+
+template<>
 DBusVariant::DBusVariant(int32_t value)
 {
     this->_type = DBus::Type::Int32;
-    this->_int32 = value;
+    this->_int = value;
+}
+
+template<>
+DBusVariant::DBusVariant(uint32_t value)
+{
+    this->_type = DBus::Type::Uint32;
+    this->_int = value;
+}
+
+template<>
+DBusVariant::DBusVariant(int64_t value)
+{
+    this->_type = DBus::Type::Int64;
+    this->_int = value;
+}
+
+template<>
+DBusVariant::DBusVariant(uint64_t value)
+{
+    this->_type = DBus::Type::Uint64;
+    this->_int = value;
 }
 
 DBusVariant::DBusVariant(bool value)
@@ -211,7 +247,7 @@ pr::String DBusVariant::value<pr::String>() const
 template<>
 int32_t DBusVariant::value<int32_t>() const
 {
-    return this->_int32;
+    return this->_int;
 }
 
 template<>

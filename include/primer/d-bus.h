@@ -113,7 +113,8 @@ public:
 
     DBusVariant(const pr::String& value);
 
-    DBusVariant(int32_t value);
+    template<typename I>
+    DBusVariant(I value);
 
     DBusVariant(bool value);
 
@@ -130,7 +131,8 @@ private:
     DBus::Type _type;
 
     pr::String _string;
-    int32_t _int32;
+    int64_t _int;
+    uint64_t _uint;
     bool _boolean;
     pr::DBusArray _array;
     std::shared_ptr<pr::DBusDictEntry> _dict_entry;
