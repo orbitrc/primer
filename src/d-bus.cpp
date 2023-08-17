@@ -190,7 +190,7 @@ template<>
 DBusVariant::DBusVariant(uint16_t value)
 {
     this->_type = DBus::Type::Uint16;
-    this->_int = value;
+    this->_uint = value;
 }
 
 template<>
@@ -204,7 +204,7 @@ template<>
 DBusVariant::DBusVariant(uint32_t value)
 {
     this->_type = DBus::Type::Uint32;
-    this->_int = value;
+    this->_uint = value;
 }
 
 template<>
@@ -218,7 +218,7 @@ template<>
 DBusVariant::DBusVariant(uint64_t value)
 {
     this->_type = DBus::Type::Uint64;
-    this->_int = value;
+    this->_uint = value;
 }
 
 DBusVariant::DBusVariant(bool value)
