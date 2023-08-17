@@ -5,6 +5,7 @@
 
 #include <exception>
 #include <optional>
+#include <memory>
 
 #include <primer/string.h>
 #include <primer/vector.h>
@@ -21,11 +22,20 @@ public:
 
     enum class Type {
         Invalid,
+        Byte,
+        Int16,
+        Uint16,
         Int32,
+        Uint32,
+        Int64,
+        Uint64,
+        Double,
         String,
         Boolean,
         Variant,
         Array,
+        Struct,
+        DictEntry,
     };
 
 public:
@@ -76,6 +86,8 @@ private:
     pr::Vector<pr::DBusVariant> _variant_v;
 };
 
+class DBusDictEntry;
+
 class DBusVariant
 {
 public:
@@ -92,6 +104,8 @@ public:
 
     DBusVariant(const pr::DBusArray& value);
 
+    DBusVariant(const pr::DBusDictEntry& value);
+
     DBus::Type type() const;
 
     template<typename T>
@@ -104,6 +118,27 @@ private:
     int32_t _int32;
     bool _boolean;
     pr::DBusArray _array;
+    std::shared_ptr<pr::DBusDictEntry> _dict_entry;
+};
+
+class DBusDictEntry
+{
+public:
+    DBusDictEntry();
+
+    void set_key_type(DBus::Type type);
+    void set_value_type(DBus::Type type);
+
+    DBus::Type key_type() const;
+    DBus::Type value_type() const;
+
+    void set_key(int32_t k);
+
+    void set_value(int32_t v);
+
+private:
+    DBus::Type _key_type;
+    DBus::Type _value_type;
 };
 
 /// A meta container for reply arguments. It can contains a plain type,
@@ -133,16 +168,6 @@ private:
     int32_t _int32;
     bool _boolean;
     DBusVariant _variant;
-};
-
-class DBusDictEntry
-{
-public:
-    DBusDictEntry();
-
-private:
-    DBus::Type _key_type;
-    DBus::Type _value_type;
 };
 
 class DBusConnection;

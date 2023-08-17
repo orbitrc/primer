@@ -151,6 +151,12 @@ DBusArray DBusVariant::value<DBusArray>() const
     return this->_array;
 }
 
+template<>
+DBusDictEntry DBusVariant::value<DBusDictEntry>() const
+{
+    return *(this->_dict_entry);
+}
+
 
 DBusArgument::DBusArgument(DBus::Type type)
 {
