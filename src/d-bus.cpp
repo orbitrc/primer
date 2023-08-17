@@ -245,9 +245,39 @@ pr::String DBusVariant::value<pr::String>() const
 }
 
 template<>
-int32_t DBusVariant::value<int32_t>() const
+int16_t DBusVariant::value() const
+{
+    return static_cast<int16_t>(this->_int);
+}
+
+template<>
+uint16_t DBusVariant::value() const
+{
+    return static_cast<uint16_t>(this->_uint);
+}
+
+template<>
+int32_t DBusVariant::value() const
+{
+    return static_cast<int32_t>(this->_int);
+}
+
+template<>
+uint32_t DBusVariant::value() const
+{
+    return static_cast<uint32_t>(this->_uint);
+}
+
+template<>
+int64_t DBusVariant::value() const
 {
     return this->_int;
+}
+
+template<>
+uint64_t DBusVariant::value() const
+{
+    return this->_uint;
 }
 
 template<>
