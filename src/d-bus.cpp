@@ -20,7 +20,7 @@ int32_t DBusArray::length() const
 {
     switch (this->_type) {
     case DBus::Type::Int32:
-        return this->_int32_v.length();
+        return this->_int_v.length();
         break;
     case DBus::Type::String:
         return this->_string_v.length();
@@ -43,9 +43,34 @@ DBus::Type DBusArray::type() const
     return this->_type;
 }
 
+void DBusArray::push(int16_t value)
+{
+    this->_int_v.push(value);
+}
+
+void DBusArray::push(uint16_t value)
+{
+    this->_uint_v.push(value);
+}
+
 void DBusArray::push(int32_t value)
 {
-    this->_int32_v.push(value);
+    this->_int_v.push(value);
+}
+
+void DBusArray::push(uint32_t value)
+{
+    this->_uint_v.push(value);
+}
+
+void DBusArray::push(int64_t value)
+{
+    this->_int_v.push(value);
+}
+
+void DBusArray::push(uint64_t value)
+{
+    this->_uint_v.push(value);
 }
 
 void DBusArray::push(bool value)
@@ -64,12 +89,6 @@ void DBusArray::push(const pr::DBusVariant& value)
 }
 
 template<>
-const pr::Vector<int32_t>& DBusArray::as_vector() const
-{
-    return this->_int32_v;
-}
-
-template<>
 const pr::Vector<bool>& DBusArray::as_vector() const
 {
     return this->_boolean_v;
@@ -85,6 +104,62 @@ template<>
 const pr::Vector<pr::DBusVariant>& DBusArray::as_vector() const
 {
     return this->_variant_v;
+}
+
+/// Convert a Vector of int64_t or uint64_t to target type.
+template<typename Source, typename Target>
+pr::Vector<Target> i_vector_convert(const pr::Vector<Source>& origin)
+{
+    pr::Vector<Target> v;
+
+    for (auto& i: origin) {
+        v.push(static_cast<Target>(i));
+    }
+
+    return v;
+}
+
+template<>
+pr::Vector<int16_t> DBusArray::to_vector() const
+{
+    // Note: Map method returning different template type?
+    /*
+    auto v = this->_int_v.map([](int64_t i) {
+        return static_cast<int16_t>(i);
+    });
+    */
+
+    return i_vector_convert<int64_t, int16_t>(this->_int_v);
+}
+
+template<>
+pr::Vector<uint16_t> DBusArray::to_vector() const
+{
+    return i_vector_convert<uint64_t, uint16_t>(this->_uint_v);
+}
+
+template<>
+pr::Vector<int32_t> DBusArray::to_vector() const
+{
+    return i_vector_convert<int64_t, int32_t>(this->_int_v);
+}
+
+template<>
+pr::Vector<uint32_t> DBusArray::to_vector() const
+{
+    return i_vector_convert<uint64_t, uint32_t>(this->_uint_v);
+}
+
+template<>
+pr::Vector<int64_t> DBusArray::to_vector() const
+{
+    return this->_int_v;
+}
+
+template<>
+pr::Vector<uint64_t> DBusArray::to_vector() const
+{
+    return this->_uint_v;
 }
 
 

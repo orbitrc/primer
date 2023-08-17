@@ -66,7 +66,17 @@ public:
 
     DBus::Type type() const;
 
+    void push(int16_t value);
+
+    void push(uint16_t value);
+
     void push(int32_t value);
+
+    void push(uint32_t value);
+
+    void push(int64_t value);
+
+    void push(uint64_t value);
 
     void push(bool value);
 
@@ -74,13 +84,18 @@ public:
 
     void push(const pr::DBusVariant& value);
 
+    /// Deprecated!
     template<typename T>
     const pr::Vector<T>& as_vector() const;
+
+    template<typename T>
+    pr::Vector<T> to_vector() const;
 
 private:
     DBus::Type _type;
 
-    pr::Vector<int32_t> _int32_v;
+    pr::Vector<int64_t> _int_v;
+    pr::Vector<uint64_t> _uint_v;
     pr::Vector<bool> _boolean_v;
     pr::Vector<pr::String> _string_v;
     pr::Vector<pr::DBusVariant> _variant_v;
