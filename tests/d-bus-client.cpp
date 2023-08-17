@@ -46,6 +46,25 @@ int main(int argc, char *argv[])
 
     for (auto& arg: args) {
         printf("Argument: (%s)\n", type_to_string(arg.type()));
+
+        if (arg.type() == pr::DBus::Type::Variant) {
+            auto variant = arg.value<pr::DBus::Variant>();
+            printf("  Variant type: %s\n", type_to_string(variant.type()));
+
+            if (variant.type() == pr::DBus::Type::Array) {
+                auto array = variant.value<pr::DBus::Array>();
+                printf("    Array<%s>\n", type_to_string(array.type()));
+
+                if (array.type() == pr::DBus::Type::String) {
+                    const pr::Vector<pr::String>& string_vector =
+                        array.as_vector<pr::String>();
+                    printf("    Length: %ld\n", string_vector.length());
+                    for (auto& val: string_vector) {
+                        printf("      \"%s\"\n", val.c_str());
+                    }
+                }
+            }
+        }
     }
 
     return 0;

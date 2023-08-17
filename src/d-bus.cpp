@@ -38,6 +38,11 @@ int32_t DBus::Array::length() const
     }
 }
 
+DBus::Type DBus::Array::type() const
+{
+    return this->_type;
+}
+
 void DBus::Array::push(int32_t value)
 {
     this->_int32_v.push(value);
@@ -56,6 +61,30 @@ void DBus::Array::push(const pr::String& value)
 void DBus::Array::push(const pr::DBus::Variant& value)
 {
     this->_variant_v.push(value);
+}
+
+template<>
+const pr::Vector<int32_t>& DBus::Array::as_vector() const
+{
+    return this->_int32_v;
+}
+
+template<>
+const pr::Vector<bool>& DBus::Array::as_vector() const
+{
+    return this->_boolean_v;
+}
+
+template<>
+const pr::Vector<pr::String>& DBus::Array::as_vector() const
+{
+    return this->_string_v;
+}
+
+template<>
+const pr::Vector<pr::DBus::Variant>& DBus::Array::as_vector() const
+{
+    return this->_variant_v;
 }
 
 
@@ -114,6 +143,12 @@ template<>
 bool DBus::Variant::value<bool>() const
 {
     return this->_boolean;
+}
+
+template<>
+DBus::Array DBus::Variant::value<DBus::Array>() const
+{
+    return this->_array;
 }
 
 
@@ -315,7 +350,7 @@ static DBus::Array _process_array(::DBusMessageIter *iter)
         void *value;
         for (int i = 0; i < len; ++i) {
             dbus_message_iter_get_basic(&array_iter, &value);
-            array.push((static_cast<const char*>(value)));
+            array.push(pr::String(static_cast<const char*>(value)));
             dbus_message_iter_next(&array_iter);
         }
     } else if (type == DBUS_TYPE_BOOLEAN) {
@@ -323,7 +358,7 @@ static DBus::Array _process_array(::DBusMessageIter *iter)
         void *value;
         for (int i = 0; i < len; ++i) {
             dbus_message_iter_get_basic(&array_iter, &value);
-            array.push(*(static_cast<int32_t*>(value)));
+            array.push(static_cast<bool>(*(static_cast<int32_t*>(value))));
             dbus_message_iter_next(&array_iter);
         }
     }

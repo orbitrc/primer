@@ -39,6 +39,8 @@ public:
 
         int32_t length() const;
 
+        DBus::Type type() const;
+
         void push(int32_t value);
 
         void push(bool value);
@@ -46,6 +48,9 @@ public:
         void push(const pr::String& value);
 
         void push(const pr::DBus::Variant& value);
+
+        template<typename T>
+        const pr::Vector<T>& as_vector() const;
 
     private:
         DBus::Type _type;
