@@ -299,6 +299,141 @@ DBusDictEntry DBusVariant::value<DBusDictEntry>() const
 }
 
 
+DBusDictEntry::DBusDictEntry()
+{
+    this->_key_type = DBus::Type::Invalid;
+    this->_value_type = DBus::Type::Invalid;
+}
+
+void DBusDictEntry::set_key_type(DBus::Type type)
+{
+    this->_key_type = type;
+}
+
+void DBusDictEntry::set_value_type(DBus::Type type)
+{
+    this->_value_type = type;
+}
+
+DBus::Type DBusDictEntry::key_type() const
+{
+    return this->_key_type;
+}
+
+DBus::Type DBusDictEntry::value_type() const
+{
+    return this->_value_type;
+}
+
+void DBusDictEntry::set_key(const pr::String& k)
+{
+    this->_key_string = k;
+}
+
+template<>
+void DBusDictEntry::set_key(int16_t k)
+{
+    this->_key_int = k;
+}
+
+template<>
+void DBusDictEntry::set_key(uint16_t k)
+{
+    this->_key_uint = k;
+}
+
+template<>
+void DBusDictEntry::set_key(int32_t k)
+{
+    this->_key_int = k;
+}
+
+template<>
+void DBusDictEntry::set_key(uint32_t k)
+{
+    this->_key_uint = k;
+}
+
+template<>
+void DBusDictEntry::set_key(int64_t k)
+{
+    this->_key_int = k;
+}
+
+template<>
+void DBusDictEntry::set_key(uint64_t k)
+{
+    this->_key_uint = k;
+}
+
+void DBusDictEntry::set_key(bool k)
+{
+    this->_key_boolean = k;
+}
+
+void DBusDictEntry::set_value(const pr::String& v)
+{
+    this->_value_string = v;
+}
+
+void DBusDictEntry::set_value(bool v)
+{
+    this->_value_boolean = v;
+}
+
+template<>
+void DBusDictEntry::set_value(int16_t v)
+{
+    this->_value_int = v;
+}
+
+template<>
+void DBusDictEntry::set_value(uint16_t v)
+{
+    this->_value_uint = v;
+}
+
+template<>
+void DBusDictEntry::set_value(int32_t v)
+{
+    this->_value_int = v;
+}
+
+template<>
+void DBusDictEntry::set_value(uint32_t v)
+{
+    this->_value_uint = v;
+}
+
+template<>
+void DBusDictEntry::set_value(int64_t v)
+{
+    this->_value_int = v;
+}
+
+template<>
+void DBusDictEntry::set_value(uint64_t v)
+{
+    this->_value_uint = v;
+}
+
+void DBusDictEntry::set_value(const DBusArray& v)
+{
+    this->_value_array = v;
+}
+
+void DBusDictEntry::set_value(const DBusVariant& v)
+{
+    this->_value_variant = v;
+}
+
+template<>
+pr::String DBusDictEntry::key() const
+{
+    return this->_key_string;
+}
+
+
 DBusArgument::DBusArgument(DBus::Type type)
 {
     this->_type = type;

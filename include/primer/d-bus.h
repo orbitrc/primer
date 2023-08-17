@@ -149,13 +149,39 @@ public:
     DBus::Type key_type() const;
     DBus::Type value_type() const;
 
-    void set_key(int32_t k);
+    void set_key(const pr::String& k);
+    template<typename I>
+    void set_key(I k);
+    void set_key(bool k);
 
-    void set_value(int32_t v);
+    void set_value(const pr::String& v);
+    template<typename I>
+    void set_value(I v);
+    void set_value(bool v);
+    void set_value(const pr::DBusArray& v);
+    void set_value(const pr::DBusVariant& v);
+
+    template<typename T>
+    T key() const;
+
+    template<typename T>
+    T value() const;
 
 private:
     DBus::Type _key_type;
     DBus::Type _value_type;
+
+    pr::String _key_string;
+    int64_t _key_int;
+    uint64_t _key_uint;
+    bool _key_boolean;
+
+    pr::String _value_string;
+    int64_t _value_int;
+    uint64_t _value_uint;
+    bool _value_boolean;
+    pr::DBusArray _value_array;
+    pr::DBusVariant _value_variant;
 };
 
 /// A meta container for reply arguments. It can contains a plain type,
