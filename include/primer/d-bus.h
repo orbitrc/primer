@@ -143,6 +143,8 @@ class DBusDictEntry
 public:
     DBusDictEntry();
 
+    DBusDictEntry(const DBusDictEntry& other);
+
     void set_key_type(DBus::Type type);
     void set_value_type(DBus::Type type);
 
@@ -161,9 +163,11 @@ public:
     void set_value(const pr::DBusArray& v);
     void set_value(const pr::DBusVariant& v);
 
+    /// Template getter for key.
     template<typename T>
     T key() const;
 
+    /// Template getter for value.
     template<typename T>
     T value() const;
 
@@ -191,7 +195,17 @@ class DBusArgument
 public:
     DBusArgument(DBus::Type type);
 
+    DBusArgument(int16_t value);
+
+    DBusArgument(uint16_t value);
+
     DBusArgument(int32_t value);
+
+    DBusArgument(uint32_t value);
+
+    DBusArgument(int64_t value);
+
+    DBusArgument(uint64_t value);
 
     DBusArgument(const pr::String& value);
 
@@ -208,7 +222,9 @@ private:
     DBus::Type _type;
 
     pr::String _string;
-    int32_t _int32;
+    int32_t _int32; // Deprecated!
+    int64_t _int;
+    uint64_t _uint;
     bool _boolean;
     DBusVariant _variant;
 };

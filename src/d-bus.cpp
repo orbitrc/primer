@@ -235,6 +235,13 @@ DBusVariant::DBusVariant(const pr::DBusArray& value)
     this->_array = value;
 }
 
+DBusVariant::DBusVariant(const pr::DBusDictEntry& value)
+{
+    this->_type = DBus::Type::DictEntry;
+    this->_dict_entry = std::shared_ptr<pr::DBusDictEntry>(
+        new pr::DBusDictEntry(value));
+}
+
 DBus::Type DBusVariant::type() const
 {
     return this->_type;
@@ -306,6 +313,26 @@ DBusDictEntry::DBusDictEntry()
     this->_key_type = DBus::Type::Invalid;
     this->_value_type = DBus::Type::Invalid;
 }
+
+/*
+DBusDictEntry::DBusDictEntry(const DBusDictEntry& other)
+{
+    this->_key_type = other._key_type;
+    this->_value_type = other._value_type;
+
+    this->_key_int = other._key_int;
+    this->_key_uint = other._key_uint;
+    this->_key_string = other._key_string;
+    this->_key_boolean = other._key_boolean;
+
+    this->_value_int = other._value_int;
+    this->_value_uint = other._value_uint;
+    this->_value_string = other._value_string;
+    this->_value_boolean = other._value_boolean;
+    this->_value_variant = other._value_variant;
+    this->_value_array = other._value_array;
+}
+*/
 
 void DBusDictEntry::set_key_type(DBus::Type type)
 {
@@ -437,16 +464,52 @@ template uint32_t DBusDictEntry::value() const;
 template int64_t DBusDictEntry::value() const;
 template uint64_t DBusDictEntry::value() const;
 
+template<>
+bool DBusDictEntry::value() const
+{
+    return this->_value_boolean;
+}
+
 
 DBusArgument::DBusArgument(DBus::Type type)
 {
     this->_type = type;
 }
 
+DBusArgument::DBusArgument(int16_t value)
+{
+    this->_type = DBus::Type::Int16;
+    this->_int = value;
+}
+
+DBusArgument::DBusArgument(uint16_t value)
+{
+    this->_type = DBus::Type::Uint16;
+    this->_uint = value;
+}
+
 DBusArgument::DBusArgument(int32_t value)
 {
     this->_type = DBus::Type::Int32;
-    this->_int32 = value;
+    this->_int = value;
+}
+
+DBusArgument::DBusArgument(uint32_t value)
+{
+    this->_type = DBus::Type::Uint32;
+    this->_uint = value;
+}
+
+DBusArgument::DBusArgument(int64_t value)
+{
+    this->_type = DBus::Type::Int64;
+    this->_int = value;
+}
+
+DBusArgument::DBusArgument(uint64_t value)
+{
+    this->_type = DBus::Type::Uint64;
+    this->_uint = value;
 }
 
 DBusArgument::DBusArgument(const pr::String& value)
@@ -468,9 +531,39 @@ DBusArgument::DBusArgument(const DBusVariant& value)
 }
 
 template<>
+int16_t DBusArgument::value() const
+{
+    return static_cast<int16_t>(this->_int);
+}
+
+template<>
+uint16_t DBusArgument::value() const
+{
+    return static_cast<uint16_t>(this->_uint);
+}
+
+template<>
 int32_t DBusArgument::value() const
 {
-    return this->_int32;
+    return static_cast<int32_t>(this->_int);
+}
+
+template<>
+uint32_t DBusArgument::value() const
+{
+    return static_cast<uint32_t>(this->_uint);
+}
+
+template<>
+int64_t DBusArgument::value() const
+{
+    return this->_int;
+}
+
+template<>
+uint64_t DBusArgument::value() const
+{
+    return this->_uint;
 }
 
 template<>
@@ -703,6 +796,30 @@ pr::Vector<DBusArgument> DBusMessage::arguments() const
             void *arg = nullptr;
             dbus_message_iter_get_basic(&iter, &arg);
             v.push(DBusArgument(*(static_cast<bool*>(arg))));
+        } else if (type == DBUS_TYPE_INT16) {
+            void *arg = nullptr;
+            dbus_message_iter_get_basic(&iter, &arg);
+            v.push(DBusArgument(*(static_cast<int16_t*>(arg))));
+        } else if (type == DBUS_TYPE_UINT16) {
+            void *arg = nullptr;
+            dbus_message_iter_get_basic(&iter, &arg);
+            v.push(DBusArgument(*(static_cast<uint16_t*>(arg))));
+        } else if (type == DBUS_TYPE_INT32) {
+            void *arg = nullptr;
+            dbus_message_iter_get_basic(&iter, &arg);
+            v.push(DBusArgument(*(static_cast<int32_t*>(arg))));
+        } else if (type == DBUS_TYPE_UINT32) {
+            void *arg = nullptr;
+            dbus_message_iter_get_basic(&iter, &arg);
+            v.push(DBusArgument(*(static_cast<uint32_t*>(arg))));
+        } else if (type == DBUS_TYPE_INT64) {
+            void *arg = nullptr;
+            dbus_message_iter_get_basic(&iter, &arg);
+            v.push(DBusArgument(*(static_cast<int64_t*>(arg))));
+        } else if (type == DBUS_TYPE_UINT64) {
+            void *arg = nullptr;
+            dbus_message_iter_get_basic(&iter, &arg);
+            v.push(DBusArgument(*(static_cast<uint64_t*>(arg))));
         } else if (type == DBUS_TYPE_ARRAY) {
             DBusArray array = _process_array(&iter);
             v.push(DBusArgument(array));
