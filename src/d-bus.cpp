@@ -397,6 +397,46 @@ pr::String DBusDictEntry::key() const
     return this->_key_string;
 }
 
+template<typename I>
+I DBusDictEntry::key() const
+{
+    if (std::is_signed<I>::value) {
+        return static_cast<I>(this->_key_int);
+    } else {
+        return static_cast<I>(this->_key_uint);
+    }
+}
+
+template int16_t DBusDictEntry::key() const;
+template uint16_t DBusDictEntry::key() const;
+template int32_t DBusDictEntry::key() const;
+template uint32_t DBusDictEntry::key() const;
+template int64_t DBusDictEntry::key() const;
+template uint64_t DBusDictEntry::key() const;
+
+template<>
+pr::String DBusDictEntry::value() const
+{
+    return this->_value_string;
+}
+
+template<typename I>
+I DBusDictEntry::value() const
+{
+    if (std::is_signed<I>::value) {
+        return static_cast<I>(this->_value_int);
+    } else {
+        return static_cast<I>(this->_value_uint);
+    }
+}
+
+template int16_t DBusDictEntry::value() const;
+template uint16_t DBusDictEntry::value() const;
+template int32_t DBusDictEntry::value() const;
+template uint32_t DBusDictEntry::value() const;
+template int64_t DBusDictEntry::value() const;
+template uint64_t DBusDictEntry::value() const;
+
 
 DBusArgument::DBusArgument(DBus::Type type)
 {
