@@ -2,6 +2,8 @@
 
 #include <stdio.h> // REMOVE AFTER DEBUG!!!!
 
+#include <type_traits>
+
 #include <dbus/dbus.h>
 
 namespace pr {
@@ -330,41 +332,22 @@ void DBusDictEntry::set_key(const pr::String& k)
     this->_key_string = k;
 }
 
-template<>
-void DBusDictEntry::set_key(int16_t k)
+template<typename I>
+void DBusDictEntry::set_key(I k)
 {
-    this->_key_int = k;
+    if (std::is_signed<I>::value) {
+        this->_key_int = k;
+    } else {
+        this->_key_uint = k;
+    }
 }
 
-template<>
-void DBusDictEntry::set_key(uint16_t k)
-{
-    this->_key_uint = k;
-}
-
-template<>
-void DBusDictEntry::set_key(int32_t k)
-{
-    this->_key_int = k;
-}
-
-template<>
-void DBusDictEntry::set_key(uint32_t k)
-{
-    this->_key_uint = k;
-}
-
-template<>
-void DBusDictEntry::set_key(int64_t k)
-{
-    this->_key_int = k;
-}
-
-template<>
-void DBusDictEntry::set_key(uint64_t k)
-{
-    this->_key_uint = k;
-}
+template void DBusDictEntry::set_key(int16_t k);
+template void DBusDictEntry::set_key(uint16_t k);
+template void DBusDictEntry::set_key(int32_t k);
+template void DBusDictEntry::set_key(uint32_t k);
+template void DBusDictEntry::set_key(int64_t k);
+template void DBusDictEntry::set_key(uint64_t k);
 
 void DBusDictEntry::set_key(bool k)
 {
@@ -381,41 +364,22 @@ void DBusDictEntry::set_value(bool v)
     this->_value_boolean = v;
 }
 
-template<>
-void DBusDictEntry::set_value(int16_t v)
+template<typename I>
+void DBusDictEntry::set_value(I v)
 {
-    this->_value_int = v;
+    if (std::is_signed<I>::value) {
+        this->_value_int = v;
+    } else {
+        this->_value_uint = v;
+    }
 }
 
-template<>
-void DBusDictEntry::set_value(uint16_t v)
-{
-    this->_value_uint = v;
-}
-
-template<>
-void DBusDictEntry::set_value(int32_t v)
-{
-    this->_value_int = v;
-}
-
-template<>
-void DBusDictEntry::set_value(uint32_t v)
-{
-    this->_value_uint = v;
-}
-
-template<>
-void DBusDictEntry::set_value(int64_t v)
-{
-    this->_value_int = v;
-}
-
-template<>
-void DBusDictEntry::set_value(uint64_t v)
-{
-    this->_value_uint = v;
-}
+template void DBusDictEntry::set_value(int16_t v);
+template void DBusDictEntry::set_value(uint16_t v);
+template void DBusDictEntry::set_value(int32_t v);
+template void DBusDictEntry::set_value(uint32_t v);
+template void DBusDictEntry::set_value(int64_t v);
+template void DBusDictEntry::set_value(uint64_t v);
 
 void DBusDictEntry::set_value(const DBusArray& v)
 {
