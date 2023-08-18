@@ -143,7 +143,7 @@ class DBusDictEntry
 public:
     DBusDictEntry();
 
-    DBusDictEntry(const DBusDictEntry& other);
+    // DBusDictEntry(const DBusDictEntry& other);
 
     void set_key_type(DBus::Type type);
     void set_value_type(DBus::Type type);
