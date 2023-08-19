@@ -179,6 +179,9 @@ public:
     // Conversions
     //==============
 
+    /// Vector to string representation.
+    ///
+    /// \since 0.4
     String to_string() const
     {
         String s = "["_S;
@@ -201,6 +204,9 @@ private:
     std::vector<T> _vec;
 };
 
+/// Vector to string representation. Special for Vector of String.
+///
+/// \since 0.4
 template<> inline
 String Vector<String>::to_string() const
 {
