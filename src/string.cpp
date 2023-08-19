@@ -13,7 +13,7 @@ namespace pr {
 
 String Unicode::version()
 {
-    return "14.0.0"_S;
+    return "15.0.0"_S;
 }
 
 Unicode::Scalar::Scalar(uint32_t code_point)
