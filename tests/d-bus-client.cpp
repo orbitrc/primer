@@ -35,14 +35,16 @@ int main(int argc, char *argv[])
         "org.kde.StatusNotifierWatcher"_S,
         "/StatusNotifierWatcher"_S,
         "org.freedesktop.DBus.Properties"_S,
-        "Get"_S);
+        "GetAll"_S);
 
     message.append(""_S);
-    message.append("RegisteredStatusNotifierItems"_S);
+    // message.append("RegisteredStatusNotifierItems"_S);
 
     pr::DBusMessage reply = conn.send_with_reply(message);
 
+    fprintf(stderr, "Before get args.\n");
     auto args = reply.arguments();
+    fprintf(stderr, "Got args. length: %ld\n", args.length());
 
     for (auto& arg: args) {
         printf("Argument: (%s)\n", type_to_string(arg.type()));

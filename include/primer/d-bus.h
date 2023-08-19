@@ -213,6 +213,8 @@ public:
 
     DBusArgument(const DBusVariant& value);
 
+    DBusArgument(const DBusArray& value);
+
     DBus::Type type() const;
 
     template<typename T>
@@ -227,6 +229,7 @@ private:
     uint64_t _uint;
     bool _boolean;
     DBusVariant _variant;
+    DBusArray _array;
 };
 
 class DBusConnection;

@@ -530,6 +530,12 @@ DBusArgument::DBusArgument(const DBusVariant& value)
     this->_variant = value;
 }
 
+DBusArgument::DBusArgument(const DBusArray& value)
+{
+    this->_type = DBus::Type::Array;
+    this->_array = value;
+}
+
 template<>
 int16_t DBusArgument::value() const
 {
@@ -706,6 +712,9 @@ DBusMessage DBusMessage::new_signal(const pr::String& path,
     return message;
 }
 
+static DBusVariant _process_variant(::DBusMessageIter*);
+static DBusDictEntry _process_dict_entry(::DBusMessageIter*);
+
 static DBusArray _process_array(::DBusMessageIter *iter)
 {
     DBusArray array;
@@ -740,18 +749,142 @@ static DBusArray _process_array(::DBusMessageIter *iter)
             array.push(static_cast<bool>(*(static_cast<int32_t*>(value))));
             dbus_message_iter_next(&array_iter);
         }
+    } else if (type == DBUS_TYPE_DICT_ENTRY) {
+        array = DBusArray(DBus::Type::DictEntry);
+        for (int i = 0; i < len; ++i) {
+            array.push(_process_dict_entry(&array_iter));
+            dbus_message_iter_next(&array_iter);
+        }
     }
 
     return array;
+}
+
+static DBusDictEntry _process_dict_entry(::DBusMessageIter *iter)
+{
+    DBusDictEntry dict_entry;
+
+    // Get key.
+
+    int key_t = dbus_message_iter_get_arg_type(iter);
+    void *key;
+    ::DBusMessageIter entry_iter;
+    dbus_message_iter_recurse(iter, &entry_iter);
+    switch (key_t) {
+    case DBUS_TYPE_INT16:
+        dbus_message_iter_get_basic(&entry_iter, key);
+        dict_entry.set_key_type(DBus::Type::Int16);
+        dict_entry.set_key(*(static_cast<int16_t*>(key)));
+        break;
+    case DBUS_TYPE_UINT16:
+        dbus_message_iter_get_basic(&entry_iter, key);
+        dict_entry.set_key_type(DBus::Type::Uint16);
+        dict_entry.set_key(*(static_cast<uint16_t*>(key)));
+        break;
+    case DBUS_TYPE_INT32:
+        dbus_message_iter_get_basic(&entry_iter, key);
+        dict_entry.set_key_type(DBus::Type::Int32);
+        dict_entry.set_key(*(static_cast<int32_t*>(key)));
+        break;
+    case DBUS_TYPE_UINT32:
+        dbus_message_iter_get_basic(&entry_iter, key);
+        dict_entry.set_key_type(DBus::Type::Uint32);
+        dict_entry.set_key(*(static_cast<uint32_t*>(key)));
+        break;
+    case DBUS_TYPE_INT64:
+        dbus_message_iter_get_basic(&entry_iter, key);
+        dict_entry.set_key_type(DBus::Type::Int64);
+        dict_entry.set_key(*(static_cast<int64_t*>(key)));
+        break;
+    case DBUS_TYPE_UINT64:
+        dbus_message_iter_get_basic(&entry_iter, key);
+        dict_entry.set_key_type(DBus::Type::Uint64);
+        dict_entry.set_key(*(static_cast<uint64_t*>(key)));
+        break;
+    case DBUS_TYPE_BOOLEAN:
+        dbus_message_iter_get_basic(&entry_iter, key);
+        dict_entry.set_key_type(DBus::Type::Boolean);
+        dict_entry.set_key(static_cast<bool>(*(static_cast<int*>(key))));
+        break;
+    case DBUS_TYPE_STRING:
+        dbus_message_iter_get_basic(&entry_iter, &key);
+        dict_entry.set_key_type(DBus::Type::String);
+        dict_entry.set_key(pr::String(static_cast<char*>(key)));
+        break;
+    default:
+        break;
+    }
+
+    dbus_message_iter_next(&entry_iter);
+
+    // Get value.
+    int value_t = dbus_message_iter_get_arg_type(&entry_iter);
+    void *value;
+    ::DBusMessageIter value_iter;
+    dbus_message_iter_recurse(&entry_iter, &value_iter);
+    switch (value_t) {
+    case DBUS_TYPE_INT16:
+        dbus_message_iter_get_basic(&value_iter, value);
+        dict_entry.set_value_type(DBus::Type::Int16);
+        dict_entry.set_value(*(static_cast<int16_t*>(value)));
+        break;
+    case DBUS_TYPE_UINT16:
+        dbus_message_iter_get_basic(&value_iter, value);
+        dict_entry.set_value_type(DBus::Type::Uint16);
+        dict_entry.set_value(*(static_cast<uint16_t*>(value)));
+        break;
+    case DBUS_TYPE_INT32:
+        dbus_message_iter_get_basic(&value_iter, value);
+        dict_entry.set_value_type(DBus::Type::Int32);
+        dict_entry.set_value(*(static_cast<int32_t*>(value)));
+        break;
+    case DBUS_TYPE_UINT32:
+        dbus_message_iter_get_basic(&value_iter, value);
+        dict_entry.set_value_type(DBus::Type::Uint32);
+        dict_entry.set_value(*(static_cast<uint32_t*>(value)));
+        break;
+    case DBUS_TYPE_INT64:
+        dbus_message_iter_get_basic(&value_iter, value);
+        dict_entry.set_value_type(DBus::Type::Int64);
+        dict_entry.set_value(*(static_cast<int64_t*>(value)));
+        break;
+    case DBUS_TYPE_UINT64:
+        dbus_message_iter_get_basic(&value_iter, value);
+        dict_entry.set_value_type(DBus::Type::Uint64);
+        dict_entry.set_value(*(static_cast<uint64_t*>(value)));
+        break;
+    case DBUS_TYPE_BOOLEAN:
+        dbus_message_iter_get_basic(&value_iter, value);
+        dict_entry.set_value_type(DBus::Type::Boolean);
+        dict_entry.set_value(static_cast<bool>(*(static_cast<int*>(value))));
+        break;
+    case DBUS_TYPE_STRING:
+        dbus_message_iter_get_basic(&value_iter, &value);
+        dict_entry.set_value_type(DBus::Type::String);
+        dict_entry.set_value(pr::String(static_cast<char*>(value)));
+        break;
+    case DBUS_TYPE_ARRAY:
+        dict_entry.set_value_type(DBus::Type::Array);
+        dict_entry.set_value(_process_array(&value_iter));
+        break;
+    case DBUS_TYPE_VARIANT:
+        dict_entry.set_value_type(DBus::Type::Variant);
+        dict_entry.set_value(_process_variant(&value_iter));
+        break;
+    default:
+        break;
+    }
+
+    return dict_entry;
 }
 
 static DBusVariant _process_variant(::DBusMessageIter *iter)
 {
     auto variant_type = dbus_message_iter_get_arg_type(iter);
     if (variant_type == DBUS_TYPE_INT32) {
-        void *value;
+        int32_t value;
         dbus_message_iter_get_basic(iter, &value);
-        DBusVariant variant(*(static_cast<int32_t*>(value)));
+        DBusVariant variant(value);
         return variant;
     } else if (variant_type == DBUS_TYPE_STRING) {
         void *value;
@@ -759,10 +892,10 @@ static DBusVariant _process_variant(::DBusMessageIter *iter)
         DBusVariant variant(pr::String(static_cast<const char*>(value)));
         return variant;
     } else if (variant_type == DBUS_TYPE_BOOLEAN) {
-        void *value;
+        int32_t value;
         dbus_message_iter_get_basic(iter, &value);
-        bool bool_value = (*(static_cast<int32_t*>(value)));
-        DBusVariant variant(bool_value);
+        bool boolean_value = static_cast<bool>(value);
+        DBusVariant variant(boolean_value);
         return variant;
     } else if (variant_type == DBUS_TYPE_ARRAY) {
         DBusArray array = _process_array(iter);

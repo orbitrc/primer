@@ -6,6 +6,7 @@
 #include "json.h"
 #include "format.h"
 #include "hash-map.h"
+#include "d-bus.h"
 
 void test_with_log(const char *name, void(*test_func)())
 {
@@ -89,6 +90,11 @@ int main(int argc, char *argv[])
     test_with_log("hash_map_insert", tests::hash_map_insert);
 
     test_with_log("hash_map_get", tests::hash_map_get);
+
+    //=========
+    // DBus
+    //=========
+    test_with_log("d_bus_argument", tests::d_bus_argument);
 
     return 0;
 }
