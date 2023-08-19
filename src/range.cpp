@@ -4,6 +4,8 @@
 
 #include <primer/core/range.h>
 
+#include <primer/format.h>
+
 namespace pr {
 
 class RangeImpl
@@ -310,5 +312,25 @@ uint64_t Range<uint64_t>::random() const
 {
     return pr_range_random_u(this->_impl->range);
 }
+
+template<typename T>
+String Range<T>::to_string() const
+{
+    auto start = format("{}"_S, this->_impl->range.start);
+    auto end = format("{}"_S, this->_impl->range.end);
+    String s = (this->_impl->range.exclusive)
+        ? start + ".."_S + end
+        : start + "..="_S + end;
+    return s;
+}
+
+template String Range<int8_t>::to_string() const;
+template String Range<uint8_t>::to_string() const;
+template String Range<int16_t>::to_string() const;
+template String Range<uint16_t>::to_string() const;
+template String Range<int32_t>::to_string() const;
+template String Range<uint32_t>::to_string() const;
+template String Range<int64_t>::to_string() const;
+template String Range<uint64_t>::to_string() const;
 
 } // namespace pr

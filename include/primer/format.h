@@ -35,6 +35,15 @@ String format(const String& format_str, double d);
 
 String format(const String& format_str, bool b);
 
+/// Returns a new formatted string using to_string() method of the object.
+///
+/// \since 0.4
+template<typename T>
+String format(const String& format_str, const T& obj)
+{
+    return format(format_str, obj.to_string());
+}
+
 template<typename T, typename... Args>
 String format(const String& format_str, const T& val, Args... args)
 {

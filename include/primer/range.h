@@ -7,6 +7,8 @@ namespace pr {
 
 class RangeImpl;
 
+class String;
+
 template <typename T>
 class Range {
 private:
@@ -49,6 +51,11 @@ public:
     bool contains(const T value) const;
 
     T random() const;
+
+    /// Create a new String that represents the Range object.
+    ///
+    /// \since 4.0
+    String to_string() const;
 };
 
 } // namespace pr
