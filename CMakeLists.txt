@@ -14,6 +14,7 @@ add_library(primer SHARED
     src/d-bus.cpp
     include/primer/json.h
     include/primer/range.h
+    include/primer/decl/string.h
     include/primer/string.h
     include/primer/vector.h
     include/primer/format.h

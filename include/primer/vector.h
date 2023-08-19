@@ -9,6 +9,9 @@
 #include <functional>
 #include <initializer_list>
 
+#include <primer/decl/string.h>
+#include <primer/format.h>
+
 namespace pr {
 
 template <typename T>
@@ -176,9 +179,46 @@ public:
     // Conversions
     //==============
 
+    String to_string() const
+    {
+        String s = "["_S;
+
+        auto length = this->length();
+        for (uint64_t i = 0; i < length; ++i) {
+            String f = format("{}", this->_vec[i]);
+            if (i < length - 1) {
+                s = s + f + ", ";
+            } else {
+                s = s + f;
+            }
+        }
+        s = s + "]"_S;
+
+        return s;
+    }
+
 private:
     std::vector<T> _vec;
 };
+
+template<> inline
+String Vector<String>::to_string() const
+{
+    String s = "["_S;
+
+    auto length = this->length();
+    for (uint64_t i = 0; i < length; ++i) {
+        String f = format("\"{}\"", this->_vec[i]);
+        if (i < length - 1) {
+            s = s + f + ", ";
+        } else {
+            s = s + f;
+        }
+    }
+    s = s + "]"_S;
+
+    return s;
+}
 
 } // namespace pr
 

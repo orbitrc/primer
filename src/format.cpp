@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include <primer/vector.h>
+
 namespace pr {
 
 String format(const String& format_str, const String& str)

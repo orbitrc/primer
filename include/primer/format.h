@@ -1,7 +1,7 @@
 #ifndef _PRIMER_FORMAT_H
 #define _PRIMER_FORMAT_H
 
-#include <primer/string.h>
+#include <primer/decl/string.h>
 
 namespace pr {
 

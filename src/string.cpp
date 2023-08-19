@@ -3,6 +3,8 @@
 #include <primer/core/string.h>
 #include <primer/core/vector.h>
 
+#include <primer/vector.h>
+
 namespace pr {
 
 //==========
