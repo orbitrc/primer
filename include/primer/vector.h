@@ -90,6 +90,18 @@ public:
         return ret;
     }
 
+    template<typename U>
+    Vector<U> map(std::function<U(const T&)> map_func) const
+    {
+        Vector<U> ret;
+
+        for (auto& val: this->_vec) {
+            ret.push(map_func(val));
+        }
+
+        return ret;
+    }
+
     std::optional<T&> find(std::function<bool(const T&)>)
     {
         return std::nullopt;

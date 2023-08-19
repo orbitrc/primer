@@ -32,6 +32,7 @@ void vector_length()
 
 void vector_map()
 {
+    // Make same type vector.
     pr::Vector<int32_t> v;
 
     v.push(1);
@@ -45,6 +46,15 @@ void vector_map()
     assert(v2[0] == 2);
     assert(v2[1] == 4);
     assert(v2[2] == 6);
+
+    // Make different type vector.
+    auto v3 = v.map<double>([](auto& el) {
+        return static_cast<double>(el);
+    });
+
+    assert(v3[0] == 1.0);
+    assert(v3[1] == 2.0);
+    assert(v3[2] == 3.0);
 }
 
 void vector_loop()
