@@ -90,6 +90,9 @@ public:
         return ret;
     }
 
+    /// Map each elements and returns a new Vector contains given template type.
+    ///
+    /// \since 0.4
     template<typename U>
     Vector<U> map(std::function<U(const T&)> map_func) const
     {
@@ -168,6 +171,10 @@ public:
     {
         return this->_vec[index];
     }
+
+    //==============
+    // Conversions
+    //==============
 
 private:
     std::vector<T> _vec;
