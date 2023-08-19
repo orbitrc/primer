@@ -96,5 +96,7 @@ int main(int argc, char *argv[])
     //=========
     test_with_log("d_bus_argument", tests::d_bus_argument);
 
+    test_with_log("d_bus_dict_entry", tests::d_bus_dict_entry);
+
     return 0;
 }

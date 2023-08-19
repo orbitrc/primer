@@ -90,6 +90,11 @@ void DBusArray::push(const pr::DBusVariant& value)
     this->_variant_v.push(value);
 }
 
+void DBusArray::push(const pr::DBusDictEntry& value)
+{
+    this->_dict_entry_v.push(value);
+}
+
 template<>
 const pr::Vector<bool>& DBusArray::as_vector() const
 {
@@ -162,6 +167,12 @@ template<>
 pr::Vector<uint64_t> DBusArray::to_vector() const
 {
     return this->_uint_v;
+}
+
+template<>
+pr::Vector<pr::DBusDictEntry> DBusArray::to_vector() const
+{
+    return this->_dict_entry_v;
 }
 
 
@@ -470,6 +481,12 @@ bool DBusDictEntry::value() const
     return this->_value_boolean;
 }
 
+template<>
+DBusVariant DBusDictEntry::value() const
+{
+    return this->_value_variant;
+}
+
 
 DBusArgument::DBusArgument(DBus::Type type)
 {
@@ -588,6 +605,12 @@ template<>
 DBusVariant DBusArgument::value() const
 {
     return this->_variant;
+}
+
+template<>
+DBusArray DBusArgument::value() const
+{
+    return this->_array;
 }
 
 DBus::Type DBusArgument::type() const
@@ -766,10 +789,10 @@ static DBusDictEntry _process_dict_entry(::DBusMessageIter *iter)
 
     // Get key.
 
-    int key_t = dbus_message_iter_get_arg_type(iter);
     void *key;
     ::DBusMessageIter entry_iter;
     dbus_message_iter_recurse(iter, &entry_iter);
+    int key_t = dbus_message_iter_get_arg_type(&entry_iter);
     switch (key_t) {
     case DBUS_TYPE_INT16:
         dbus_message_iter_get_basic(&entry_iter, key);
@@ -818,10 +841,10 @@ static DBusDictEntry _process_dict_entry(::DBusMessageIter *iter)
     dbus_message_iter_next(&entry_iter);
 
     // Get value.
-    int value_t = dbus_message_iter_get_arg_type(&entry_iter);
     void *value;
     ::DBusMessageIter value_iter;
     dbus_message_iter_recurse(&entry_iter, &value_iter);
+    int value_t = dbus_message_iter_get_arg_type(&entry_iter);
     switch (value_t) {
     case DBUS_TYPE_INT16:
         dbus_message_iter_get_basic(&value_iter, value);

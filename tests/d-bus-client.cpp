@@ -17,11 +17,69 @@ const char* type_to_string(pr::DBus::Type type)
         return "Variant";
     case pr::DBus::Type::Array:
         return "Array";
+    case pr::DBus::Type::DictEntry:
+        return "DictEntry";
     default:
         break;
     }
 
     return "Unknown";
+}
+
+pr::String string_to_string(const pr::String& string)
+{
+    return pr::String("\""_S + string + "\"");
+}
+
+pr::String variant_to_string(const pr::DBusVariant& variant)
+{
+    pr::String s = "Variant<"_S;
+    s = s + type_to_string(variant.type());
+    s = s + ">"_S;
+
+    return s;
+}
+
+pr::String dict_entry_to_string(const pr::DBusDictEntry& dict_entry)
+{
+    pr::String s = "{ "_S;
+    // Key to string.
+    if (dict_entry.key_type() == pr::DBus::Type::String) {
+        s = s + string_to_string(dict_entry.key<pr::String>());
+    } else {
+        fprintf(stderr, "Type %d is not implemented!\n", dict_entry.key_type());
+        s = s + "*Not implemented*"_S;
+    }
+    s = s + " = "_S;
+
+    // Value to string.
+    if (dict_entry.value_type() == pr::DBus::Type::Variant) {
+        s = s + variant_to_string(dict_entry.value<pr::DBusVariant>());
+    } else {
+        s = s + "*Not implemented*"_S;
+    }
+
+    s = s + " }"_S;
+
+    return s;
+}
+
+pr::String array_to_string(const pr::DBusArray& array)
+{
+    pr::String s = "Array<"_S;
+    s = s + type_to_string(array.type());
+    s = s + "> ["_S;
+
+    if (array.type() == pr::DBus::Type::DictEntry) {
+        auto vec = array.to_vector<pr::DBusDictEntry>();
+        for (auto& item: vec) {
+            s = s + dict_entry_to_string(item);
+        }
+    }
+
+    s = s + "]"_S;
+
+    return s;
 }
 
 int main(int argc, char *argv[])
@@ -48,24 +106,8 @@ int main(int argc, char *argv[])
 
     for (auto& arg: args) {
         printf("Argument: (%s)\n", type_to_string(arg.type()));
-
-        if (arg.type() == pr::DBus::Type::Variant) {
-            auto variant = arg.value<pr::DBusVariant>();
-            printf("  Variant type: %s\n", type_to_string(variant.type()));
-
-            if (variant.type() == pr::DBus::Type::Array) {
-                auto array = variant.value<pr::DBusArray>();
-                printf("    Array<%s>\n", type_to_string(array.type()));
-
-                if (array.type() == pr::DBus::Type::String) {
-                    const pr::Vector<pr::String>& string_vector =
-                        array.as_vector<pr::String>();
-                    printf("    Length: %ld\n", string_vector.length());
-                    for (auto& val: string_vector) {
-                        printf("      \"%s\"\n", val.c_str());
-                    }
-                }
-            }
+        if (arg.type() == pr::DBus::Type::Array) {
+            printf("%s\n", array_to_string(arg.value<pr::DBusArray>()).c_str());
         }
     }
 

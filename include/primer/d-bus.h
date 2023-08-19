@@ -55,6 +55,8 @@ private:
 
 class DBusVariant;
 
+class DBusDictEntry;
+
 class DBusArray
 {
 public:
@@ -84,6 +86,8 @@ public:
 
     void push(const pr::DBusVariant& value);
 
+    void push(const pr::DBusDictEntry& value);
+
     /// Deprecated!
     template<typename T>
     const pr::Vector<T>& as_vector() const;
@@ -99,9 +103,8 @@ private:
     pr::Vector<bool> _boolean_v;
     pr::Vector<pr::String> _string_v;
     pr::Vector<pr::DBusVariant> _variant_v;
+    pr::Vector<pr::DBusDictEntry> _dict_entry_v;
 };
-
-class DBusDictEntry;
 
 class DBusVariant
 {
