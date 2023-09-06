@@ -28,6 +28,7 @@ test:
 
 install:
 	strip build/libprimer.so.$(VERSION)
+	mkdir -p $(DESTDIR)/$(PREFIX)/include/primer
 	cp include/primer/*.h $(DESTDIR)/$(PREFIX)/include/primer/
 	cp -r include/primer/decl $(DESTDIR)/$(PREFIX)/include/primer/
 	cp build/libprimer.so.$(VERSION) $(DESTDIR)/$(PREFIX)/$(LIBDIR)/
