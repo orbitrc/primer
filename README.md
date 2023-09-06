@@ -54,3 +54,9 @@ For install,
 $ sudo make PREFIX=/usr install
 ```
 
+### Ubuntu
+
+```sh
+$ sudo make PREFIX=/usr LIBDIR=/lib/x86_64-linux-gnu install
+```
+
