@@ -7,6 +7,7 @@ SONAME = libprimer.so.$(VERSION_MAJOR)
 INSTALL_DIR=$(shell tools/dist-install-dir.sh)
 
 PREFIX ?= /usr/local
+LIBDIR ?= /lib/
 
 OBJ = src/range.o \
 	src/string.o \
@@ -28,13 +29,14 @@ test:
 install:
 	strip build/libprimer.so.$(VERSION)
 	cp include/primer/*.h $(DESTDIR)/$(PREFIX)/include/primer/
-	cp build/libprimer.so.$(VERSION) $(DESTDIR)/$(PREFIX)/lib/
+	cp -r include/primer/decl $(DESTDIR)/$(PREFIX)/include/primer/
+	cp build/libprimer.so.$(VERSION) $(DESTDIR)/$(PREFIX)/$(LIBDIR)/
 	ln -sf libprimer.so.$(VERSION) \
-		$(DESTDIR)/$(PREFIX)/lib/libprimer.so.$(VERSION_MAJOR).$(VERSION_MINOR)
+		$(DESTDIR)/$(PREFIX)/$(LIBDIR)/libprimer.so.$(VERSION_MAJOR).$(VERSION_MINOR)
 	ln -sf libprimer.so.$(VERSION_MAJOR).$(VERSION_MINOR) \
-		$(DESTDIR)/$(PREFIX)/lib/libprimer.so.$(VERSION_MAJOR)
+		$(DESTDIR)/$(PREFIX)/$(LIBDIR)/libprimer.so.$(VERSION_MAJOR)
 	ln -sf libprimer.so.$(VERSION_MAJOR) \
-		$(DESTDIR)/$(PREFIX)/lib/libprimer.so
+		$(DESTDIR)/$(PREFIX)/$(LIBDIR)/libprimer.so
 
 clean:
 	rm -rf build/
