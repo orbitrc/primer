@@ -72,11 +72,17 @@ void vector_loop()
 
 void vector_find()
 {
-    pr::Vector<int32_t> v;
+    pr::Vector<int32_t> v = {1, 2, 100};
 
-    v.push(1);
-    v.push(2);
-    v.push(100);
+    auto found = v.find([](int32_t two) {
+        if (two == 2) {
+            return true;
+        }
+        return false;
+    });
+    found->get() = 42;
+
+    assert(v[1] == 42);
 }
 
 void vector_index()

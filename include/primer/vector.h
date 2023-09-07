@@ -108,8 +108,18 @@ public:
         return ret;
     }
 
-    std::optional<T&> find(std::function<bool(const T&)>)
+    /// Find an object by the find function.
+    ///
+    /// \since 0.4
+    std::optional<std::reference_wrapper<T>>
+    find(std::function<bool(const T&)> find_func)
     {
+        for (auto& val: this->_vec) {
+            if (find_func(val) == true) {
+                return val;
+            }
+        }
+
         return std::nullopt;
     }
 
