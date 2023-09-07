@@ -161,4 +161,15 @@ void vector_sort()
     assert(v2[1][1] == '2');
 }
 
+void vector_c_ptr()
+{
+    pr::Vector<int32_t> v = {1, 1, 2, 3, 5, 8, 13};
+    auto length = v.length();
+    int32_t *ptr = v.c_ptr();
+
+    for (uint64_t i = 0; i < length; ++i) {
+        assert(ptr[i] == v[i]);
+    }
+}
+
 } // namespace tests

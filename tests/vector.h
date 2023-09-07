@@ -21,6 +21,8 @@ void vector_remove();
 
 void vector_sort();
 
+void vector_c_ptr();
+
 }
 
 #endif // _TESTS_VECTOR_H

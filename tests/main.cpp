@@ -72,6 +72,8 @@ int main(int argc, char *argv[])
 
     test_with_log("vector_sort", tests::vector_sort);
 
+    test_with_log("vector_c_ptr", tests::vector_c_ptr);
+
     //==========
     // JSON
     //==========

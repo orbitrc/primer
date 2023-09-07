@@ -210,6 +210,26 @@ public:
         return s;
     }
 
+    //===============
+    // C Compatible
+    //===============
+
+    /// Returns the C pointer underlying the Vector.
+    ///
+    /// \since 0.4
+    T* c_ptr()
+    {
+        return this->_vec.data();
+    }
+
+    /// Returns the C pointer underlying the Vector.
+    ///
+    /// \since 0.4
+    const T* c_ptr() const
+    {
+        return this->_vec.data();
+    }
+
 private:
     std::vector<T> _vec;
 };
