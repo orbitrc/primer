@@ -23,4 +23,9 @@ void println(const String& format_str, int32_t i)
     println(s);
 }
 
+void eprintln(const String& str)
+{
+    fprintf(stderr, "%s\n", str.c_str());
+}
+
 } // namespace pr
