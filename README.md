@@ -9,7 +9,7 @@ Perpose
 -------
 
 It is for providing syntactic sugars and abstract classes used in
-applications. Primer doesn't care about performance ultil a
+applications. Primer doesn't care about performance until a
 decent API is done.
 This means that it is suitable for use in applications where
 performance is not critical, which makes it unsuitable for use
@@ -23,12 +23,12 @@ All Primer objects begin with `pr::` C++ namespace.
 libprimer-core
 --------------
 
-The core implementation of Primer is written in Rust. This is separated to
-another library because of some limits.
+The core implementation of Primer is written in Rust. This will be
+built as a static library and included in Primer.
 
-Primer's version is same as **libprimer-core**.
+~~Primer's version is same as **libprimer-core**.~~
 
-Before build Primer, you should build **libprimer-core** and install.
+Before build Primer, you should build **libprimer-core**.
 
 **libprimer-core** requires `cargo` command which is package manager for Rust.
 Check it by,
@@ -39,6 +39,14 @@ $ cargo --version
 
 Build
 -----
+
+To build, you need the following.
+
+- C++ compiler (usually g++)
+- GNU Make
+- CMake
+- pkg-config
+- libdbus-1 with it's headers
 
 For build,
 
