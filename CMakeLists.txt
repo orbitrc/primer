@@ -17,6 +17,7 @@ add_library(primer SHARED
     include/primer/decl/string.h
     include/primer/string.h
     include/primer/vector.h
+    include/primer/hash-map.h
     include/primer/format.h
     include/primer/io.h
     include/primer/d-bus.h
