@@ -20,6 +20,8 @@ int main(int argc, char *argv[])
     //==========
     // Range
     //==========
+    test_with_log("range_getters", tests::range_getters);
+
     test_with_log("range_contains", tests::range_contains);
 
     test_with_log("range_random", tests::range_random);

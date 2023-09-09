@@ -4,12 +4,25 @@
 
 namespace tests {
 
+void range_getters()
+{
+    pr::Range r1(3, 14);
+
+    assert(r1.start() == 3);
+    assert(r1.end() == 14);
+    assert(r1.exclusive() == true);
+}
+
 void range_contains()
 {
     pr::Range r1(2, 42);
 
     assert(r1.contains(41));
     assert(!r1.contains(42));
+
+    pr::Range r2(0, 10, false);
+
+    assert(r2.contains(10));
 }
 
 void range_random()

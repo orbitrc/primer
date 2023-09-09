@@ -193,6 +193,58 @@ Range<uint64_t>::~Range()
     delete this->_impl;
 }
 
+//======================
+// Start/End/Exclusive
+//======================
+
+// Template
+template<typename T>
+T Range<T>::start() const
+{
+    return this->_impl->range.start;
+}
+
+template int8_t Range<int8_t>::start() const;
+template uint8_t Range<uint8_t>::start() const;
+template int16_t Range<int16_t>::start() const;
+template uint16_t Range<uint16_t>::start() const;
+template int32_t Range<int32_t>::start() const;
+template uint32_t Range<uint32_t>::start() const;
+template int64_t Range<int64_t>::start() const;
+template uint64_t Range<uint64_t>::start() const;
+
+// Template
+template<typename T>
+T Range<T>::end() const
+{
+    return this->_impl->range.end;
+}
+
+template int8_t Range<int8_t>::end() const;
+template uint8_t Range<uint8_t>::end() const;
+template int16_t Range<int16_t>::end() const;
+template uint16_t Range<uint16_t>::end() const;
+template int32_t Range<int32_t>::end() const;
+template uint32_t Range<uint32_t>::end() const;
+template int64_t Range<int64_t>::end() const;
+template uint64_t Range<uint64_t>::end() const;
+
+// Template
+template<typename T>
+bool Range<T>::exclusive() const
+{
+    return this->_impl->range.exclusive;
+}
+
+template bool Range<int8_t>::exclusive() const;
+template bool Range<uint8_t>::exclusive() const;
+template bool Range<int16_t>::exclusive() const;
+template bool Range<uint16_t>::exclusive() const;
+template bool Range<int32_t>::exclusive() const;
+template bool Range<uint32_t>::exclusive() const;
+template bool Range<int64_t>::exclusive() const;
+template bool Range<uint64_t>::exclusive() const;
+
 //==============
 // Contains
 //==============

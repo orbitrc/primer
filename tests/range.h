@@ -5,6 +5,8 @@
 
 namespace tests {
 
+void range_getters();
+
 void range_contains();
 
 void range_random();

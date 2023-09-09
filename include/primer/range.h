@@ -29,20 +29,11 @@ public:
     // Element access
     //=========================
 
-    T start() const
-    {
-        return this->range.start;
-    }
+    T start() const;
 
-    T end() const
-    {
-        return this->range.end;
-    }
+    T end() const;
 
-    bool exclusive() const
-    {
-        return this->range.exclusive;
-    }
+    bool exclusive() const;
 
     //=========================
     // Others
