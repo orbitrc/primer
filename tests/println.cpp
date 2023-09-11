@@ -1,5 +1,6 @@
 #include <primer/io.h>
 #include <primer/range.h>
+#include <primer/byte-array.h>
 
 int main(int argc, char *argv[])
 {
@@ -27,6 +28,9 @@ int main(int argc, char *argv[])
     rv.push(pr::Range(0, 10, false));
     rv.push(pr::Range(10, 42));
     pr::println("{}", rv);
+
+    pr::ByteArray ba = {0x7f, 0x45, 0x4c, 0x46};
+    pr::println("{}", ba);
 
     return 0;
 }

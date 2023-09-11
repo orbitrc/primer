@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 project(primer
-    VERSION 0.4.0
+    VERSION 0.5.0
     DESCRIPTION "Primer library"
     LANGUAGES CXX)
 
@@ -9,6 +9,7 @@ add_library(primer SHARED
     src/json.cpp
     src/range.cpp
     src/string.cpp
+    src/byte-array.cpp
     src/format.cpp
     src/io.cpp
     src/d-bus.cpp
@@ -18,6 +19,7 @@ add_library(primer SHARED
     include/primer/string.h
     include/primer/vector.h
     include/primer/hash-map.h
+    include/primer/byte-array.h
     include/primer/format.h
     include/primer/io.h
     include/primer/d-bus.h
