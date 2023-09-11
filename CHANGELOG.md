@@ -1,5 +1,29 @@
 # Change Log
 
+## [main] - 20xx-xx-xx
+
+### Added
+
+- ByteArray class.
+
+### Changed
+
+### Fixed
+
+- Errors in getter methods in Range are fixed.
+
+
+## [0.4.1] - 2023-09-10
+
+### Added
+
+### Changed
+
+### Fixed
+
+- Range start/end/exclusive methods.
+
+
 ## [0.4.0] - 2023-09-08
 
 D-Bus API has been added but it's not complete and still experimental.
