@@ -27,6 +27,8 @@ void unicode_scalar_literal();
 
 void unicode_na();
 
+void unicode_encoder_utf8();
+
 } // namespace tests
 
 #endif // _TESTS_STRING_H

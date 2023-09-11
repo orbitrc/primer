@@ -17,6 +17,8 @@ class Vector;
 
 class String;
 
+class ByteArray;
+
 class Unicode
 {
 public:
@@ -40,6 +42,47 @@ public:
 
     private:
         uint32_t _code_point;
+    };
+
+    /// Unicode encoding enum.
+    ///
+    /// \since 0.5
+    enum class Encoding {
+        Utf8,
+        Utf16Le,
+        Utf16Be,
+    };
+
+    /// Unicode decoder.
+    ///
+    /// \since 0.5
+    class Decoder
+    {
+    public:
+        Decoder();
+
+        Decoder(Encoding encoding);
+
+        String decode(const ByteArray& bytes) const;
+
+    private:
+        Encoding _encoding;
+    };
+
+    /// Unicode encoder.
+    ///
+    /// \since 0.5
+    class Encoder
+    {
+    public:
+        Encoder();
+
+        Encoder(Encoding encoding);
+
+        ByteArray encode(const String& string) const;
+
+    private:
+        Encoding _encoding;
     };
 
 public:

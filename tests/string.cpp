@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include <primer/string.h>
+#include <primer/byte-array.h>
 
 namespace tests {
 
@@ -129,6 +130,17 @@ void unicode_scalar_literal()
     auto space = 0x0020_U;
 
     assert(space == 0x0020);
+}
+
+void unicode_encoder_utf8()
+{
+    pr::String s = "가"_S;
+
+    auto encoded = pr::Unicode::Encoder().encode(s);
+    assert(encoded.length() == 3);
+    assert(encoded[0] == 0xea);
+    assert(encoded[1] == 0xb0);
+    assert(encoded[2] == 0x80);
 }
 
 } // namespace tests

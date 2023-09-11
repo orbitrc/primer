@@ -4,6 +4,7 @@
 #include <primer/core/vector.h>
 
 #include <primer/vector.h>
+#include <primer/byte-array.h>
 
 namespace pr {
 
@@ -41,6 +42,76 @@ Unicode::Scalar::operator uint32_t()
 Unicode::Scalar::operator uint32_t() const
 {
     return this->_code_point;
+}
+
+
+Unicode::Encoder::Encoder()
+{
+    this->_encoding = Unicode::Encoding::Utf8;
+}
+
+Unicode::Encoder::Encoder(Encoding encoding)
+{
+    this->_encoding = encoding;
+}
+
+static ByteArray _unicode_encode_utf8(const Vector<Unicode::Scalar>& scalars)
+{
+    if (scalars.length() == 0) {
+        return ByteArray();
+    }
+
+    uint64_t buffer_size = 0;
+    // Count buffer size.
+    for (auto& scalar: scalars) {
+        if (scalar < 0x0080) {
+            buffer_size += 1;
+        } else if (scalar < 0x0800) {
+            buffer_size += 2;
+        } else if (scalar < 0x10000) {
+            buffer_size += 3;
+        } else {
+            buffer_size += 4;
+        }
+    }
+
+    uint8_t *buffer = new uint8_t[buffer_size];
+    uint64_t buf_i = 0;
+    // Encode each Unicode scalars.
+    for (auto& scalar: scalars) {
+        if (scalar < 0x0080) {
+            buffer[buf_i++] = scalar;
+        } else if (scalar < 0x0800) {
+            buffer[buf_i++] = 0b11000000 | (scalar >> 6);
+            buffer[buf_i++] = 0b10000000 | (scalar & 0b00111111);
+        } else if (scalar < 0x10000) {
+            buffer[buf_i++] = 0b11100000 | (scalar >> 12);
+            buffer[buf_i++] = 0b10000000 | ((scalar >> 6) & 0b00111111);
+            buffer[buf_i++] = 0b10000000 | (scalar & 0b00111111);
+        } else {
+            buffer[buf_i++] = 0b11110000 | (scalar >> 18);
+            buffer[buf_i++] = 0b10000000 | ((scalar >> 12) & 0b00111111);
+            buffer[buf_i++] = 0b10000000 | ((scalar >> 6) & 0b00111111);
+            buffer[buf_i++] = 0b10000000 | (scalar & 0b00111111);
+        }
+    }
+    ByteArray encoded = ByteArray(buffer, buffer_size);
+    delete[] buffer;
+
+    return encoded;
+}
+
+ByteArray Unicode::Encoder::encode(const String& string) const
+{
+    if (this->_encoding == Encoding::Utf8) {
+        return _unicode_encode_utf8(string.unicode_scalars());
+    } else if (this->_encoding == Encoding::Utf16Le) {
+        // TODO.
+        return ByteArray();
+    } else {
+        // TODO.
+        return ByteArray();
+    }
 }
 
 //========

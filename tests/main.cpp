@@ -56,6 +56,8 @@ int main(int argc, char *argv[])
 
     test_with_log("unicode_na", tests::unicode_na);
 
+    test_with_log("unicode_encoder_utf8", tests::unicode_encoder_utf8);
+
     //==========
     // Vector
     //==========
