@@ -8,6 +8,11 @@
 
 namespace pr {
 
+const char* InvalidUnicodeScalarError::what() const noexcept
+{
+    return "The given code point exceeds U+10FFFF or is a surrogate character.";
+}
+
 //==========
 // Unicode
 //==========
@@ -19,7 +24,14 @@ String Unicode::version()
 
 Unicode::Scalar::Scalar(uint32_t code_point)
 {
-    // TODO: Check if code point is surrogate.
+    if (code_point > 0x10FFFF) {
+        this->_code_point = 0;
+        throw InvalidUnicodeScalarError();
+    }
+    if (0xD800 <= code_point && code_point <= 0xDFFF) {
+        this->_code_point = 0;
+        throw InvalidUnicodeScalarError();
+    }
 
     this->_code_point = code_point;
 }

@@ -8,6 +8,8 @@
 
 ### Changed
 
+- Unicode::Scalar class now throws in constructor.
+
 ### Fixed
 
 - Errors in getter methods in Range are fixed.

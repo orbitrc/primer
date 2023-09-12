@@ -5,6 +5,7 @@
 
 #include <functional>
 #include <string>
+#include <exception>
 
 namespace pr {
 
@@ -19,10 +20,24 @@ class String;
 
 class ByteArray;
 
+
+/// Exception for invalid values in the `Unicode::Scalar` constructor.
+///
+/// \since 0.5
+/// If the given code point is over U+10FFFF, or is a surrogate character,
+/// this exception is thrown.
+class InvalidUnicodeScalarError : public std::exception
+{
+    const char* what() const noexcept override;
+};
+
+
 class Unicode
 {
 public:
 
+    /// An Unicode scalar value is a code point that not exceeds U+10FFFF, and
+    /// do not contain surrogate characters.
     class Scalar
     {
     public:
