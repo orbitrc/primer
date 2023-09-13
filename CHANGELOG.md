@@ -5,10 +5,11 @@
 ### Added
 
 - ByteArray class.
+- Unicode encoder class.
 
 ### Changed
 
-- Unicode::Scalar class now throws in constructor.
+- Unicode::Scalar class now throws in constructor for invalid code point range.
 
 ### Fixed
 

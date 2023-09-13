@@ -143,4 +143,45 @@ void unicode_encoder_utf8()
     assert(encoded[2] == 0x80);
 }
 
+void unicode_encoder_utf16()
+{
+    // Under U+10000, Little-endian.
+    {
+        pr::String s = "7"_S; // U+0037
+
+        auto scalars = s.unicode_scalars();
+        assert(scalars[0] == 0x0037);
+
+        auto encoded = pr::Unicode::Encoder(pr::Unicode::Encoding::Utf16Le)
+            .encode(s);
+        assert(encoded.length() == 2);
+        assert(encoded[0] == 0x37);
+        assert(encoded[1] == 0x00);
+    }
+    // Over U+FFFF, Little-endian.
+    {
+        pr::String s = "𐐷"_S; // U+10437
+
+        auto encoded = pr::Unicode::Encoder(pr::Unicode::Encoding::Utf16Le)
+            .encode(s);
+        assert(encoded.length() == 4);
+        assert(encoded[0] == 0x01);
+        assert(encoded[1] == 0xD8);
+        assert(encoded[2] == 0x37);
+        assert(encoded[3] == 0xDC);
+    }
+    // Over U+FFFF, Big-endian.
+    {
+        pr::String s = "𐐷"_S; // U+10437
+
+        auto encoded = pr::Unicode::Encoder(pr::Unicode::Encoding::Utf16Be)
+            .encode(s);
+        assert(encoded.length() == 4);
+        assert(encoded[0] == 0xD8);
+        assert(encoded[1] == 0x01);
+        assert(encoded[2] == 0xDC);
+        assert(encoded[3] == 0x37);
+    }
+}
+
 } // namespace tests

@@ -113,16 +113,62 @@ static ByteArray _unicode_encode_utf8(const Vector<Unicode::Scalar>& scalars)
     return encoded;
 }
 
+static ByteArray _unicode_encode_utf16(const Vector<Unicode::Scalar>& scalars,
+                                       bool be)
+{
+    if (scalars.length() == 0) {
+        return ByteArray();
+    }
+
+    uint8_t *buffer = new uint8_t[scalars.length() * 4];
+    uint64_t buf_i = 0;
+    uint64_t buf_size = 0;
+    for (auto& scalar: scalars) {
+        if (scalar <= 0xFFFF) {
+            if (!be) {
+                // Little-endian.
+                buffer[buf_i++] = scalar & 0x00FF;
+                buffer[buf_i++] = scalar >> 8;
+            } else {
+                // Big-endian.
+                buffer[buf_i++] = scalar >> 8;
+                buffer[buf_i++] = scalar & 0x00FF;
+            }
+            buf_size += 2;
+        } else {
+            uint16_t sub = scalar - 0x100000;
+            uint16_t high = (sub >> 10) + 0xD800;
+            uint16_t low = (sub & 0x03FF) + 0xDC00;
+            if (!be) {
+                // Little-endian.
+                buffer[buf_i++] = high & 0x00FF;
+                buffer[buf_i++] = high >> 8;
+                buffer[buf_i++] = low & 0x00FF;
+                buffer[buf_i++] = low >> 8;
+            } else {
+                // Big-endian.
+                buffer[buf_i++] = high >> 8;
+                buffer[buf_i++] = high & 0x00FF;
+                buffer[buf_i++] = low >> 8;
+                buffer[buf_i++] = low & 0x00FF;
+            }
+            buf_size += 4;
+        }
+    }
+    ByteArray encoded = ByteArray(buffer, buf_size);
+    delete[] buffer;
+
+    return encoded;
+}
+
 ByteArray Unicode::Encoder::encode(const String& string) const
 {
     if (this->_encoding == Encoding::Utf8) {
         return _unicode_encode_utf8(string.unicode_scalars());
     } else if (this->_encoding == Encoding::Utf16Le) {
-        // TODO.
-        return ByteArray();
+        return _unicode_encode_utf16(string.unicode_scalars(), false);
     } else {
-        // TODO.
-        return ByteArray();
+        return _unicode_encode_utf16(string.unicode_scalars(), true);
     }
 }
 
