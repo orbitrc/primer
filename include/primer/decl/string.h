@@ -21,9 +21,10 @@ class String;
 class ByteArray;
 
 
-/// Exception for invalid values in the `Unicode::Scalar` constructor.
+/// \brief Exception for invalid values in the `Unicode::Scalar` constructor.
 ///
 /// \since 0.5
+///
 /// If the given code point is over U+10FFFF, or is a surrogate character,
 /// this exception is thrown.
 class InvalidUnicodeScalarError : public std::exception
@@ -36,8 +37,8 @@ class Unicode
 {
 public:
 
-    /// An Unicode scalar value is a code point that not exceeds U+10FFFF, and
-    /// do not contain surrogate characters.
+    /// \brief A Unicode scalar value is a code point that not exceeds
+    /// U+10FFFF, and do not contain surrogate characters.
     class Scalar
     {
     public:
@@ -59,7 +60,7 @@ public:
         uint32_t _code_point;
     };
 
-    /// Unicode encoding enum.
+    /// \brief Unicode encoding enum.
     ///
     /// \since 0.5
     enum class Encoding {
@@ -68,7 +69,7 @@ public:
         Utf16Be,
     };
 
-    /// Unicode decoder.
+    /// \brief Unicode decoder.
     ///
     /// \since 0.5
     class Decoder
@@ -84,7 +85,7 @@ public:
         Encoding _encoding;
     };
 
-    /// Unicode encoder.
+    /// \brief Unicode encoder.
     ///
     /// \since 0.5
     class Encoder
