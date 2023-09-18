@@ -9,3 +9,4 @@ Cargo.lock
 target/
 *.pro.user
 CMakeLists.txt.user
+doxygen/
