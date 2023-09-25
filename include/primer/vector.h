@@ -18,32 +18,37 @@ template <typename T>
 class Vector
 {
 public:
+    /// \brief Default constructor.
+    ///
+    /// Construct an empty, zero-length `Vector`.
     Vector<T>()
     {
     }
 
+    /// \brief Constructor with initializer list.
     Vector<T>(std::initializer_list<T> init)
     {
         this->_vec = init;
     }
 
+    /// \brief Destructor.
     ~Vector<T>()
     {
     }
 
-    /// Returns number of items in Vector.
+    /// \brief Returns number of items in Vector.
     uint64_t length() const
     {
         return this->_vec.size();
     }
 
-    /// Append a value to the last of Vector.
+    /// \brief Append a value to the last of Vector.
     void push(const T& value)
     {
         this->_vec.push_back(value);
     }
 
-    /// Inserts a value to the index.
+    /// \brief Inserts a value to the index.
     void insert(uint64_t index, T value)
     {
         // Find iter.
@@ -53,7 +58,7 @@ public:
         this->_vec.insert(it, value);
     }
 
-    /// Removes and returns the element of given index.
+    /// \brief Removes and returns the element of given index.
     T remove(uint64_t index)
     {
         auto it = this->_vec.begin();
@@ -65,7 +70,8 @@ public:
         return el;
     }
 
-    /// Find first index of given value.
+    /// \brief Find first index of given value.
+    ///
     /// Returns index if contanis value, or std::nullopt.
     std::optional<uint64_t> index(const T& value) const
     {
@@ -81,7 +87,7 @@ public:
         return std::nullopt;
     }
 
-    /// Maps each elements and returns new Vector.
+    /// \brief Maps each elements and returns new Vector.
     Vector<T> map(std::function<T(const T&)> map_func) const
     {
         Vector<T> ret;
@@ -93,7 +99,8 @@ public:
         return ret;
     }
 
-    /// Map each elements and returns a new Vector contains given template type.
+    /// \brief Map each elements and returns a new Vector contains given
+    /// template type.
     ///
     /// \since 0.4
     template<typename U>
@@ -108,9 +115,15 @@ public:
         return ret;
     }
 
-    /// Find an object by the find function.
+    /// \brief Find an object by the find function.
     ///
     /// \since 0.4
+    ///
+    /// This method returns a `std::optional` of template type
+    /// `std::reference_wrapper`.
+    /// It can be compared simply with `std::nullopt` for existence. However
+    /// to get the value, it once have to unwrap.
+    /// This design is for returning the reference but not a copied value.
     std::optional<std::reference_wrapper<T>>
     find(std::function<bool(const T&)> find_func)
     {
@@ -123,15 +136,17 @@ public:
         return std::nullopt;
     }
 
-    /// Sort items in the Vector. This method changes the Vector.
+    /// \brief Sort items in the Vector. This method changes the Vector.
+    ///
     /// Sort is in stable.
     void sort()
     {
         std::stable_sort(this->begin(), this->end());
     }
 
-    /// Sort items in the Vector by given function.
+    /// \brief Sort items in the Vector by given function.
     /// This method changes the Vector.
+    ///
     /// Sort is in stable.
     void sort(std::function<bool(const T&, const T&)> func)
     {
@@ -189,7 +204,7 @@ public:
     // Conversions
     //==============
 
-    /// Vector to string representation.
+    /// \brief Vector to string representation.
     ///
     /// \since 0.4
     String to_string() const
@@ -214,17 +229,22 @@ public:
     // C Compatible
     //===============
 
-    /// Returns the C pointer underlying the Vector.
+    /// \brief Returns the C pointer underlying the Vector.
     ///
     /// \since 0.4
+    ///
+    /// Because a `Vector` store the data contiguously, you can access the raw
+    /// pointer.
     T* c_ptr()
     {
         return this->_vec.data();
     }
 
-    /// Returns the C pointer underlying the Vector.
+    /// \brief Returns the C pointer underlying the Vector.
     ///
     /// \since 0.4
+    ///
+    /// This is a const version overloading.
     const T* c_ptr() const
     {
         return this->_vec.data();
@@ -234,7 +254,7 @@ private:
     std::vector<T> _vec;
 };
 
-/// Vector to string representation. Special for Vector of String.
+/// \brief Vector to string representation. Special for Vector of String.
 ///
 /// \since 0.4
 template<> inline

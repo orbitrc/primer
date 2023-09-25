@@ -43,11 +43,21 @@ public:
     {
     public:
 
+        /// \brief Construct `Unicode::Scalar` with a valid code point.
+        ///
+        /// If the given code point is an invalid scalar, then
+        /// `InvalidUnicodeScalarError` will be thrown and the value
+        /// will be set to 0.
         Scalar(uint32_t code_point);
 
         //=====================
         // Unicode Properties
         //=====================
+
+        /// \brief Get Unicode 'na' property for the scalar.
+        ///
+        /// 'na' is the short name of 'Name' property. If the scalar has no
+        /// this property then an empty `String` will be returned.
         String na() const;
 
         //==============
@@ -75,10 +85,15 @@ public:
     class Decoder
     {
     public:
+        /// \brief Default constructor.
+        ///
+        /// The default encoding is UTF-8.
         Decoder();
 
+        /// \brief Construct with encoding.
         Decoder(Encoding encoding);
 
+        /// \brief Decode bytes and returns string.
         String decode(const ByteArray& bytes) const;
 
     private:
@@ -91,10 +106,15 @@ public:
     class Encoder
     {
     public:
+        /// \brief Default constructor.
+        ///
+        /// The default encoding is UTF-8.
         Encoder();
 
+        /// \brief Construct with encoding.
         Encoder(Encoding encoding);
 
+        /// \brief Encode a string into bytes.
         ByteArray encode(const String& string) const;
 
     private:
@@ -121,15 +141,16 @@ public:
     // Constructor/Destructor
     //=========================
 
-    /// Contruct with empty string.
+    /// \brief Contruct with empty string.
     String();
 
-    /// Construct with null-terminated string literal.
+    /// \brief Construct with null-terminated string literal.
     String(const char *c_str);
 
-    /// Construct with C char array with length. Not null-terminated.
+    /// \brief Construct with C char array with length. Not null-terminated.
     String(const char *c_str, uint64_t len);
 
+    /// \brief Copy constructor.
     String(const String& other);
 
     ~String();
@@ -138,6 +159,7 @@ public:
     // Element Access
     //=================
 
+    /// \brief Return `Vector` of `Unicode::Scalar`.
     Vector<Unicode::Scalar> unicode_scalars() const;
 
     const char* c_str() const;
@@ -146,20 +168,23 @@ public:
     // Operations
     //===============
 
+    /// \brief Split the string by the delimiter string.
     Vector<String> split(const String& delim) const;
 
+    /// \brief Split the string by the delimiter string a given number
+    /// of times.
     Vector<String> split(const String& delim, uint64_t count) const;
 
-    /// Returns new String that leading and trailing whitespaces removed.
+    /// \brief Returns new String that leading and trailing whitespaces removed.
     String trim() const;
 
-    /// Returns true if the string contains given string.
+    /// \brief Returns true if the string contains given string.
     bool contains(const String& other) const;
 
-    /// Returns true if the string starts with given string.
+    /// \brief Returns true if the string starts with given string.
     bool starts_with(const String& other) const;
 
-    /// Returns true if the string ends with given string.
+    /// \brief Returns true if the string ends with given string.
     bool ends_with(const String& other) const;
 
     //===============

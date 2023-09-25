@@ -12,46 +12,49 @@
 
 namespace pr {
 
-/// A `ByteArray` class represents an abstraction of an array of 8-bit data
-/// type.
+/// \brief A `ByteArray` class represents an abstraction of an array of 8-bit
+/// data type.
 ///
 /// \since 0.5
 class ByteArray
 {
 public:
+    /// \brief Default constructor.
     ByteArray();
 
-    /// Construct a `ByteArray` with the given length.
+    /// \brief Construct a `ByteArray` with the given length.
     ByteArray(uint64_t length);
 
-    /// Construct a `ByteArray` with C-style raw pointer with length.
+    /// \brief Construct a `ByteArray` with C-style raw pointer with length.
     ///
     /// \param data A valid C pointer.
     /// \param length The length of the data.
     ByteArray(const uint8_t *data, uint64_t length);
 
-    /// Construct a `ByteArray` with C-style raw pointer with length.
+    /// \brief Construct a `ByteArray` with C-style raw pointer with length.
     ///
     /// \param data A valid C pointer.
     /// \param length The length of the data.
+    ///
     /// Because most of the C APIs using `const char*` as a byte data. This is
     /// a convenience overloading for those.
     ByteArray(const char *data, uint64_t length);
 
-    /// Construct a `ByteArray` with `std::initializer_list`.
+    /// \brief Construct a `ByteArray` with `std::initializer_list`.
     ///
     /// \param list The initializer list.
     ByteArray(std::initializer_list<uint8_t> list);
 
-    /// Copy constructor for `ByteArray`.
+    /// \brief Copy constructor for `ByteArray`.
     ByteArray(const ByteArray& other);
 
-    /// Get the fixed length of this array.
+    /// \brief Get the fixed length of this array.
     uint64_t length() const;
 
-    /// Set the length of this array.
+    /// \brief Set the length of this array.
     ///
     /// \param length The length.
+    ///
     /// If the length is smaller than the current length, then the data will
     /// be discarded from last.
     /// If the length is larger than the current length, then the remains will
