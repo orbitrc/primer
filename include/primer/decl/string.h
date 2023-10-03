@@ -29,6 +29,20 @@ class ByteArray;
 /// this exception is thrown.
 class InvalidUnicodeScalarError : public std::exception
 {
+public:
+    const char* what() const noexcept override;
+};
+
+
+/// \brief This exception thrown when decode byte array to string.
+///
+/// \since 0.5
+///
+/// Decoding may fail if the byte array is an ill-formed Unicode string or
+/// not a string.
+class UnicodeDecodeError : public std::exception
+{
+public:
     const char* what() const noexcept override;
 };
 
