@@ -176,6 +176,13 @@ public:
     /// \brief Return `Vector` of `Unicode::Scalar`.
     Vector<Unicode::Scalar> unicode_scalars() const;
 
+    /// \brief Returns null-terminated const char pointer in UTF-8.
+    ///
+    /// Because the `String` is not composed of char pointer, the return
+    /// value of this function is independent.
+    /// While a `String` can contain a null character, the return valud of
+    /// this function does not include values after the null character.
+    /// You must not access the address after first null character.
     const char* c_str() const;
 
     //===============
