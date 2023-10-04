@@ -1,6 +1,6 @@
 [package]
 name = "primer-core"
-version = "0.4.0"
+version = "0.4.1"
 authors = ["Yujŏnja <hardboiled65@gmail.com>"]
 description = "A base library collections for Application."
 license = "MIT"
