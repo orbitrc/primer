@@ -6,6 +6,7 @@
 
 - ByteArray class.
 - Unicode encoder class.
+- Unicode decoder class.
 
 ### Changed
 
@@ -14,6 +15,7 @@
 ### Fixed
 
 - Errors in getter methods in Range are fixed.
+- String from not null-terminated C-style string error fixed.
 
 
 ## [0.4.1] - 2023-09-10
