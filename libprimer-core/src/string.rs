@@ -68,9 +68,15 @@ pub extern "C" fn pr_string_from_c_str_sized(c_str: *const c_char, len: u64) -> 
     }
 
     let rust_string = String::from_utf8(v).unwrap();
+    // CString containing null-character is invalid.
+    let mut null_terminated = rust_string.clone();
+    if let Some(pos) = rust_string.find('\0') {
+        null_terminated = rust_string[..pos].to_string();
+    }
+
     let boxed = Box::new(pr_string {
         string: Box::new(rust_string.to_owned()),
-        c_string: Box::new(CString::new(rust_string).unwrap()),
+        c_string: Box::new(CString::new(null_terminated).unwrap()),
     });
 
     Box::into_raw(boxed)
