@@ -70,6 +70,8 @@ add_custom_target(tests
     SOURCES
     ./tests/vector.h
     ./tests/vector.cpp
+    ./tests/string.h
+    ./tests/string.cpp
     ./tests/d-bus.h
     ./tests/d-bus.cpp
     ./tests/d-bus-server.cpp

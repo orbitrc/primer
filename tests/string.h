@@ -31,6 +31,10 @@ void unicode_encoder_utf8();
 
 void unicode_encoder_utf16();
 
+void unicode_decoder_utf8();
+
+void unicode_decoder_utf16();
+
 } // namespace tests
 
 #endif // _TESTS_STRING_H

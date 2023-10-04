@@ -13,6 +13,11 @@ const char* InvalidUnicodeScalarError::what() const noexcept
     return "The given code point exceeds U+10FFFF or is a surrogate character.";
 }
 
+const char* UnicodeDecodeError::what() const noexcept
+{
+    return "Unicode decoding failed.";
+}
+
 //==========
 // Unicode
 //==========
@@ -169,6 +174,191 @@ ByteArray Unicode::Encoder::encode(const String& string) const
         return _unicode_encode_utf16(string.unicode_scalars(), false);
     } else {
         return _unicode_encode_utf16(string.unicode_scalars(), true);
+    }
+}
+
+
+Unicode::Decoder::Decoder()
+{
+    this->_encoding = Unicode::Encoding::Utf8;
+}
+
+Unicode::Decoder::Decoder(Encoding encoding)
+{
+    this->_encoding = encoding;
+}
+
+static bool _unicode_validate_utf8(const ByteArray& bytes)
+{
+    uint64_t cursor = 0;
+    uint64_t length = bytes.length();
+    uint32_t code_point = 0;
+
+    while (cursor < length) {
+        if (bytes[cursor] < 0x80) {
+            cursor += 1;
+        } else if ((bytes[cursor] & 0xE0) == 0xC0) {
+            if (cursor + 1 < length &&
+                (bytes[cursor + 1] & 0xC0) == 0x80) {
+                // Check code point.
+                code_point = ((bytes[cursor] & 0x1F) << 6)
+                    | (bytes[cursor + 1] & 0x3F);
+                if (!(0x0080 <= code_point && code_point <= 0x07FF)) {
+                    return false;
+                }
+                cursor += 2;
+            } else {
+                return false;
+            }
+        } else if ((bytes[cursor] & 0xF0) == 0xE0) {
+            if (cursor + 2 < length &&
+                (bytes[cursor + 1] & 0xC0) == 0x80 &&
+                (bytes[cursor + 2] & 0xC0) == 0x80) {
+                // Check code point.
+                code_point = ((bytes[cursor] & 0xF) << 12)
+                    | ((bytes[cursor + 1] & 0x3F) << 6)
+                    | (bytes[cursor + 2] & 0x3F);
+                if (!(0x0800 <= code_point && code_point <= 0xFFFF)) {
+                    return false;
+                }
+                cursor += 3;
+            } else {
+                return false;
+            }
+        } else if ((bytes[cursor] & 0xF8) == 0xF0) {
+            if (cursor + 3 < length &&
+                (bytes[cursor + 1] & 0xC0) == 0x80 &&
+                (bytes[cursor + 2] & 0xC0) == 0x80 &&
+                (bytes[cursor + 3] & 0xC0) == 0x80) {
+                // Check code point.
+                code_point = ((bytes[cursor] & 0x7) << 18)
+                    | ((bytes[cursor + 1] & 0x3F) << 12)
+                    | ((bytes[cursor + 2] & 0x3F) << 6)
+                    | (bytes[cursor + 3] & 0x3F);
+                if (!(0x10000 <= code_point && code_point <= 0x10FFFF)) {
+                    return false;
+                }
+                cursor += 4;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    if (cursor != length) {
+        return false;
+    }
+
+    return true;
+}
+
+static bool _unicode_decode_utf16(const ByteArray& bytes,
+                                  std::string *buffer,
+                                  bool be)
+{
+    buffer->reserve(bytes.length() * 4);
+    uint64_t cursor = 0;
+    uint64_t length = bytes.length();
+
+    if (length % 2 != 0) {
+        return false;
+    }
+
+    while (cursor < length) {
+        uint16_t code_unit = !be
+            ? bytes[cursor] | (bytes[cursor + 1] << 8)
+            : bytes[cursor + 1] | (bytes[cursor] << 8);
+        cursor += 2;
+        if (!(0xD800 <= code_unit && code_unit <= 0xDBFF)) {
+            // Not a surrogate.
+
+            // Low surrogate.
+            if (0xDC00 <= code_unit && code_unit <= 0xDFFF) {
+                return false;
+            }
+
+            if (code_unit <= 0x7F) {
+                // 1-byte character.
+                buffer->push_back(static_cast<char>(code_unit));
+            } else if (code_unit <= 0x7FF) {
+                // 2-bytes character.
+                buffer->push_back(
+                    static_cast<char>(0b11000000 | (code_unit >> 6)));
+                buffer->push_back(
+                    static_cast<char>(0b10000000 | (code_unit & 0b00111111)));
+            } else { // (code_unit <= 0xFFFF)
+                // 3-bytes character.
+                buffer->push_back(static_cast<char>(
+                    0b11100000 | code_unit >> 12));
+                buffer->push_back(static_cast<char>(
+                    0b10000000 | ((code_unit >> 6) & 0b00111111)));
+                buffer->push_back(static_cast<char>(
+                    0b10000000 | (code_unit & 0b00111111)));
+            }
+        } else {
+            // A surrogate.
+            if (cursor + 1 > length) {
+                return false;
+            }
+            uint16_t code_unit_2 = !be
+                ? bytes[cursor] | (bytes[cursor + 1] << 8)
+                : bytes[cursor + 1] | (bytes[cursor] << 8);
+            cursor += 2;
+
+            if (0xDC00 <= code_unit_2 && code_unit_2 <= 0xDFFF) {
+                uint32_t code_point = ((code_unit - 0xD800) * 0x400);
+                code_point += (code_unit_2 - 0xDC00);
+                code_point += 0x10000;
+
+                buffer->push_back(static_cast<char>(
+                    0b11110000 | (code_point >> 18)));
+                buffer->push_back(static_cast<char>(
+                    0b10000000 | ((code_point >> 12) & 0b00111111)));
+                buffer->push_back(static_cast<char>(
+                    0b10000000 | ((code_point >> 6) & 0b00111111)));
+                buffer->push_back(static_cast<char>(
+                    0b10000000 | (code_point & 0b00111111)));
+            } else {
+                // Invalid surrogate.
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+String Unicode::Decoder::decode(const ByteArray& bytes) const
+{
+    if (this->_encoding == Encoding::Utf8) {
+        bool valid = _unicode_validate_utf8(bytes);
+        if (valid) {
+            String s(reinterpret_cast<const char*>(bytes.c_ptr()),
+                bytes.length());
+            return s;
+        } else {
+            throw UnicodeDecodeError();
+        }
+    } else if (this->_encoding == Encoding::Utf16Le) {
+        std::string buffer;
+        bool result = _unicode_decode_utf16(bytes, &buffer, false);
+        if (result == false) {
+            throw UnicodeDecodeError();
+        }
+        String s(buffer.c_str(), buffer.length());
+
+        return s;
+    } else {
+        std::string buffer;
+        bool result = _unicode_decode_utf16(bytes, &buffer, true);
+        if (result == false) {
+            throw UnicodeDecodeError();
+        }
+        String s(buffer.c_str(), buffer.length());
+
+        return s;
     }
 }
 

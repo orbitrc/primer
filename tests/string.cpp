@@ -184,4 +184,109 @@ void unicode_encoder_utf16()
     }
 }
 
+void unicode_decoder_utf8()
+{
+    // Must succeed.
+    pr::ByteArray encoded = {0xe3, 0x81, 0x93, 0xe3, 0x82, 0x93,
+                             0xe3, 0x81, 0xb0, 0xe3, 0x82, 0x93,
+                             0xe3, 0x81, 0xaf};
+    pr::String aisatsu = "こんばんは"_S;
+
+    pr::Unicode::Decoder decoder(pr::Unicode::Encoding::Utf8);
+    pr::String decoded = decoder.decode(encoded);
+
+    assert(decoded == aisatsu);
+
+    // Must fail.
+    {
+        pr::ByteArray invalid = {0xC0, 0x80};
+        bool failed = false;
+        try {
+            pr::String noop = decoder.decode(invalid);
+        } catch (const pr::UnicodeDecodeError& e) {
+            failed = true;
+        }
+        assert(failed == true);
+    }
+    // Must fail.
+    {
+        pr::ByteArray invalid = {0xF0, 0x80, 0x80, 0x80};
+        bool failed = false;
+        try {
+            pr::String noop = decoder.decode(invalid);
+        } catch (const pr::UnicodeDecodeError& e) {
+            failed = true;
+        }
+        assert(failed == true);
+    }
+    // Must fail.
+    {
+        pr::ByteArray invalid = {0xF4, 0x90, 0x80, 0x80};
+        bool failed = false;
+        try {
+            pr::String noop = decoder.decode(invalid);
+        } catch (const pr::UnicodeDecodeError& e) {
+            failed = true;
+        }
+        assert(failed == true);
+    }
+}
+
+void unicode_decoder_utf16()
+{
+    // Must succeed.
+    pr::ByteArray encoded_le = {0x7E, 0x30};
+    pr::ByteArray encoded_be = {0x30, 0x7E};
+    pr::String ma = "ま"_S;
+
+    pr::Unicode::Decoder decoder_le(pr::Unicode::Encoding::Utf16Le);
+    pr::Unicode::Decoder decoder_be(pr::Unicode::Encoding::Utf16Be);
+    {
+        pr::String decoded_le = decoder_le.decode(encoded_le);
+        pr::String decoded_be = decoder_be.decode(encoded_be);
+        assert(decoded_le == ma);
+        assert(decoded_be == ma);
+    }
+
+    auto must_fail = [decoder_le, decoder_be](const pr::ByteArray& bytes,
+                                              bool be) {
+        bool failed = false;
+        try {
+            pr::String noop = (!be)
+                ? decoder_le.decode(bytes)
+                : decoder_be.decode(bytes);
+        } catch (const pr::UnicodeDecodeError& e) {
+            failed = true;
+        }
+        assert(failed == true);
+    };
+
+    // Must fail.
+    {
+        pr::ByteArray invalid = {0x00, 0xD8};
+        must_fail(invalid, false);
+    }
+    // Must fail.
+    {
+        pr::ByteArray invalid = {0xD8, 0x00, 0x00, 0x41};
+        must_fail(invalid, true);
+    }
+    // Must fail.
+    {
+        pr::ByteArray invalid = {0xAD, 0xDE, 0xEF, 0xBE};
+        must_fail(invalid, false);
+    }
+    // Must succeed.
+    {
+        pr::ByteArray valid = {0x00, 0x11, 0x00, 0x00};
+        bool failed = false;
+        try {
+            pr::String noop = decoder_be.decode(valid);
+        } catch (const pr::UnicodeDecodeError& e) {
+            failed = true;
+        }
+        assert(failed == false);
+    }
+}
+
 } // namespace tests
