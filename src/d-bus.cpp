@@ -627,12 +627,12 @@ const char* DBus::introspect_1_0_xml_doctype_decl_node()
 
 DBusError::DBusError(const char *message)
 {
-    this->_message = message;
+    this->_message = "D-Bus error: "_S + String(message);
 }
 
 const char* DBusError::what() const noexcept
 {
-    return (pr::String("D-Bus error: ") + this->_message).c_str();
+    return this->_message.c_str();
 }
 
 
@@ -1044,6 +1044,15 @@ bool DBusMessage::append(const pr::String& value)
     }
 
     return true;
+}
+
+DBusMessage& DBusMessage::operator=(const DBusMessage& other)
+{
+    this->_impl = new DBusMessage::Impl();
+    this->_impl->message = other._impl->message;
+    this->_impl->message_count = other._impl->message_count + 1;
+
+    return *this;
 }
 
 DBusMessage DBusMessage::new_method_call(const pr::String& dest,

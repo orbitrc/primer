@@ -273,6 +273,8 @@ public:
 
     bool append(const pr::String& value);
 
+    DBusMessage& operator=(const DBusMessage& other);
+
 public:
     static DBusMessage new_method_call(const pr::String& dest,
                                        const pr::String& path,

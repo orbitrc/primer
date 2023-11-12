@@ -98,7 +98,13 @@ int main(int argc, char *argv[])
     message.append(""_S);
     // message.append("RegisteredStatusNotifierItems"_S);
 
-    pr::DBusMessage reply = conn.send_with_reply(message);
+    pr::DBusMessage reply;
+    try {
+        reply = conn.send_with_reply(message);
+    } catch (const pr::DBusError& e) {
+        fprintf(stderr, "%s\n", e.what());
+        return 1;
+    }
 
     fprintf(stderr, "Before get args.\n");
     auto args = reply.arguments();

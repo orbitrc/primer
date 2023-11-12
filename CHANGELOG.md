@@ -7,6 +7,7 @@
 - ByteArray class.
 - Unicode encoder class.
 - Unicode decoder class.
+- DBusMessage assignment operator.
 
 ### Changed
 
@@ -16,6 +17,7 @@
 
 - Errors in getter methods in Range are fixed.
 - String from not null-terminated C-style string error fixed.
+- DBusError broken error message fixed.
 
 
 ## [0.4.1] - 2023-09-10
