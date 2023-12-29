@@ -50,19 +50,37 @@ To build, you need the following.
 
 For build,
 
+### Old Instruction (Below 0.5.0)
+
 ```sh
+$ make
+```
+
+### New Instruction
+
+```sh
+$ mkdir build
+$ cd build
+$ cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    ..
 $ make
 ```
 
 For install,
 
-### Arch Linux
+```sh
+$ sudo make install
+```
+
+### Arch Linux (old)
 
 ```sh
 $ sudo make PREFIX=/usr install
 ```
 
-### Ubuntu
+### Ubuntu (old)
 
 ```sh
 $ sudo make PREFIX=/usr LIBDIR=/lib/x86_64-linux-gnu install

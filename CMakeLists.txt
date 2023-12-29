@@ -5,6 +5,22 @@ project(primer
     DESCRIPTION "Primer library"
     LANGUAGES CXX)
 
+set(PRIMER_DECL_HEADER_FILES
+    include/primer/decl/string.h
+)
+
+set(PRIMER_HEADER_FILES
+    include/primer/json.h
+    include/primer/range.h
+    include/primer/string.h
+    include/primer/vector.h
+    include/primer/hash-map.h
+    include/primer/byte-array.h
+    include/primer/format.h
+    include/primer/io.h
+    include/primer/d-bus.h
+)
+
 add_library(primer SHARED
     src/json.cpp
     src/range.cpp
@@ -13,16 +29,8 @@ add_library(primer SHARED
     src/format.cpp
     src/io.cpp
     src/d-bus.cpp
-    include/primer/json.h
-    include/primer/range.h
-    include/primer/decl/string.h
-    include/primer/string.h
-    include/primer/vector.h
-    include/primer/hash-map.h
-    include/primer/byte-array.h
-    include/primer/format.h
-    include/primer/io.h
-    include/primer/d-bus.h
+    ${PRIMER_DECL_HEADER_FILES}
+    ${PRIMER_HEADER_FILES}
 )
 
 target_include_directories(primer
@@ -64,6 +72,24 @@ if (PRIMER_CORE_LIBRARY)
 else()
     message(FATAL_ERROR "libprimer_core.a not found!")
 endif()
+
+# Install
+include(GNUInstallDirs)
+
+set_target_properties(primer PROPERTIES
+    PUBLIC_HEADER
+    "${PRIMER_HEADER_FILES}"
+)
+
+install(TARGETS primer
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}
+    PUBLIC_HEADER
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/primer
+)
+install(
+    FILES ${PRIMER_DECL_HEADER_FILES}
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/primer/decl
+)
 
 # Tests. For IDE.
 add_custom_target(tests
