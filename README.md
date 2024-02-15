@@ -1,19 +1,18 @@
 Primer
 ========
 
-A base C++ library collections for Application.
+A C++ base class collection library for [Blusher](https://github.com/orbitrc/blusher2).
 
-It contains DateTime, JSON, Unicode etc. all-in-one.
+All non-GUI related classes are split here.
 
 Perpose
 -------
 
-It is for providing syntactic sugars and abstract classes used in
-applications. Primer doesn't care about performance until a
-decent API is done.
-This means that it is suitable for use in applications where
-performance is not critical, which makes it unsuitable for use
-in libraries.
+Blusher is a C++ GUI framework but still needs non-GUI classes since C++ does
+not offer that much functionalities for build the applications.
+
+Like glib or Qt Core, this library provide Unicode string, vector, hash map
+and more. These classes have APIs as high-level as possible.
 
 Namespaces
 ----------
