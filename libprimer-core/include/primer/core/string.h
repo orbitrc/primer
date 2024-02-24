@@ -56,6 +56,9 @@ void pr_string_free(pr_string *string);
 //==================
 // Unicode Methods
 //==================
+
+pr_string* pr_unicode_version();
+
 pr_string* pr_unicode_scalar_na(uint32_t scalar);
 
 #ifdef __cplusplus

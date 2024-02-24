@@ -280,6 +280,14 @@ pub extern "C" fn pr_string_free(_string: *mut pr_string) {
 // Unicode
 //=============
 #[no_mangle]
+pub extern "C" fn pr_unicode_version() -> *mut pr_string {
+    let version = seshat::unicode::UNICODE_VERSION.to_string();
+    let pr_s = pr_string_from_rust_string(version);
+
+    pr_s
+}
+
+#[no_mangle]
 pub extern "C" fn pr_unicode_scalar_na(scalar: u32) -> *mut pr_string {
     let rust_char = char::from_u32(scalar).unwrap();
     let na = rust_char.na();

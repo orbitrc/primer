@@ -24,7 +24,12 @@ const char* UnicodeDecodeError::what() const noexcept
 
 String Unicode::version()
 {
-    return "15.0.0"_S;
+    auto pr_s = pr_unicode_version();
+    String version = String(pr_string_c_str(pr_s));
+
+    pr_string_free(pr_s);
+
+    return version;
 }
 
 Unicode::Scalar::Scalar(uint32_t code_point)

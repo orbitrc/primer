@@ -1,8 +1,8 @@
 [package]
 name = "primer-core"
 version = "0.4.1"
-authors = ["Yujŏnja <hardboiled65@gmail.com>"]
-description = "A base library collections for Application."
+authors = ["Aspen Schneider <hardboiled65@gmail.com>"]
+description = "A core library for Primer"
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/orbitrc/primer"

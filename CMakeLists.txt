@@ -91,16 +91,7 @@ install(
     DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/primer/decl
 )
 
-# Tests. For IDE.
-add_custom_target(tests
-    SOURCES
-    ./tests/vector.h
-    ./tests/vector.cpp
-    ./tests/string.h
-    ./tests/string.cpp
-    ./tests/d-bus.h
-    ./tests/d-bus.cpp
-    ./tests/d-bus-server.cpp
-    ./tests/d-bus-client.cpp
-    ./tests/main.cpp
-)
+
+enable_testing()
+add_subdirectory(tests)
+
