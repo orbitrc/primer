@@ -91,7 +91,11 @@ install(
     DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/primer/decl
 )
 
+# Tests
+
+set(PRIMER_TEST_BINARY_DIR ${CMAKE_BINARY_DIR}/tests)
 
 enable_testing()
+file(MAKE_DIRECTORY ${PRIMER_TEST_BINARY_DIR})
 add_subdirectory(tests)
 

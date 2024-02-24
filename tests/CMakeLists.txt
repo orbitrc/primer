@@ -28,3 +28,7 @@ add_test(NAME primer-test
     COMMAND primer-test
 )
 
+set_target_properties(primer-test PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${PRIMER_TEST_BINARY_DIR})
+
+add_subdirectory(string)
