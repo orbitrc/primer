@@ -4,6 +4,15 @@
 
 ### Added
 
+### Changed
+
+### Fixed
+
+
+## [0.5.0] - 2024-02-25
+
+### Added
+
 - ByteArray class.
 - Unicode encoder class.
 - Unicode decoder class.
@@ -12,6 +21,7 @@
 ### Changed
 
 - Unicode::Scalar class now throws in constructor for invalid code point range.
+- Unicode::version now derived from the core library.
 
 ### Fixed
 
